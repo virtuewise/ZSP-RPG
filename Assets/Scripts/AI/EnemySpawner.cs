@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using UnityEngine;
+using ZSP.Player;
 
 namespace ZSP.AI
 {
@@ -18,8 +20,15 @@ namespace ZSP.AI
         [Header("Fallback")]
         public Material fallbackMaterial;
 
+        private readonly List<GameObject> _spawnedEnemies = new();
+
         public int Spawn(int count)
         {
+            // A new mission replaces the previous mission's live enemy set.
+            foreach (var previous in _spawnedEnemies)
+                if (previous != null) Destroy(previous);
+            _spawnedEnemies.Clear();
+
             var spawned = 0;
             for (var i = 0; i < count; i++)
             {
@@ -33,6 +42,9 @@ namespace ZSP.AI
                 var enemy = enemyPrefab != null ? Instantiate(enemyPrefab, position, Quaternion.identity) : CreateFallback(position);
                 enemy.name = $"Meridian-{i + 1}";
                 enemy.tag = "Enemy";
+                if (enemy.GetComponentInChildren<EnemyHealth>() == null)
+                    enemy.AddComponent<EnemyHealth>();
+                _spawnedEnemies.Add(enemy);
                 spawned++;
             }
             Debug.Log($"[ZSP] EnemySpawner created {spawned} enemies.");

@@ -244,7 +244,7 @@ namespace ZSP.Narrative
             Upsert(State.endings, _pending.endings, entry, e => e.mission == missionId);
         }
 
-        private static void Upsert<T>(List<T> state, List<T> pending, T entry, Func<T, bool> match)
+        private static void Upsert<T>(List<T> state, List<T> pending, T entry, Predicate<T> match)
         {
             var index = state.FindIndex(match);
             if (index >= 0) state[index] = entry; else state.Add(entry);

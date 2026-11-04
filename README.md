@@ -51,7 +51,7 @@ python -m pytest test_sis_v1.py -q   # 22 passed
 
 ## Scenes and prefabs
 
-Unity creates `.unity` scene files and `.prefab` assets only when the Editor opens the project; hand-authoring them is not reliable. The `ZSP` menu (`Create Bootstrap Scene`, `Create Player Rig`, `Create SIS Demo Scene`, `Create Vertical Slice Scene`) regenerates them deterministically on first open. `.meta` files are generated likewise, which is why scenes and prefabs are **not** committed yet — once the first scene/prefab is verified in the editor, those YAML assets will be committed.
+The repo includes the Unity-generated scenes (`Assets/Scenes/Bootstrap.unity`, `SISDemo.unity`, `VerticalSlice.unity`), the player rig (`Assets/Prefabs/Player.prefab`) and their `.meta` files, generated deterministically by the `ZSP` menu with Unity 6000.6.8f1. If a fresh clone ever disagrees with the meta GUIDs, regenerate them via `ZSP → Create Bootstrap Scene / Player Rig / SIS Demo Scene / Vertical Slice Scene` and re-commit.
 
 ## Licence posture
 

@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using ZSP.Core;
 using ZSP.Player;
 using ZSP.Narrative;
+using ZSP.AI;
 
 namespace ZSP.EditorTools
 {

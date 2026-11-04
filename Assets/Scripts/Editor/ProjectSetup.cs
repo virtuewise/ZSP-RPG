@@ -8,6 +8,7 @@ using ZSP.Core;
 using ZSP.Player;
 using ZSP.Narrative;
 using ZSP.AI;
+using ZSP.UI;
 
 namespace ZSP.EditorTools
 {
@@ -167,11 +168,36 @@ namespace ZSP.EditorTools
             if (Object.FindObjectOfType<EventSystem>() == null)
                 new GameObject("EventSystem", typeof(EventSystem), typeof(StandaloneInputModule));
 
+            // Wire a working HUD instead of leaving MissionDirector.hud unset.
+            var hud = canvas.AddComponent<HUDController>();
+            hud.controller = move;
+            hud.weapons = weapons;
+            hud.stealth = stealth;
+            hud.playerHealth = health;
+            hud.healthText = CreateUIText(canvas.transform, "HealthText", new Vector2(0.02f, 0.92f), new Vector2(0.22f, 0.99f), 18, new Color(0.95f, 0.88f, 0.68f));
+            hud.ammoText = CreateUIText(canvas.transform, "AmmoText", new Vector2(0.78f, 0.92f), new Vector2(0.98f, 0.99f), 18, new Color(0.95f, 0.88f, 0.68f));
+            hud.detectionText = CreateUIText(canvas.transform, "DetectionText", new Vector2(0.35f, 0.92f), new Vector2(0.65f, 0.99f), 16, Color.white);
+            hud.objectiveText = CreateUIText(canvas.transform, "ObjectiveText", new Vector2(0.02f, 0.02f), new Vector2(0.58f, 0.10f), 16, Color.white);
+
+            var detectionFillObject = new GameObject("DetectionFill", typeof(RectTransform), typeof(Image));
+            detectionFillObject.transform.SetParent(canvas.transform, false);
+            var detectionRect = detectionFillObject.GetComponent<RectTransform>();
+            detectionRect.anchorMin = new Vector2(0.40f, 0.89f);
+            detectionRect.anchorMax = new Vector2(0.60f, 0.91f);
+            detectionRect.offsetMin = Vector2.zero;
+            detectionRect.offsetMax = Vector2.zero;
+            var detectionFill = detectionFillObject.GetComponent<Image>();
+            detectionFill.type = Image.Type.Filled;
+            detectionFill.fillMethod = Image.FillMethod.Horizontal;
+            detectionFill.fillOrigin = (int)Image.OriginHorizontal.Left;
+            detectionFill.fillAmount = 0f;
+            hud.detectionFill = detectionFill;
+
             var spawner = new GameObject("EnemySpawner");
             spawner.AddComponent<EnemySpawner>();
 
             var director = new GameObject("MissionDirector").AddComponent<MissionDirector>();
-            director.hud = null; // wire to a HUDController when the real UI exists
+            director.hud = hud;
             director.stealthSystem = stealth;
             director.enemySpawner = spawner.GetComponent<EnemySpawner>();
             director.autoStartFirstMission = false;

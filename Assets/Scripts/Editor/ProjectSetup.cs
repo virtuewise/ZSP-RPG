@@ -62,6 +62,7 @@ namespace ZSP.EditorTools
             weapons.aimCamera = cam;
 
             var progression = player.AddComponent<ProgressionSystem>();
+            player.AddComponent<PlayerHealth>();
 
             var stealth = player.AddComponent<StealthSystem>();
             stealth.playerRoot = player.transform;

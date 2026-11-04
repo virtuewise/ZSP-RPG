@@ -44,7 +44,7 @@ namespace ZSP.Narrative
             foreach (var ch in value)
             {
                 if (!(char.IsLetter(ch) || ch == ' ' || ch == '\'' || ch == '’' || ch == '-' || ch == '.'))
-                    throw new ArgumentException("Display name: letters, spaces, apostrophes and hyphens only.");
+                    throw new ArgumentException("Display name: letters, spaces, apostrophes, hyphens and periods only.");
             }
             CheckBlocked(value);
             return value;

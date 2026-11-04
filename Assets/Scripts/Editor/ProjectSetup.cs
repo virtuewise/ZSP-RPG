@@ -22,8 +22,6 @@ namespace ZSP.EditorTools
         public static void CreateBootstrapScene()
         {
             var scene = EditorSceneManager.NewScene(NewSceneSetup.DefaultGameObjects, NewSceneMode.Single);
-            var defaultCamera = Camera.main;
-            if (defaultCamera != null) Object.DestroyImmediate(defaultCamera.gameObject);
 
             var boot = new GameObject("GameBootstrap");
             boot.AddComponent<AssetBundleLoader>();
@@ -136,6 +134,8 @@ namespace ZSP.EditorTools
         public static void CreateVerticalSliceScene()
         {
             var scene = EditorSceneManager.NewScene(NewSceneSetup.DefaultGameObjects, NewSceneMode.Single);
+            var defaultCamera = Camera.main;
+            if (defaultCamera != null) Object.DestroyImmediate(defaultCamera.gameObject);
 
             var boot = new GameObject("GameBootstrap");
             boot.AddComponent<AssetBundleLoader>();

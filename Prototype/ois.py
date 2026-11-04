@@ -59,7 +59,7 @@ def validate_display_name(value: str) -> str:
     if len(value) > 28:
         raise OISError("display name: 28 characters max")
     if not _letters_only(value):
-        raise OISError("display name: letters, spaces, apostrophes and hyphens only")
+        raise OISError("display name: letters, spaces, apostrophes, hyphens and periods only")
     _check_blocked(value)
     return value
 

@@ -234,15 +234,43 @@ namespace ZSP.Narrative
                     throw new InvalidDataException($"Mission {mission.id} start beat missing");
                 if (!mission.beats.Any(b => b.type == "mission_end"))
                     throw new InvalidDataException($"Mission {mission.id} has no mission_end beat");
-                foreach (var cid in mission.contacts)
+                foreach (var cid in mission.contacts ?? new List<string>())
                     if (!Contacts.ContainsKey(cid)) throw new InvalidDataException($"Mission {mission.id}: unknown contact {cid}");
-                foreach (var wid in mission.witnesses)
+                foreach (var wid in mission.witnesses ?? new List<string>())
                     if (!Witnesses.ContainsKey(wid)) throw new InvalidDataException($"Mission {mission.id}: unknown witness {wid}");
+                foreach (var kid in mission.keyCharacters ?? new List<string>())
+                    if (!Characters.ContainsKey(kid)) throw new InvalidDataException($"Mission {mission.id}: unknown key character {kid}");
+
+                var knownBeats = Beats[mission.id];
+                foreach (var beat in mission.beats)
+                {
+                    if (!string.IsNullOrEmpty(beat.next) && !knownBeats.ContainsKey(beat.next))
+                        throw new InvalidDataException($"Mission {mission.id} beat {beat.id}: unknown next beat {beat.next}");
+                    if (!string.IsNullOrEmpty(beat.nextMission) && !Missions.ContainsKey(beat.nextMission))
+                        throw new InvalidDataException($"Mission {mission.id} beat {beat.id}: unknown next mission {beat.nextMission}");
+
+                    if (beat.choices == null) continue;
+                    foreach (var choice in beat.choices)
+                    {
+                        if (!string.IsNullOrEmpty(choice.next) && !knownBeats.ContainsKey(choice.next))
+                            throw new InvalidDataException($"Mission {mission.id} choice {beat.id}/{choice.id}: unknown next beat {choice.next}");
+                        ValidateBranchTarget(mission.id, beat.id, choice.id, "success", choice.success, knownBeats);
+                        ValidateBranchTarget(mission.id, beat.id, choice.id, "failure", choice.failure, knownBeats);
+                    }
+                }
             }
             if (!Missions.ContainsKey("M1") || !Missions.ContainsKey("M2") || !Missions.ContainsKey("M3"))
                 throw new InvalidDataException("Season 1 requires M1/M2/M3");
             if (Missions["M3"].endings == null || Missions["M3"].endings.Count == 0)
                 throw new InvalidDataException("M3 must have endings");
+        }
+
+        private static void ValidateBranchTarget(string missionId, string beatId, string choiceId, string branchName,
+            StoryBranch branch, Dictionary<string, StoryBeat> knownBeats)
+        {
+            if (branch == null || string.IsNullOrEmpty(branch.next)) return;
+            if (!knownBeats.ContainsKey(branch.next))
+                throw new InvalidDataException($"Mission {missionId} choice {beatId}/{choiceId}/{branchName}: unknown next beat {branch.next}");
         }
     }
 }

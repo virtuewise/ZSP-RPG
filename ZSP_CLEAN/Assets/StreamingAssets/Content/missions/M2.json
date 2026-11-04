@@ -1,0 +1,513 @@
+{
+  "schemaVersion": 1,
+  "missions": [
+    {
+      "id": "M2",
+      "order": 2,
+      "title": "The Ledger",
+      "location": "eastgate",
+      "premise": "The archive points to a money-laundering node at Eastgate and a bagman named Fingers Nyandoro. Find him, get the ledger, and decide who gets to use it.",
+      "invariants": ["ledger_resolved", "fingers_contact"],
+      "objectives": [
+        "Tail Fingers Nyandoro through Eastgate",
+        "Get the ledger or his testimony",
+        "Decide what to do with the evidence"
+      ],
+      "contacts": ["nyasha", "tariro", "mukoma"],
+      "witnesses": ["tendai", "fingers"],
+      "keyCharacters": [],
+      "endings": [],
+      "start": "M2_OPEN",
+      "beats": [
+        {
+          "id": "M2_OPEN",
+          "type": "dialogue",
+          "speaker": "nyasha",
+          "text": "Nyasha meets you in a car park in Avondale. She looks like she hasn't slept in a week. 'The archive points to a bureau de change near Eastgate. Fingers Nyandoro runs the money. He's careful. He's also scared of Nightjar. Use that.'",
+          "variants": [
+            {
+              "requirements": ["contact_compromised:nyasha"],
+              "text": "Nyasha's safehouse is a burned shell. Her phone is dead. On the wall, someone has painted a nightjar. She is alive, but she is no longer safe, and neither are you. The archive still points to Eastgate. Fingers Nyandoro runs the money."
+            }
+          ],
+          "choices": [
+            {
+              "id": "listen",
+              "text": "Tell me about Fingers.",
+              "next": "M2_PARTNER"
+            },
+            {
+              "id": "ask_nyasha",
+              "text": "Are you okay?",
+              "requirements": ["contact_available:nyasha"],
+              "effects": {
+                "trust": [{"contact": "nyasha", "delta": 0.1}],
+                "flags": ["checked_on_nyasha"],
+                "behavior": [{"action": "trust_contact", "target": "nyasha", "value": 1}]
+              },
+              "next": "M2_NYASHA"
+            }
+          ]
+        },
+        {
+          "id": "M2_NYASHA",
+          "type": "dialogue",
+          "speaker": "nyasha",
+          "text": "'No,' she says. 'But I'm still here. Fingers has a locker at Eastgate and a table at the café on the ground floor. He walks the same loop twice before he makes a drop. He is waiting for someone. Find out who.'",
+          "choices": [
+            {
+              "id": "thanks",
+              "text": "Then let's find him.",
+              "effects": {
+                "trust": [{"contact": "nyasha", "delta": 0.05}]
+              },
+              "next": "M2_PARTNER"
+            }
+          ]
+        },
+        {
+          "id": "M2_PARTNER",
+          "type": "choice",
+          "text": "You need eyes on Fingers. Tariro can put a journalist on the street. Mukoma can put a stolen taxi and a few very quiet men on him. Or you can do it alone.",
+          "choices": [
+            {
+              "id": "tariro",
+              "text": "Call Tariro. Sunlight is a weapon.",
+              "effects": {
+                "trust": [{"contact": "tariro", "delta": 0.2}],
+                "flags": ["partner_tariro"],
+                "behavior": [{"action": "trust_contact", "target": "tariro", "value": 1}]
+              },
+              "next": "M2_ENTRY"
+            },
+            {
+              "id": "mukoma",
+              "text": "Call Mukoma. He knows the streets.",
+              "effects": {
+                "trust": [{"contact": "mukoma", "delta": 0.2}],
+                "flags": ["partner_mukoma"],
+                "behavior": [{"action": "trust_contact", "target": "mukoma", "value": 1}]
+              },
+              "next": "M2_ENTRY"
+            },
+            {
+              "id": "solo",
+              "text": "Do it alone. Fewer people to lose.",
+              "effects": {
+                "flags": ["partner_solo"],
+                "heat": -1
+              },
+              "next": "M2_ENTRY"
+            }
+          ]
+        },
+        {
+          "id": "M2_ENTRY",
+          "type": "route",
+          "text": "Eastgate at noon. The mall entrance is a river of shoppers and cameras. The service corridor smells of frying oil. The roof stairwell is locked, but the lock is old.",
+          "routes": ["mall_entrance", "service_corridor", "roof"],
+          "next": "M2_SURVEILLANCE"
+        },
+        {
+          "id": "M2_SURVEILLANCE",
+          "type": "investigation",
+          "text": "Eastgate at noon. Fingers buys a newspaper, checks a locker, and walks the same loop twice. He is waiting for someone. The lunch crowd gives you plenty of cover and very little time.",
+          "maxSearches": 2,
+          "areas": [
+            {
+              "id": "locker",
+              "name": "Locker bank",
+              "text": "A bank of steel lockers near the toilets. Fingers used number 114. The lock is cheap; the contents are not.",
+              "stat": "tech",
+              "difficulty": 3,
+              "intel": ["payment_ledger"],
+              "effects": {
+                "flags": ["opened_locker"],
+                "behavior": [{"action": "investigate", "target": "locker", "value": 1}]
+              },
+              "failureEffects": {
+                "heat": 1,
+                "flags": ["locker_alarm"]
+              }
+            },
+            {
+              "id": "cafe",
+              "name": "Ground-floor café",
+              "text": "Fingers leaves a folded receipt under the sugar dispenser. The barista is paid to forget him. She is not paid enough.",
+              "stat": "stealth",
+              "difficulty": 2,
+              "intel": ["chiweshe_memo"],
+              "effects": {
+                "flags": ["searched_cafe"],
+                "behavior": [{"action": "investigate", "target": "cafe", "value": 1}]
+              },
+              "failureEffects": {
+                "heat": 1
+              }
+            },
+            {
+              "id": "tail",
+              "name": "Follow the loop",
+              "text": "You follow him past the pharmacy, the phone shop and the bureau de change. He stops at the same window twice. The second time, he is not looking at the display.",
+              "stat": "stealth",
+              "difficulty": 3,
+              "intel": ["nightjar_patrol"],
+              "effects": {
+                "flags": ["tailed_fingers"],
+                "behavior": [{"action": "investigate", "target": "tail", "value": 1}]
+              },
+              "failureEffects": {
+                "heat": 1,
+                "flags": ["fingers_spooked"]
+              }
+            },
+            {
+              "id": "street",
+              "name": "Street confrontation",
+              "text": "A group of Nightjar contractors is waiting in a white Hilux. They are not here for the shopping. You can mark their faces, or you can mark their plates.",
+              "stat": "combat",
+              "difficulty": 2,
+              "intel": ["nightjar_manifest"],
+              "effects": {
+                "credits": 1,
+                "flags": ["saw_nightjar"],
+                "behavior": [{"action": "investigate", "target": "street", "value": 1}]
+              },
+              "failureEffects": {
+                "health": -1,
+                "heat": 2
+              }
+            }
+          ],
+          "next": "M2_FINGERS"
+        },
+        {
+          "id": "M2_FINGERS",
+          "type": "choice",
+          "speaker": "fingers",
+          "text": "Fingers sees you before you reach him. He bolts through the market, knocking over a crate of tomatoes. By the time you catch him, he is crying and holding a ledger to his chest. 'I'm nobody,' he says. 'I just move the money.'",
+          "choices": [
+            {
+              "id": "empathy",
+              "text": "Then help me move it somewhere it can't hurt anyone.",
+              "check": {"stat": "empathy", "difficulty": 2},
+              "success": {
+                "text": "He laughs, badly. Then he opens the ledger and starts talking. Names, dates, account numbers. He has been waiting for someone to ask him properly.",
+                "effects": {
+                  "intel": ["fingers_testimony", "payment_ledger"],
+                  "flags": ["fingers_cooperative"],
+                  "trust": [{"contact": "fingers", "delta": 0.2}],
+                  "behavior": [{"action": "interrogate", "target": "fingers", "value": 1}]
+                },
+                "next": "M2_FATE"
+              },
+              "failure": {
+                "text": "He twists out of your grip and runs for the Hilux. The Nightjar men are already opening the doors.",
+                "effects": {
+                  "flags": ["fingers_fled"],
+                  "heat": 1
+                },
+                "next": "M2_CHASE"
+              }
+            },
+            {
+              "id": "pressure",
+              "text": "You're nobody until I decide what you are. Open it.",
+              "check": {"stat": "intimidation", "difficulty": 2},
+              "success": {
+                "text": "He opens the ledger with shaking hands. 'Mavhunga,' he says. 'The deputy director. He signs the Kaguvi payments. I never met him. I just moved the money.'",
+                "effects": {
+                  "intel": ["payment_ledger", "fingers_testimony"],
+                  "flags": ["fingers_cooperative", "fingers_terrified"],
+                  "behavior": [{"action": "interrogate", "target": "fingers", "value": 1}]
+                },
+                "next": "M2_FATE"
+              },
+              "failure": {
+                "text": "He screams for help. Two Nightjar men step out of the crowd. You have to move before this becomes a firefight in a market.",
+                "effects": {
+                  "flags": ["fingers_fled"],
+                  "heat": 2,
+                  "health": -1
+                },
+                "next": "M2_CHASE"
+              }
+            },
+            {
+              "id": "threat",
+              "text": "Give me the ledger and I'll let you keep your fingers.",
+              "check": {"stat": "combat", "difficulty": 2},
+              "success": {
+                "text": "He hands it over without another word. You have the ledger, but he is already looking for a way to sell you out.",
+                "effects": {
+                  "intel": ["payment_ledger"],
+                  "flags": ["fingers_terrified"],
+                  "behavior": [{"action": "interrogate", "target": "fingers", "value": 1}]
+                },
+                "next": "M2_FATE"
+              },
+              "failure": {
+                "text": "He kicks you in the knee and runs. The ledger stays in his hands.",
+                "effects": {
+                  "health": -1,
+                  "heat": 1,
+                  "flags": ["fingers_fled"]
+                },
+                "next": "M2_CHASE"
+              }
+            },
+            {
+              "id": "kill",
+              "text": "No more middlemen.",
+              "effects": {
+                "witnesses": [{"id": "fingers", "status": "killed", "cooperative": false}],
+                "keyCharacters": [{"id": "fingers", "status": "dead"}],
+                "intel": ["payment_ledger"],
+                "flags": ["fingers_killed"],
+                "heat": 2,
+                "behavior": [{"action": "witness_killed", "target": "fingers", "value": 1}]
+              },
+              "next": "M2_LEDGER"
+            }
+          ]
+        },
+        {
+          "id": "M2_FATE",
+          "type": "choice",
+          "text": "Fingers is sitting on an overturned crate, the ledger in his lap. The market is starting to notice. Whatever you decide, it will not stay in this square.",
+          "choices": [
+            {
+              "id": "spare",
+              "text": "Let him go. He gave you what you needed.",
+              "requirements": ["flag:fingers_cooperative"],
+              "effects": {
+                "witnesses": [{"id": "fingers", "status": "spared", "cooperative": true}],
+                "keyCharacters": [{"id": "fingers", "status": "alive"}],
+                "flags": ["fingers_spared"],
+                "behavior": [{"action": "witness_spared", "target": "fingers", "value": 1}]
+              },
+              "next": "M2_LEDGER"
+            },
+            {
+              "id": "release",
+              "text": "Tell him to disappear.",
+              "effects": {
+                "witnesses": [{"id": "fingers", "status": "spared", "cooperative": false}],
+                "keyCharacters": [{"id": "fingers", "status": "alive"}],
+                "flags": ["fingers_spared"],
+                "behavior": [{"action": "witness_spared", "target": "fingers", "value": 1}]
+              },
+              "next": "M2_LEDGER"
+            },
+            {
+              "id": "detain",
+              "text": "Keep him. He can testify.",
+              "effects": {
+                "witnesses": [{"id": "fingers", "status": "spared", "cooperative": false}],
+                "keyCharacters": [{"id": "fingers", "status": "alive"}],
+                "flags": ["fingers_detained"],
+                "behavior": [{"action": "witness_spared", "target": "fingers", "value": 1}]
+              },
+              "next": "M2_LEDGER"
+            },
+            {
+              "id": "kill",
+              "text": "Finish it.",
+              "effects": {
+                "witnesses": [{"id": "fingers", "status": "killed", "cooperative": false}],
+                "keyCharacters": [{"id": "fingers", "status": "dead"}],
+                "flags": ["fingers_killed"],
+                "heat": 1,
+                "behavior": [{"action": "witness_killed", "target": "fingers", "value": 1}]
+              },
+              "next": "M2_LEDGER"
+            }
+          ]
+        },
+        {
+          "id": "M2_CHASE",
+          "type": "chase",
+          "text": "A Nightjar pickup cuts across Samora Machel Avenue. Fingers is in the back. If he reaches the Kaguvi road, the ledger disappears.",
+          "choices": [
+            {
+              "id": "ram",
+              "text": "Ram the pickup at the intersection.",
+              "check": {"stat": "combat", "difficulty": 3},
+              "success": {
+                "text": "The pickup spins into a lamppost. You pull Fingers out of the back seat before the Nightjar men can regroup. He is bleeding, but alive.",
+                "effects": {
+                  "witnesses": [{"id": "fingers", "status": "spared", "cooperative": true}],
+                  "keyCharacters": [{"id": "fingers", "status": "alive"}],
+                  "intel": ["payment_ledger"],
+                  "flags": ["fingers_rescued"],
+                  "heat": 2,
+                  "behavior": [{"action": "vehicle_chase", "target": "nightjar_pickup", "value": 1}]
+                },
+                "next": "M2_LEDGER"
+              },
+              "failure": {
+                "text": "The pickup is heavier than it looks. You come off the road, and by the time you are moving again, the Nightjar men have Fingers and the ledger.",
+                "effects": {
+                  "witnesses": [{"id": "fingers", "status": "captured", "cooperative": false}],
+                  "flags": ["fingers_captured"],
+                  "health": -2,
+                  "heat": 2,
+                  "behavior": [{"action": "vehicle_chase", "target": "nightjar_pickup", "value": 1}]
+                },
+                "next": "M2_LEDGER"
+              }
+            },
+            {
+              "id": "evade",
+              "text": "Box them in through the side streets.",
+              "check": {"stat": "driving", "difficulty": 3},
+              "success": {
+                "text": "You take the loading bay behind the old department store and come out in front of them. The pickup brakes. Fingers opens the door and runs to you.",
+                "effects": {
+                  "witnesses": [{"id": "fingers", "status": "spared", "cooperative": true}],
+                  "keyCharacters": [{"id": "fingers", "status": "alive"}],
+                  "intel": ["payment_ledger"],
+                  "flags": ["fingers_rescued"],
+                  "heat": 1,
+                  "behavior": [{"action": "vehicle_chase", "target": "nightjar_pickup", "value": 1}]
+                },
+                "next": "M2_LEDGER"
+              },
+              "failure": {
+                "text": "You lose them at the railway crossing. The barrier comes down, and the pickup is gone before it lifts.",
+                "effects": {
+                  "witnesses": [{"id": "fingers", "status": "captured", "cooperative": false}],
+                  "flags": ["fingers_captured"],
+                  "heat": 1
+                },
+                "next": "M2_LEDGER"
+              }
+            },
+            {
+              "id": "shortcut",
+              "text": "Cut through the market and take the ledger on foot.",
+              "check": {"stat": "stealth", "difficulty": 2},
+              "success": {
+                "text": "You reach the pickup at the next junction, pull Fingers out through the passenger door, and disappear into the market before the driver understands what happened.",
+                "effects": {
+                  "witnesses": [{"id": "fingers", "status": "spared", "cooperative": true}],
+                  "keyCharacters": [{"id": "fingers", "status": "alive"}],
+                  "intel": ["payment_ledger"],
+                  "flags": ["fingers_rescued"],
+                  "behavior": [{"action": "stealth_takedown", "target": "nightjar_driver", "value": 1}]
+                },
+                "next": "M2_LEDGER"
+              },
+              "failure": {
+                "text": "The market is too thick. By the time you reach the road, the pickup is already gone.",
+                "effects": {
+                  "witnesses": [{"id": "fingers", "status": "captured", "cooperative": false}],
+                  "flags": ["fingers_captured"],
+                  "heat": 1
+                },
+                "next": "M2_LEDGER"
+              }
+            }
+          ]
+        },
+        {
+          "id": "M2_LEDGER",
+          "type": "choice",
+          "text": "The ledger names a shell company, a freight route, and a room on Kaguvi Hill. It also names Collin Mavhunga, Deputy Director of the Directorate. You have one copy and several ways to use it.",
+          "choices": [
+            {
+              "id": "publish",
+              "text": "Give it to Tariro. Let the country see it.",
+              "requirements": ["intel:payment_ledger", "trust:tariro:0.4"],
+              "effects": {
+                "intel": ["payment_ledger"],
+                "trust": [{"contact": "tariro", "delta": 0.1}],
+                "factions": [
+                  {"id": "nightjar", "influence": -1, "heat": 2, "exposed": true},
+                  {"id": "civic_front", "influence": 2, "heat": 1}
+                ],
+                "flags": ["ledger_published"],
+                "behavior": [{"action": "expose_org", "target": "nightjar", "value": 1}, {"action": "trust_contact", "target": "tariro", "value": 1}]
+              },
+              "next": "M2_END"
+            },
+            {
+              "id": "leverage",
+              "text": "Keep it. Leverage is quieter than truth.",
+              "requirements": ["intel:payment_ledger"],
+              "effects": {
+                "intel": ["payment_ledger"],
+                "factions": [{"id": "directorate", "influence": 1, "heat": 1}],
+                "flags": ["ledger_leveraged"],
+                "behavior": [{"action": "protect_org", "target": "directorate", "value": 1}]
+              },
+              "next": "M2_END"
+            },
+            {
+              "id": "sell",
+              "text": "Sell it to the Ledger. Let them clean up their own mess.",
+              "requirements": ["intel:payment_ledger"],
+              "effects": {
+                "credits": 3,
+                "factions": [{"id": "ledger", "influence": 1, "heat": -1}],
+                "flags": ["ledger_sold"],
+                "behavior": [{"action": "protect_org", "target": "ledger", "value": 1}]
+              },
+              "next": "M2_END"
+            },
+            {
+              "id": "destroy",
+              "text": "Burn it. Nobody gets to use it.",
+              "effects": {
+                "factions": [
+                  {"id": "civic_front", "influence": -1},
+                  {"id": "nightjar", "heat": -1}
+                ],
+                "flags": ["ledger_destroyed"],
+                "behavior": [{"action": "expose_org", "target": "nightjar", "value": 1}]
+              },
+              "next": "M2_END"
+            }
+          ]
+        },
+        {
+          "id": "M2_END",
+          "type": "dialogue",
+          "speaker": "nyasha",
+          "text": "The city feels different after a decision like that. Somewhere on Kaguvi Hill, a man is already adjusting his plans.",
+          "variants": [
+            {
+              "requirements": ["flag:ledger_published"],
+              "text": "Tariro's story goes online at six. By seven, Nightjar's share price is a rumour and the Directorate is denying everything. Nyasha calls. 'You just made yourself the most wanted man in Harare. I hope you know what you're doing.'"
+            },
+            {
+              "requirements": ["flag:ledger_leveraged"],
+              "text": "The Directorate calls before midnight. A man with a careful voice offers you a meeting and a budget. Nyasha does not call. The ledger is still in your pocket, and it is heavier than it was."
+            },
+            {
+              "requirements": ["flag:ledger_sold"],
+              "text": "Mukoma calls to tell you the Ledger's people are asking questions. 'They paid you,' he says. 'That means they own a piece of you now.' The ledger is gone. The names are not."
+            },
+            {
+              "requirements": ["flag:ledger_destroyed"],
+              "text": "The ledger burns in a metal bin behind the market. Tariro stops answering her phone. Nyasha says nothing for a long time. 'We'll have to do the rest without a map,' she says."
+            }
+          ],
+          "choices": [
+            {
+              "id": "continue",
+              "text": "Then we go to Kaguvi Hill.",
+              "next": "M2_END_MISSION"
+            }
+          ]
+        },
+        {
+          "id": "M2_END_MISSION",
+          "type": "mission_end",
+          "text": "Eastgate is behind you. The road north climbs through msasa trees toward a private estate, a helipad, and the men who built the Shadow Protocol.",
+          "nextMission": "M3"
+        }
+      ]
+    }
+  ]
+}

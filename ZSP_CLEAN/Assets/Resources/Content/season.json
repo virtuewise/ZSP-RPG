@@ -1,0 +1,244 @@
+{
+  "schemaVersion": 1,
+  "season": {
+    "id": "S1",
+    "title": "Season 1: The Shadow Protocol",
+    "logline": "A disappeared intelligence archive pulls a disgraced operative back into a conspiracy that reaches from Harare's freight yards to a private estate on Kaguvi Hill.",
+    "disclaimer": "This is a work of fiction. All organisations, units and named individuals are invented. Real places are used only as recognisable geography and are not intended to depict real institutions or people."
+  },
+  "characters": [
+    {
+      "id": "kuda",
+      "name": "Kuda Moyo",
+      "role": "protagonist",
+      "faction": "independent",
+      "age": 38,
+      "bio": "Former Directorate operative. Left the service after Operation Ironwood went wrong. Disciplined, observant, dryly funny, and not entirely sure he is a good man.",
+      "defaultTrust": 1.0,
+      "tags": ["former_dsi", "operative", "playable"]
+    },
+    {
+      "id": "nyasha",
+      "name": "Nyasha Chikore",
+      "role": "handler",
+      "faction": "directorate",
+      "age": 41,
+      "bio": "Kuda's former handler and the analyst who built the Shadow Protocol archive. She has been running from her own service for eight months.",
+      "defaultTrust": 0.45,
+      "tags": ["handler", "analyst", "fugitive"]
+    },
+    {
+      "id": "tariro",
+      "name": "Tariro Mupfumi",
+      "role": "journalist",
+      "faction": "civic_front",
+      "age": 33,
+      "bio": "Investigative reporter for The Harare Ledger. Believes public sunlight is the only reliable disinfectant. Has the scars to prove she has been wrong before.",
+      "defaultTrust": 0.2,
+      "tags": ["journalist", "exposure", "ally"]
+    },
+    {
+      "id": "mukoma",
+      "name": "Mukoma Simba",
+      "role": "fixer",
+      "faction": "independent",
+      "age": 45,
+      "bio": "Former soldier turned fixer. Runs a garage in Mbare and knows every road out of Harare. Loyal to people, not institutions.",
+      "defaultTrust": 0.2,
+      "tags": ["fixer", "driver", "ally"]
+    },
+    {
+      "id": "rudo",
+      "name": "Rudo Ndlovu",
+      "role": "medic",
+      "faction": "civic_front",
+      "age": 29,
+      "bio": "Field medic and NGO courier. Keeps a clinic running in Mbare with donated supplies and inconvenient questions.",
+      "defaultTrust": 0.3,
+      "tags": ["medic", "support"]
+    },
+    {
+      "id": "tendai",
+      "name": "Tendai Chuma",
+      "role": "courier",
+      "faction": "nightjar",
+      "age": 26,
+      "bio": "Nightjar contract driver. Not ideological. Mostly scared. He has a younger sister in Kuwadzana and a mother who thinks he works in logistics.",
+      "defaultTrust": 0.15,
+      "tags": ["witness", "courier", "nightjar"]
+    },
+    {
+      "id": "fingers",
+      "name": "Farai 'Fingers' Nyandoro",
+      "role": "bagman",
+      "faction": "ledger",
+      "age": 37,
+      "bio": "Money launderer and bureau de change operator. Quick hands, weak nerves, an encyclopaedic memory for account numbers.",
+      "defaultTrust": 0.1,
+      "tags": ["witness", "bagman", "ledger"]
+    },
+    {
+      "id": "mhofu",
+      "name": "Captain Dereck Mhofu",
+      "role": "enforcer",
+      "faction": "nightjar",
+      "age": 35,
+      "bio": "Nightjar field commander at Kaguvi Hill. Professional, unhurried, and increasingly aware that his employer is not protecting the country he served.",
+      "defaultTrust": 0.2,
+      "tags": ["enforcer", "nightjar", "potential_ally"]
+    },
+    {
+      "id": "gumbo",
+      "name": "Brigadier-General Farai Gumbo",
+      "role": "antagonist",
+      "faction": "nightjar",
+      "age": 58,
+      "bio": "Founder of Nightjar Strategic Solutions and patron of the Shadow Protocol. Believes the state is too fragile for democracy and too important to leave to politicians.",
+      "defaultTrust": 0.0,
+      "tags": ["antagonist", "nightjar", "patron"]
+    },
+    {
+      "id": "mavhunga",
+      "name": "Collin Mavhunga",
+      "role": "antagonist",
+      "faction": "directorate",
+      "age": 49,
+      "bio": "Deputy Director of the Directorate. The man who authorised Ironwood and sold its results. Calm, procedural, and utterly certain of his own necessity.",
+      "defaultTrust": 0.0,
+      "tags": ["antagonist", "directorate", "traitor"]
+    },
+    {
+      "id": "chiweshe",
+      "name": "Rutendo Chiweshe",
+      "role": "official",
+      "faction": "directorate",
+      "age": 52,
+      "bio": "Permanent Secretary in the Ministry of Interior. Provides political cover for Nightjar in exchange for plausible deniability.",
+      "defaultTrust": 0.0,
+      "tags": ["official", "directorate", "corrupt"]
+    },
+    {
+      "id": "blessing",
+      "name": "Blessing",
+      "role": "dockworker",
+      "faction": "independent",
+      "age": 44,
+      "bio": "Msasa dockworker. Owes Mukoma a favour and has a highly developed instinct for when to be elsewhere.",
+      "defaultTrust": 0.2,
+      "tags": ["dockworker", "contact"]
+    },
+    {
+      "id": "amai",
+      "name": "Amai Grace",
+      "role": "market elder",
+      "faction": "independent",
+      "age": 60,
+      "bio": "Mbare market elder. Sees everything, sells most of what she sees, and protects the rest.",
+      "defaultTrust": 0.2,
+      "tags": ["market", "information"]
+    }
+  ],
+  "factions": [
+    {
+      "id": "nightjar",
+      "name": "Nightjar Strategic Solutions",
+      "kind": "private military company",
+      "description": "A deniable security contractor with a client list that includes the Directorate. Runs the Shadow Protocol's protective layer.",
+      "influence": 7,
+      "heat": 2,
+      "exposed": false,
+      "alliance": "hostile"
+    },
+    {
+      "id": "directorate",
+      "name": "Directorate of Strategic Intelligence",
+      "kind": "state intelligence service",
+      "description": "A fictional Zimbabwean intelligence body. Publicly restrained, internally divided, and penetrated by the Shadow Protocol.",
+      "influence": 6,
+      "heat": 1,
+      "exposed": false,
+      "alliance": "neutral"
+    },
+    {
+      "id": "civic_front",
+      "name": "Civic Front",
+      "kind": "reform coalition",
+      "description": "A loose alliance of journalists, lawyers, medics and civil-society groups. Has no guns and considerable patience.",
+      "influence": 4,
+      "heat": 0,
+      "exposed": false,
+      "alliance": "neutral"
+    },
+    {
+      "id": "ledger",
+      "name": "The Ledger",
+      "kind": "financial network",
+      "description": "A money-laundering network built around bureaux de change, freight companies and a few very quiet accountants.",
+      "influence": 5,
+      "heat": 1,
+      "exposed": false,
+      "alliance": "hostile"
+    },
+    {
+      "id": "independent",
+      "name": "Independent",
+      "kind": "unaffiliated",
+      "description": "No institutional loyalty.",
+      "influence": 0,
+      "heat": 0,
+      "exposed": false,
+      "alliance": "neutral"
+    }
+  ],
+  "contacts": [
+    {
+      "id": "nyasha",
+      "name": "Nyasha Chikore",
+      "centrality": 0.9,
+      "trust": 0.45,
+      "available": true
+    },
+    {
+      "id": "tariro",
+      "name": "Tariro Mupfumi",
+      "centrality": 0.8,
+      "trust": 0.2,
+      "available": true
+    },
+    {
+      "id": "mukoma",
+      "name": "Mukoma Simba",
+      "centrality": 0.6,
+      "trust": 0.2,
+      "available": true
+    },
+    {
+      "id": "rudo",
+      "name": "Rudo Ndlovu",
+      "centrality": 0.4,
+      "trust": 0.3,
+      "available": true
+    },
+    {
+      "id": "tendai",
+      "name": "Tendai Chuma",
+      "centrality": 0.3,
+      "trust": 0.15,
+      "available": true
+    },
+    {
+      "id": "fingers",
+      "name": "Farai 'Fingers' Nyandoro",
+      "centrality": 0.4,
+      "trust": 0.1,
+      "available": true
+    },
+    {
+      "id": "mhofu",
+      "name": "Captain Dereck Mhofu",
+      "centrality": 0.5,
+      "trust": 0.2,
+      "available": true
+    }
+  ]
+}

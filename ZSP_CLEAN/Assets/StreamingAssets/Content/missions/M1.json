@@ -1,0 +1,458 @@
+{
+  "schemaVersion": 1,
+  "missions": [
+    {
+      "id": "M1",
+      "order": 1,
+      "title": "The Courier's Warning",
+      "location": "msasa_yard",
+      "premise": "Nyasha Chikore breaks eight months of silence with a warning: a Directorate archive is about to disappear from a Nightjar freight yard. Get it before the cleanup team does.",
+      "invariants": ["archive_resolved", "nightjar_contact"],
+      "objectives": [
+        "Enter Msasa Freight Yard",
+        "Find the Shadow Protocol archive",
+        "Deal with the Nightjar courier",
+        "Leave the yard alive"
+      ],
+      "contacts": ["nyasha"],
+      "witnesses": ["tendai"],
+      "keyCharacters": [],
+      "endings": [],
+      "start": "M1_BRIEF",
+      "beats": [
+        {
+          "id": "M1_BRIEF",
+          "type": "dialogue",
+          "speaker": "nyasha",
+          "text": "Kuda. Don't speak. Just listen. The transport that vanished outside Harare wasn't carrying ballots. It was carrying an archive. My archive. Nightjar is cleaning the site at Msasa. I need you to get there before they do.",
+          "choices": [
+            {
+              "id": "accept",
+              "text": "I'm on my way.",
+              "effects": {
+                "trust": [{"contact": "nyasha", "delta": 0.1}],
+                "flags": ["accepted_job"],
+                "behavior": [{"action": "trust_contact", "target": "nyasha", "value": 1}]
+              },
+              "next": "M1_APPROACH"
+            },
+            {
+              "id": "ironwood",
+              "text": "You said you'd never call me again after Ironwood.",
+              "effects": {
+                "trust": [{"contact": "nyasha", "delta": 0.05}],
+                "flags": ["ironwood_asked"],
+                "behavior": [{"action": "trust_contact", "target": "nyasha", "value": 1}]
+              },
+              "next": "M1_IRONWOOD"
+            },
+            {
+              "id": "price",
+              "text": "This isn't a favour. What's it worth?",
+              "effects": {
+                "trust": [{"contact": "nyasha", "delta": -0.05}],
+                "credits": 1,
+                "flags": ["asked_for_payment"]
+              },
+              "next": "M1_APPROACH"
+            }
+          ]
+        },
+        {
+          "id": "M1_IRONWOOD",
+          "type": "dialogue",
+          "speaker": "nyasha",
+          "text": "I know what I cost you. I'm not asking for forgiveness. I'm asking you to stop them before they do it again. The archive is in the admin block. Bay six. Please, Kuda.",
+          "choices": [
+            {
+              "id": "accept",
+              "text": "I'll do it. For the people they buried, not for you.",
+              "effects": {
+                "trust": [{"contact": "nyasha", "delta": 0.1}],
+                "flags": ["accepted_job"],
+                "behavior": [{"action": "trust_contact", "target": "nyasha", "value": 1}]
+              },
+              "next": "M1_APPROACH"
+            },
+            {
+              "id": "cold",
+              "text": "After this, we're even.",
+              "effects": {
+                "trust": [{"contact": "nyasha", "delta": -0.05}],
+                "flags": ["accepted_job", "cold_start"]
+              },
+              "next": "M1_APPROACH"
+            }
+          ]
+        },
+        {
+          "id": "M1_APPROACH",
+          "type": "route",
+          "text": "Msasa Freight Yard. Four ways in. The front gate is lit and staffed. The service roof is quiet. A dockworker named Blessing owes Mukoma a favour. Or you can take the drainage channel under the east fence.",
+          "routes": ["front_gate", "service_roof", "worker_bribe", "drainage"],
+          "next": "M1_YARD"
+        },
+        {
+          "id": "M1_YARD",
+          "type": "investigation",
+          "text": "The yard is a grid of containers and floodlights. You have a few minutes before the next patrol. The admin block is dark except for one window on the first floor.",
+          "maxSearches": 2,
+          "areas": [
+            {
+              "id": "office",
+              "name": "Manager's office",
+              "text": "A cheap desk, a fan that doesn't turn, and a floor safe under a crate of photocopy paper.",
+              "stat": "stealth",
+              "difficulty": 2,
+              "intel": ["archive_fragment"],
+              "effects": {
+                "flags": ["searched_office"],
+                "behavior": [{"action": "investigate", "target": "office", "value": 1}]
+              },
+              "failureEffects": {
+                "heat": 1,
+                "flags": ["office_alarm"]
+              }
+            },
+            {
+              "id": "loading_bay",
+              "name": "Loading bay six",
+              "text": "A sealed container, a forklift with the keys still in it, and a clipboard that someone tried to burn.",
+              "stat": "stealth",
+              "difficulty": 3,
+              "intel": ["nightjar_manifest"],
+              "effects": {
+                "flags": ["searched_bay"],
+                "behavior": [{"action": "investigate", "target": "loading_bay", "value": 1}]
+              },
+              "failureEffects": {
+                "heat": 1,
+                "flags": ["bay_alarm"]
+              }
+            },
+            {
+              "id": "truck",
+              "name": "Courier's truck",
+              "text": "A white pickup with Nightjar plates. The cab smells of cigarettes and cheap air freshener. There is a duty roster on the dash.",
+              "stat": "tech",
+              "difficulty": 2,
+              "intel": ["nightjar_manifest"],
+              "effects": {
+                "credits": 1,
+                "flags": ["searched_truck"],
+                "behavior": [{"action": "investigate", "target": "truck", "value": 1}]
+              },
+              "failureEffects": {
+                "heat": 1
+              }
+            }
+          ],
+          "next": "M1_TENDAI"
+        },
+        {
+          "id": "M1_TENDAI",
+          "type": "choice",
+          "speaker": "tendai",
+          "text": "A young Nightjar courier freezes when you step out of the shadows. His sidearm is still holstered. 'I'm just the driver,' he says. 'I don't know what's on the drives.'",
+          "choices": [
+            {
+              "id": "empathy",
+              "text": "Then help me make sure nobody else gets hurt.",
+              "check": {"stat": "empathy", "difficulty": 2},
+              "success": {
+                "text": "He looks at the floor for a long time. Then he tells you about the manifest, the sealed container, and the man who signed for it.",
+                "effects": {
+                  "intel": ["nightjar_manifest"],
+                  "flags": ["tendai_cooperative"],
+                  "trust": [{"contact": "tendai", "delta": 0.2}],
+                  "behavior": [{"action": "interrogate", "target": "tendai", "value": 1}]
+                },
+                "next": "M1_FATE"
+              },
+              "failure": {
+                "text": "He stammers, then bolts for the gate. You catch him by the collar before he reaches the light.",
+                "effects": {
+                  "flags": ["tendai_afraid"],
+                  "heat": 1
+                },
+                "next": "M1_FATE"
+              }
+            },
+            {
+              "id": "pressure",
+              "text": "You have ten seconds before I stop asking.",
+              "check": {"stat": "intimidation", "difficulty": 2},
+              "success": {
+                "text": "He talks. Fast, quiet, and with the particular clarity of a man who has decided that survival is a temporary arrangement.",
+                "effects": {
+                  "intel": ["nightjar_manifest"],
+                  "flags": ["tendai_cooperative", "tendai_afraid"],
+                  "trust": [{"contact": "tendai", "delta": 0.1}],
+                  "behavior": [{"action": "interrogate", "target": "tendai", "value": 1}]
+                },
+                "next": "M1_FATE"
+              },
+              "failure": {
+                "text": "He goes pale, then angry. 'You think you're the only one who can hurt me?' He reaches for the radio.",
+                "effects": {
+                  "flags": ["tendai_hostile"],
+                  "heat": 2,
+                  "health": -1
+                },
+                "next": "M1_FATE"
+              }
+            },
+            {
+              "id": "threat",
+              "text": "Walk away. Forget you saw me.",
+              "check": {"stat": "stealth", "difficulty": 2},
+              "success": {
+                "text": "He nods, backs away, and disappears between the containers. You hear his footsteps stop, then start again, running.",
+                "effects": {
+                  "witnesses": [{"id": "tendai", "status": "spared", "cooperative": false}],
+                  "keyCharacters": [{"id": "tendai", "status": "alive"}],
+                  "flags": ["tendai_fled"],
+                  "behavior": [{"action": "stealth_avoid", "target": "tendai", "value": 1}]
+                },
+                "next": "M1_ARCHIVE"
+              },
+              "failure": {
+                "text": "He stumbles over a pallet and you catch him before he can shout. Now you have a decision to make.",
+                "effects": {
+                  "flags": ["tendai_caught"]
+                },
+                "next": "M1_FATE"
+              }
+            }
+          ]
+        },
+        {
+          "id": "M1_FATE",
+          "type": "choice",
+          "text": "Tendai is sitting on a crate, hands shaking. The yard is quiet for now. Whatever you do next will follow you further than this fence.",
+          "choices": [
+            {
+              "id": "spare",
+              "text": "Let him go. He gave you what you needed.",
+              "requirements": ["flag:tendai_cooperative"],
+              "effects": {
+                "witnesses": [{"id": "tendai", "status": "spared", "cooperative": true}],
+                "keyCharacters": [{"id": "tendai", "status": "alive"}],
+                "flags": ["tendai_spared"],
+                "behavior": [{"action": "witness_spared", "target": "tendai", "value": 1}]
+              },
+              "next": "M1_ARCHIVE"
+            },
+            {
+              "id": "release",
+              "text": "Tell him to run and don't look back.",
+              "effects": {
+                "witnesses": [{"id": "tendai", "status": "spared", "cooperative": false}],
+                "keyCharacters": [{"id": "tendai", "status": "alive"}],
+                "flags": ["tendai_spared"],
+                "behavior": [{"action": "witness_spared", "target": "tendai", "value": 1}]
+              },
+              "next": "M1_ARCHIVE"
+            },
+            {
+              "id": "detain",
+              "text": "Zip-tie him to the truck. He can explain himself to the police.",
+              "effects": {
+                "witnesses": [{"id": "tendai", "status": "spared", "cooperative": false}],
+                "keyCharacters": [{"id": "tendai", "status": "alive"}],
+                "flags": ["tendai_detained"],
+                "behavior": [{"action": "witness_spared", "target": "tendai", "value": 1}]
+              },
+              "next": "M1_ARCHIVE"
+            },
+            {
+              "id": "kill",
+              "text": "No witnesses.",
+              "effects": {
+                "witnesses": [{"id": "tendai", "status": "killed", "cooperative": false}],
+                "keyCharacters": [{"id": "tendai", "status": "dead"}],
+                "flags": ["tendai_killed"],
+                "heat": 1,
+                "behavior": [{"action": "witness_killed", "target": "tendai", "value": 1}]
+              },
+              "next": "M1_ARCHIVE"
+            }
+          ]
+        },
+        {
+          "id": "M1_ARCHIVE",
+          "type": "choice",
+          "text": "The archive drive sits in a waterproof case beneath the office floor. It is still warm. Nightjar's cleanup team is two floors above you.",
+          "choices": [
+            {
+              "id": "take",
+              "text": "Take the drive.",
+              "effects": {
+                "intel": ["archive_fragment"],
+                "flags": ["archive_taken"],
+                "heat": 1,
+                "behavior": [{"action": "expose_org", "target": "nightjar", "value": 1}]
+              },
+              "next": "M1_EXFIL"
+            },
+            {
+              "id": "copy",
+              "text": "Copy what you can and leave the drive.",
+              "check": {"stat": "tech", "difficulty": 3},
+              "success": {
+                "text": "The drive is encrypted, but the index is not. You leave the original where it was and take a copy that will fit in a coat pocket.",
+                "effects": {
+                  "intel": ["archive_fragment"],
+                  "flags": ["archive_copied"],
+                  "heat": 1,
+                  "behavior": [{"action": "expose_org", "target": "nightjar", "value": 1}]
+                },
+                "next": "M1_DEBRIEF"
+              },
+              "failure": {
+                "text": "The drive locks itself. You pull the power before it can wipe, but the alarm goes with it.",
+                "effects": {
+                  "heat": 2,
+                  "flags": ["archive_locked"]
+                },
+                "next": "M1_EXFIL"
+              }
+            },
+            {
+              "id": "destroy",
+              "text": "Burn it. Nobody gets it.",
+              "effects": {
+                "flags": ["archive_destroyed"],
+                "factions": [{"id": "nightjar", "influence": -1, "heat": 1}],
+                "behavior": [{"action": "expose_org", "target": "nightjar", "value": 1}]
+              },
+              "next": "M1_EXFIL"
+            }
+          ]
+        },
+        {
+          "id": "M1_EXFIL",
+          "type": "combat",
+          "text": "The yard erupts. A Nightjar response team is converging on the admin block. You need to leave before the gate closes.",
+          "enemies": 3,
+          "choices": [
+            {
+              "id": "evade",
+              "text": "Slip through the containers and use the dark.",
+              "check": {"stat": "stealth", "difficulty": 3},
+              "success": {
+                "text": "You move between the containers while the floodlights sweep empty ground. The fence is close. Nobody sees you leave.",
+                "effects": {
+                  "flags": ["clean_exfil"],
+                  "behavior": [{"action": "stealth_avoid", "target": "nightjar_response", "value": 1}]
+                },
+                "next": "M1_DEBRIEF"
+              },
+              "failure": {
+                "text": "A guard spots you at the fence. You take him down, but not before he gets a shot off.",
+                "effects": {
+                  "health": -2,
+                  "heat": 2,
+                  "flags": ["noisy_exfil"],
+                  "behavior": [{"action": "stealth_takedown", "target": "guard", "value": 1}]
+                },
+                "next": "M1_DEBRIEF"
+              }
+            },
+            {
+              "id": "fight",
+              "text": "Meet them head-on.",
+              "check": {"stat": "combat", "difficulty": 3},
+              "success": {
+                "text": "You take the first two in the dark and the third from behind. The yard goes quiet again.",
+                "effects": {
+                  "heat": 2,
+                  "flags": ["loud_exfil"],
+                  "behavior": [{"action": "gunfight", "target": "nightjar_response", "value": 1}]
+                },
+                "next": "M1_DEBRIEF"
+              },
+              "failure": {
+                "text": "They are better equipped than you expected. You make the gate, but you leave blood on the tarmac.",
+                "effects": {
+                  "health": -2,
+                  "heat": 3,
+                  "flags": ["loud_exfil"],
+                  "behavior": [{"action": "gunfight", "target": "nightjar_response", "value": 1}]
+                },
+                "next": "M1_DEBRIEF"
+              }
+            },
+            {
+              "id": "vehicle",
+              "text": "Take the courier's pickup and drive through the gate.",
+              "check": {"stat": "driving", "difficulty": 3},
+              "success": {
+                "text": "The pickup starts on the second try. You go through the gate before the boom is fully down and leave Msasa behind in a spray of gravel.",
+                "effects": {
+                  "heat": 2,
+                  "flags": ["vehicle_exfil"],
+                  "behavior": [{"action": "vehicle_chase", "target": "msasa_gate", "value": 1}]
+                },
+                "next": "M1_DEBRIEF"
+              },
+              "failure": {
+                "text": "The pickup stalls at the gate. You abandon it and run, with Nightjar's headlights behind you.",
+                "effects": {
+                  "health": -1,
+                  "heat": 3,
+                  "flags": ["vehicle_exfil", "noisy_exfil"],
+                  "behavior": [{"action": "vehicle_chase", "target": "msasa_gate", "value": 1}]
+                },
+                "next": "M1_DEBRIEF"
+              }
+            }
+          ]
+        },
+        {
+          "id": "M1_DEBRIEF",
+          "type": "dialogue",
+          "speaker": "nyasha",
+          "text": "You have it? Good. There's a name in the manifest: Fingers Nyandoro. He moves money through Eastgate. Find him before Nightjar moves him. The yard log will carry your handle: {OIS_CALLSIGN}.",
+          "variants": [
+            {
+              "requirements": ["flag:archive_destroyed"],
+              "text": "You burned it. Then we do this the hard way. Fingers Nyandoro is still the thread. He moves money through Eastgate. Find him before Nightjar moves him."
+            },
+            {
+              "requirements": ["flag:tendai_killed"],
+              "text": "You left a body in the yard. Nightjar will know it was you. They logged the handle: {OIS_CALLSIGN}. Fingers Nyandoro is the next thread. Eastgate. Find him before they do."
+            }
+          ],
+          "choices": [
+            {
+              "id": "continue",
+              "text": "I'll find him.",
+              "effects": {
+                "trust": [{"contact": "nyasha", "delta": 0.05}],
+                "behavior": [{"action": "trust_contact", "target": "nyasha", "value": 1}]
+              },
+              "next": "M1_END"
+            },
+            {
+              "id": "warn",
+              "text": "They know you're alive. Move the safehouse.",
+              "effects": {
+                "trust": [{"contact": "nyasha", "delta": 0.1}],
+                "flags": ["warned_nyasha"],
+                "behavior": [{"action": "trust_contact", "target": "nyasha", "value": 1}]
+              },
+              "next": "M1_END"
+            }
+          ]
+        },
+        {
+          "id": "M1_END",
+          "type": "mission_end",
+          "text": "Msasa Freight Yard is behind you. The archive is incomplete, but it points east, to Eastgate and a man who moves money for people who do not exist.",
+          "nextMission": "M2"
+        }
+      ]
+    }
+  ]
+}

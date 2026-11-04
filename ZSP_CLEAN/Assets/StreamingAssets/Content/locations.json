@@ -1,0 +1,253 @@
+{
+  "schemaVersion": 1,
+  "locations": [
+    {
+      "id": "msasa_yard",
+      "name": "Msasa Freight Yard",
+      "region": "Harare",
+      "description": "A freight and customs yard east of the city centre. Containers, floodlights, a weighbridge and a small administration block. Nightjar uses bay six for cargo that never appears on a manifest.",
+      "routes": [
+        {
+          "id": "front_gate",
+          "name": "Front gate",
+          "kind": "front",
+          "baseDifficulty": 3,
+          "stealth": 1,
+          "speed": 3,
+          "risk": 4,
+          "description": "Lit, staffed and covered by a camera. Fast, but everyone will know you came."
+        },
+        {
+          "id": "service_roof",
+          "name": "Service roof",
+          "kind": "side",
+          "baseDifficulty": 3,
+          "stealth": 3,
+          "speed": 2,
+          "risk": 2,
+          "description": "A maintenance ladder behind the admin block leads onto the container roofs. Quiet, exposed to the east fence."
+        },
+        {
+          "id": "worker_bribe",
+          "name": "Blessing's gate",
+          "kind": "social",
+          "baseDifficulty": 2,
+          "stealth": 2,
+          "speed": 2,
+          "risk": 1,
+          "description": "A dockworker named Blessing owes Mukoma a favour. He can open the staff entrance and forget he saw you."
+        },
+        {
+          "id": "drainage",
+          "name": "Drainage channel",
+          "kind": "stealth",
+          "baseDifficulty": 4,
+          "stealth": 4,
+          "speed": 1,
+          "risk": 3,
+          "description": "A storm drain runs under the east fence. Slow, filthy, and almost never watched."
+        }
+      ]
+    },
+    {
+      "id": "avondale_safehouse",
+      "name": "Avondale Safehouse",
+      "region": "Harare",
+      "description": "A rented cottage behind a lemon tree and a wall of bougainvillea. Nyasha has been sleeping in the back room and working in the kitchen.",
+      "routes": [
+        {
+          "id": "front_door",
+          "name": "Front door",
+          "kind": "front",
+          "baseDifficulty": 2,
+          "stealth": 1,
+          "speed": 3,
+          "risk": 2,
+          "description": "The obvious way in. The neighbours are used to visitors."
+        },
+        {
+          "id": "back_alley",
+          "name": "Back alley",
+          "kind": "side",
+          "baseDifficulty": 2,
+          "stealth": 3,
+          "speed": 2,
+          "risk": 1,
+          "description": "A service lane behind the cottage. Quiet, but the gate is chained."
+        }
+      ]
+    },
+    {
+      "id": "eastgate",
+      "name": "Eastgate and Samora Machel Avenue",
+      "region": "Harare CBD",
+      "description": "The commercial spine of the city. Office towers, pavement traders, security guards, and a bureau de change tucked between a pharmacy and a mobile-phone shop.",
+      "routes": [
+        {
+          "id": "mall_entrance",
+          "name": "Mall entrance",
+          "kind": "front",
+          "baseDifficulty": 2,
+          "stealth": 1,
+          "speed": 3,
+          "risk": 2,
+          "description": "Crowds, cameras, and a security desk that mostly watches the wrong screen."
+        },
+        {
+          "id": "service_corridor",
+          "name": "Service corridor",
+          "kind": "side",
+          "baseDifficulty": 3,
+          "stealth": 3,
+          "speed": 2,
+          "risk": 2,
+          "description": "A staff corridor behind the food court. Smells of frying oil and cigarette smoke."
+        },
+        {
+          "id": "roof",
+          "name": "Roof access",
+          "kind": "stealth",
+          "baseDifficulty": 4,
+          "stealth": 4,
+          "speed": 1,
+          "risk": 3,
+          "description": "A maintenance stairwell leads to the roof. Good for surveillance, bad for a quick exit."
+        }
+      ]
+    },
+    {
+      "id": "mbare_market",
+      "name": "Mbare Musika",
+      "region": "Harare",
+      "description": "A sprawling market of produce, spare parts, rumours and improvised logistics. Mukoma's garage is three streets away. Everybody sees everything and nobody remembers without a reason.",
+      "routes": [
+        {
+          "id": "crowd",
+          "name": "The crowd",
+          "kind": "social",
+          "baseDifficulty": 2,
+          "stealth": 3,
+          "speed": 2,
+          "risk": 1,
+          "description": "Disappear into the throng of buyers and porters. Easy, until someone recognises you."
+        },
+        {
+          "id": "stalls",
+          "name": "Stall roofs",
+          "kind": "side",
+          "baseDifficulty": 3,
+          "stealth": 3,
+          "speed": 2,
+          "risk": 3,
+          "description": "Climb across the timber stalls and corrugated roofs. Fast, noisy, and fragile."
+        },
+        {
+          "id": "rooftops",
+          "name": "Rooftops",
+          "kind": "stealth",
+          "baseDifficulty": 4,
+          "stealth": 4,
+          "speed": 1,
+          "risk": 2,
+          "description": "A route across the old warehouse roofs. Slow, but it gives you a clean line of sight."
+        }
+      ]
+    },
+    {
+      "id": "samora_road",
+      "name": "Samora Machel Avenue",
+      "region": "Harare CBD",
+      "description": "Four lanes of traffic, kombis, delivery trucks and a railway crossing that is never down for as long as you expect.",
+      "routes": [
+        {
+          "id": "main_road",
+          "name": "Main road",
+          "kind": "front",
+          "baseDifficulty": 3,
+          "stealth": 1,
+          "speed": 4,
+          "risk": 4,
+          "description": "Straight, fast, and completely exposed."
+        },
+        {
+          "id": "side_street",
+          "name": "Side streets",
+          "kind": "side",
+          "baseDifficulty": 3,
+          "stealth": 2,
+          "speed": 3,
+          "risk": 2,
+          "description": "A maze of one-way streets and loading bays. Slower, but harder to block."
+        },
+        {
+          "id": "rail_crossing",
+          "name": "Rail crossing",
+          "kind": "stealth",
+          "baseDifficulty": 4,
+          "stealth": 3,
+          "speed": 2,
+          "risk": 3,
+          "description": "A service road beside the railway line. If the barriers come down, the chase ends."
+        }
+      ]
+    },
+    {
+      "id": "kaguvi_hill",
+      "name": "Kaguvi Hill Estate",
+      "region": "Harare periphery",
+      "description": "A colonial-era estate on a private hill north-east of the city. Msasa trees, a tennis court nobody uses, a helipad, and a security perimeter that is professionally maintained.",
+      "routes": [
+        {
+          "id": "main_gate",
+          "name": "Main gate",
+          "kind": "front",
+          "baseDifficulty": 5,
+          "stealth": 1,
+          "speed": 3,
+          "risk": 5,
+          "description": "A fortified gatehouse with two guards, a boom and a concrete chicane. It is designed to make you feel watched."
+        },
+        {
+          "id": "east_service",
+          "name": "East service road",
+          "kind": "side",
+          "baseDifficulty": 4,
+          "stealth": 3,
+          "speed": 2,
+          "risk": 4,
+          "description": "A maintenance track used by the estate's generator crews. Cameras on the fence line."
+        },
+        {
+          "id": "hill_path",
+          "name": "Hunter's path",
+          "kind": "stealth",
+          "baseDifficulty": 3,
+          "stealth": 4,
+          "speed": 1,
+          "risk": 3,
+          "description": "An old footpath through the msasa trees, known to Mukoma and a few poachers. Slow, steep, and invisible from the house."
+        },
+        {
+          "id": "press_convoy",
+          "name": "Press convoy",
+          "kind": "social",
+          "baseDifficulty": 3,
+          "stealth": 2,
+          "speed": 3,
+          "risk": 2,
+          "description": "Tariro can attach you to a press convoy covering a protest at the district offices. The guards will hate the cameras, which is the point."
+        },
+        {
+          "id": "mhofu_keycard",
+          "name": "Mhofu's keycard",
+          "kind": "insider",
+          "baseDifficulty": 1,
+          "stealth": 4,
+          "speed": 3,
+          "risk": 1,
+          "description": "Captain Mhofu's keycard opens the service gate and the east stairwell. It only works if he is alive and willing."
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,63 @@
+# ZSP — what may never enter the repository.
+# The original APK and everything derived from it is proprietary and stays local.
+
+# Original decompiled APK and its leftovers
+/ZIMBABWE THE SHADOW PROTOCOL/
+/ZSP_CLEAN/StrippedSource/
+
+# Everything extracted from that APK (reference only, never redistributed)
+/ZSP_CLEAN/Assets/Extracted/
+/ZSP_CLEAN/Assets/StreamingAssets/zsp_assets.unity3d
+/ZSP_CLEAN/Assets/StreamingAssets/zsp_assets.unity3d.meta
+/ZSP_CLEAN/_Quarantine/
+/ZSP_CLEAN/ASSET_INDEX.csv
+
+# Python tooling outputs
+__pycache__/
+*.pyc
+.pytest_cache/
+_probe/
+inventory_out.txt
+ASSET_INVENTORY.md
+demo_summary.json
+
+# Local notes and generated media (not for publication)
+/Zimbabwe RPG Invention Ideas.html
+
+# Root extraction/analysis tooling that inspects the APK (local only)
+/adaptive_mission_chain.py
+/test_amc.py
+/ADAPTIVE_MISSION_CHAIN_DESIGN.md
+/inventory.py
+/characters.py
+/characters2.py
+/extract_assets.py
+/extract_audio.py
+/extract_scenes.py
+/inspect_*.py
+/probe_*.py
+/make_catalog.py
+/quarantine_*.py
+
+# APK-derived metadata and local tooling (keep local)
+/ZSP_CLEAN/ASSET_CATALOG.md
+/ZSP_CLEAN/AUDIO_INDEX.csv
+/ZSP_CLEAN/QUARANTINE_INDEX.csv
+/ZSP_CLEAN/CLEANUP_REPORT.md
+/ZSP_CLEAN/Tools/
+
+# OS / tooling noise
+.DS_Store
+Thumbs.db
+*.log
+
+# Unity user/editor state
+/ZSP_CLEAN/Library/
+/ZSP_CLEAN/Temp/
+/ZSP_CLEAN/UserSettings/
+/ZSP_CLEAN/Logs/
+/ZSP_CLEAN/obj/
+*.csproj
+*.sln
+*.pidb
+*.userprefs

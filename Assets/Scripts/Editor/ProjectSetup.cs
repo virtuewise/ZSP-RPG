@@ -137,11 +137,6 @@ namespace ZSP.EditorTools
             var defaultCamera = Camera.main;
             if (defaultCamera != null) Object.DestroyImmediate(defaultCamera.gameObject);
 
-            var boot = new GameObject("GameBootstrap");
-            boot.AddComponent<AssetBundleLoader>();
-            var bootstrap = boot.AddComponent<GameBootstrap>();
-            bootstrap.autoLoadScene = false;
-
             var ground = GameObject.CreatePrimitive(PrimitiveType.Plane);
             ground.name = "BlockoutGround";
             ground.transform.localScale = new Vector3(12f, 1f, 12f);

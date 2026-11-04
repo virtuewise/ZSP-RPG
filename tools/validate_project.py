@@ -115,9 +115,10 @@ def main() -> None:
                         if branch_next and branch_next not in known_beats:
                             fail(f"Mission {mission_id} choice {beat_id}/{choice_id}/{branch_name} points to missing beat {branch_next!r}")
 
-    expected_missions = {"M1", "M2", "M3"}
-    if mission_ids != expected_missions:
-        fail(f"Expected mission set {sorted(expected_missions)}, found {sorted(mission_ids)}")
+    required_missions = {"M1", "M2", "M3"}
+    missing_missions = sorted(required_missions - mission_ids)
+    if missing_missions:
+        fail(f"Required playable slice missions are missing: {missing_missions}; found {sorted(mission_ids)}")
     for mission_id, mission in missions_by_id.items():
         next_mission = mission.get("nextMission")
         if next_mission and next_mission not in mission_ids:

@@ -38,6 +38,7 @@ namespace ZSP.EditorTools
         public static void CreatePlayerRig()
         {
             var player = new GameObject("Player");
+            player.tag = "Player";
             player.transform.position = Vector3.zero;
 
             var cc = player.AddComponent<CharacterController>();
@@ -130,6 +131,7 @@ namespace ZSP.EditorTools
             ground.GetComponent<MeshRenderer>().sharedMaterial = mat;
 
             var player = new GameObject("Player");
+            player.tag = "Player";
             var cc = player.AddComponent<CharacterController>();
             cc.height = 1.8f;
             cc.radius = 0.35f;

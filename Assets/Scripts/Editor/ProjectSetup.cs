@@ -167,23 +167,30 @@ namespace ZSP.EditorTools
             director.stealthSystem = stealth;
             director.enemySpawner = spawner.GetComponent<EnemySpawner>();
             director.autoStartFirstMission = false;
+            director.playerHealth = health;
+            director.identity = new OperativeIdentity();
 
-            var dossierText = new GameObject("DossierText", typeof(RectTransform), typeof(Text));
-            dossierText.transform.SetParent(canvas.transform, false);
-            var rect = dossierText.GetComponent<RectTransform>();
-            rect.anchorMin = new Vector2(0.02f, 0.56f);
-            rect.anchorMax = new Vector2(0.46f, 0.96f);
-            rect.offsetMin = Vector2.zero;
-            rect.offsetMax = Vector2.zero;
-            var dt = dossierText.GetComponent<Text>();
-            dt.font = Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
-            dt.text = "dossier";
-            dt.fontSize = 17;
-            dt.color = new Color(0.93f, 0.86f, 0.60f, 0.95f);
-            var dossier = new GameObject("DossierUI").AddComponent<ZSP.UI.DossierUI>();
-            dossier.dossierText = dt;
-            dossier.panelRoot = dossierText;
-            dossier.identity = director.identity;
+            // Identity registrar (OIS) - first-launch callsign/display/nickname entry.
+            var registrarPanel = new GameObject("IdentityRegistrarPanel", typeof(RectTransform), typeof(Image));
+            registrarPanel.transform.SetParent(canvas.transform, false);
+            var rp = registrarPanel.GetComponent<RectTransform>();
+            rp.anchorMin = new Vector2(0.55f, 0.02f);
+            rp.anchorMax = new Vector2(0.98f, 0.98f);
+            rp.offsetMin = Vector2.zero;
+            rp.offsetMax = Vector2.zero;
+            var rpImage = registrarPanel.GetComponent<Image>();
+            rpImage.color = new Color(0.06f, 0.09f, 0.08f, 0.85f);
+
+            var registrar = registrarPanel.AddComponent<IdentityRegistrar>();
+            registrar.director = director;
+            registrar.previewText = CreateUIText(registrarPanel.transform, "Preview", new Vector2(0.04f, 0.02f), new Vector2(0.96f, 0.55f), 16, new Color(0.93f, 0.86f, 0.60f));
+            registrar.errorText = CreateUIText(registrarPanel.transform, "Error", new Vector2(0.04f, 0.55f), new Vector2(0.96f, 0.62f), 14, new Color(0.95f, 0.35f, 0.30f));
+            registrar.displayNameField = CreateInputField(registrarPanel.transform, "DisplayName", "Display name", new Vector2(0.04f, 0.64f), new Vector2(0.96f, 0.72f));
+            registrar.callsignField = CreateInputField(registrarPanel.transform, "Callsign", "Callsign (SHADOW-07)", new Vector2(0.04f, 0.74f), new Vector2(0.96f, 0.82f));
+            registrar.nicknameField = CreateInputField(registrarPanel.transform, "Nickname", "Nickname (optional)", new Vector2(0.04f, 0.84f), new Vector2(0.96f, 0.92f));
+            registrar.confirmButton = CreateButton(registrarPanel.transform, "Confirm", new Vector2(0.04f, 0.93f), new Vector2(0.96f, 0.99f));
+            registrar.confirmButton.onClick.AddListener(registrar.OnConfirm);
+            registrar.RefreshPreview();
 
             const string path = "Assets/Scenes/VerticalSlice.unity";
             System.IO.Directory.CreateDirectory("Assets/Scenes");
@@ -202,6 +209,92 @@ namespace ZSP.EditorTools
             PlayerSettings.SetApplicationIdentifier(BuildTargetGroup.Standalone, "com.zsp.shadowprotocol");
             AssetDatabase.SaveAssets();
             Debug.Log("[ZSP] Product identity set to 'Zimbabwe: The Shadow Protocol'.");
+        }
+        private static Text CreateUIText(Transform parent, string name, Vector2 anchorMin, Vector2 anchorMax, int fontSize, Color color)
+        {
+            var go = new GameObject(name, typeof(RectTransform), typeof(Text));
+            go.transform.SetParent(parent, false);
+            var rect = go.GetComponent<RectTransform>();
+            rect.anchorMin = anchorMin;
+            rect.anchorMax = anchorMax;
+            rect.offsetMin = Vector2.zero;
+            rect.offsetMax = Vector2.zero;
+            var text = go.GetComponent<Text>();
+            text.font = Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
+            text.text = name;
+            text.fontSize = fontSize;
+            text.color = color;
+            text.alignment = TextAnchor.MiddleLeft;
+            return text;
+        }
+
+        private static InputField CreateInputField(Transform parent, string name, string placeholder, Vector2 anchorMin, Vector2 anchorMax)
+        {
+            var go = new GameObject(name, typeof(RectTransform), typeof(Image), typeof(InputField));
+            go.transform.SetParent(parent, false);
+            var rect = go.GetComponent<RectTransform>();
+            rect.anchorMin = anchorMin;
+            rect.anchorMax = anchorMax;
+            rect.offsetMin = Vector2.zero;
+            rect.offsetMax = Vector2.zero;
+            var image = go.GetComponent<Image>();
+            image.color = new Color(0.12f, 0.15f, 0.14f, 0.9f);
+            var field = go.GetComponent<InputField>();
+            var textGo = new GameObject("Text", typeof(RectTransform), typeof(Text));
+            textGo.transform.SetParent(go.transform, false);
+            var textRect = textGo.GetComponent<RectTransform>();
+            textRect.anchorMin = Vector2.zero;
+            textRect.anchorMax = Vector2.one;
+            textRect.offsetMin = new Vector2(8f, 0f);
+            textRect.offsetMax = new Vector2(-8f, 0f);
+            var text = textGo.GetComponent<Text>();
+            text.font = Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
+            text.fontSize = 16;
+            text.color = Color.white;
+            text.alignment = TextAnchor.MiddleLeft;
+            field.textComponent = text;
+            var placeholderGo = new GameObject("Placeholder", typeof(RectTransform), typeof(Text));
+            placeholderGo.transform.SetParent(go.transform, false);
+            var phRect = placeholderGo.GetComponent<RectTransform>();
+            phRect.anchorMin = Vector2.zero;
+            phRect.anchorMax = Vector2.one;
+            phRect.offsetMin = new Vector2(8f, 0f);
+            phRect.offsetMax = new Vector2(-8f, 0f);
+            var ph = placeholderGo.GetComponent<Text>();
+            ph.font = Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
+            ph.fontSize = 16;
+            ph.color = new Color(0.6f, 0.6f, 0.6f, 0.7f);
+            ph.text = placeholder;
+            field.placeholder = ph;
+            return field;
+        }
+
+        private static Button CreateButton(Transform parent, string name, Vector2 anchorMin, Vector2 anchorMax)
+        {
+            var go = new GameObject(name, typeof(RectTransform), typeof(Image), typeof(Button));
+            go.transform.SetParent(parent, false);
+            var rect = go.GetComponent<RectTransform>();
+            rect.anchorMin = anchorMin;
+            rect.anchorMax = anchorMax;
+            rect.offsetMin = Vector2.zero;
+            rect.offsetMax = Vector2.zero;
+            var image = go.GetComponent<Image>();
+            image.color = new Color(0.78f, 0.62f, 0.28f, 0.9f);
+            var button = go.GetComponent<Button>();
+            var label = new GameObject("Label", typeof(RectTransform), typeof(Text));
+            label.transform.SetParent(go.transform, false);
+            var lr = label.GetComponent<RectTransform>();
+            lr.anchorMin = Vector2.zero;
+            lr.anchorMax = Vector2.one;
+            lr.offsetMin = Vector2.zero;
+            lr.offsetMax = Vector2.zero;
+            var text = label.GetComponent<Text>();
+            text.font = Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
+            text.text = name;
+            text.fontSize = 18;
+            text.color = new Color(0.12f, 0.09f, 0.04f);
+            text.alignment = TextAnchor.MiddleCenter;
+            return button;
         }
     }
 }

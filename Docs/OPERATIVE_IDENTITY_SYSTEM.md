@@ -39,6 +39,6 @@ Saved in `GameSaveRecord.identity`. Loaded saves restore identity; old saves fal
 4. OIS is presentation over the SIS ledger; it hashes behaviour, not names.
 
 ## Not yet implemented
-- Registrar/identity-selection UI screen (first-launch flow) — target for Mission 001 milestone.
+- `IdentityRegistrar.cs` registration component exists and validates/binds the chosen identity. The first-launch UI scene/panel, serialized field references, and end-to-end scene wiring still need to be connected and tested.
 - Localised block-lists per shipping locale.
 - Pronunciation of callsign for VO (if desired later).

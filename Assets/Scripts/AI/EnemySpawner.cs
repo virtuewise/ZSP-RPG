@@ -31,7 +31,7 @@ namespace ZSP.AI
                     : transform.position + new Vector3((i * 2.5f) - count, 0f, 6f + (i * 1.5f));
 
                 var enemy = enemyPrefab != null ? Instantiate(enemyPrefab, position, Quaternion.identity) : CreateFallback(position);
-                enemy.name = $"Nightjar-{i + 1}";
+                enemy.name = $"Meridian-{i + 1}";
                 enemy.tag = "Enemy";
                 spawned++;
             }

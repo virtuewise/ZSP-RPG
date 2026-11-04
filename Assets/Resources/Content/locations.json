@@ -53,7 +53,7 @@
       "id": "avondale_safehouse",
       "name": "Avondale Safehouse",
       "region": "Harare",
-      "description": "A rented cottage behind a lemon tree and a wall of bougainvillea. Nyasha has been sleeping in the back room and working in the kitchen.",
+      "description": "A rented room above a garage in Avondale. Tinashe has been lying to his landlord for three years about what he does for a living.",
       "routes": [
         {
           "id": "front_door",
@@ -246,6 +246,54 @@
           "speed": 3,
           "risk": 1,
           "description": "Captain Mhofu's keycard opens the service gate and the east stairwell. It only works if he is alive and willing."
+        }
+      ]
+    },
+    {
+      "id": "chitungwiza",
+      "name": "Chitungwiza Safehouse Network",
+      "region": "Chitungwiza",
+      "description": "High-density township corridor south of Harare. Informal markets, bus ranks, church halls, and a network of rented back rooms used by people who do not want to be found.",
+      "routes": [
+        {
+          "id": "bus_rank",
+          "name": "Bus rank",
+          "kind": "front",
+          "baseDifficulty": 3,
+          "stealth": 1,
+          "speed": 3,
+          "risk": 3,
+          "description": "Crowds, kombi horns and a police post that sees everything and files nothing."
+        },
+        {
+          "id": "market",
+          "name": "Market lane",
+          "kind": "social",
+          "baseDifficulty": 2,
+          "stealth": 3,
+          "speed": 2,
+          "risk": 2,
+          "description": "Stall lines, dust and shade. Easy to slip away, harder to be forgotten."
+        },
+        {
+          "id": "safehouse_roof",
+          "name": "Safehouse roof",
+          "kind": "stealth",
+          "baseDifficulty": 3,
+          "stealth": 4,
+          "speed": 1,
+          "risk": 3,
+          "description": "Concrete roofs joined by a plank and a prayer. Quiet, but exposed to low helicopters."
+        },
+        {
+          "id": "drain",
+          "name": "Drain and storm culvert",
+          "kind": "stealth",
+          "baseDifficulty": 4,
+          "stealth": 4,
+          "speed": 1,
+          "risk": 2,
+          "description": "Mhara dumped his phone here. The culvert is still cold."
         }
       ]
     }

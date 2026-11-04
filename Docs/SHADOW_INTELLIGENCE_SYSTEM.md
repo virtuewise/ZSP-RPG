@@ -21,7 +21,7 @@ auditable, and bounded.
 
 1. **Determinism.** The same behaviour history produces the same future content. No hidden
    rolls that cannot be reproduced from the log.
-2. **Auditability.** Every change SIS makes carries a reason: "Nightjar reinforced the
+2. **Auditability.** Every change SIS makes carries a reason: "Meridian reinforced the
    front gate because you used it 4 times."
 3. **Boundedness.** Adaptation is a 0–10 budget per mission. The plot cannot be consumed.
 4. **Coherence.** Narrative state is rederived by replaying the ledger; contradictions are
@@ -107,15 +107,14 @@ exposure ≥ threshold(contact)   AND   trust_events ≥ min_events(contact)
 ```
 
 Thresholds are per contact and are defined in `COMPROMISE_RULES` in the reference
-implementation. Roughly: Nyasha needs sustained reliance, Tariro and Mukoma are exposed
+implementation. Roughly: Amara needs sustained reliance; Tafadzwa and Muponda are exposed faster.
 faster.
 
 Being compromised is a *mission condition*, not a failure:
 
 - M2: the safehouse is a burned shell; the player can still try the Avondale route and is
   denied help.
-- M3: Nyasha is captured and must be rescued; Tariro is targeted and must be protected;
-  Mukoma is watched and his routes shrink.
+- M3: Amara is captured and must be recovered; Tafadzwa is targeted and must be protected; Muponda is watched and his routes shrink.
 
 Player-facing text: "They know you talk to her."
 
@@ -133,8 +132,8 @@ Witnesses (`tendai`, `fingers`, `mhofu`) persist:
 Key characters (e.g. `mhofu`) follow the same rule. Deleting a key character always has a
 consequence, never an inconvenience:
 
-- Fingers dead → no `fingers_testimony`; the Expose ending requires the published ledger.
-- Fingers + Tendai dead → "Hack the estate terminal for the core file" is added to M3.
+- Tafadzwa dead → no `tafadzwa_tip`; the Expose ending requires the published ledger (a later episode).
+- Tafadzwa + Lovemore dead → "Recover the MSG-09 archive" is added to M3 (see Episode 03).
 - Mhofu dead → the `mhofu_keycard` route in M3 is locked.
 - `gumbo` dead → ending `burn` has a named corpse; ending `control` harder (no patron).
 
@@ -151,7 +150,7 @@ from the behaviour profile and spends it against a cap of **10 points**:
 | front-door pattern (entries ≥ 2, front_ratio ≥ 0.6) | strategy +2, reinforcements +1 |
 | witnesses spared | strategy +1 |
 | exposed contact | detection +1 |
-| nightjar heat ≥ 4 | detection +1, armour +1 |
+| meridian heat ≥ 4 | detection +1, armour +1 |
 | key character killed | strategy +1 |
 
 The vector is scaled to fit inside the cap. It is applied to:
@@ -178,8 +177,8 @@ availability of an ending, or the fact that the mission ends where the script sa
 
 Each mission declares `invariants`. For Season 1:
 
-- **M1** — archive resolved; Nightjar contact made.
-- **M2** — ledger resolved; Fingers contacted.
+- **M1** — archive resolved; Meridian contact made.
+- **M2** — phone recovered or lost; MSG-09 traced.
 - **M3** — confrontation happens; the protocol is revealed; at least one ending is available.
 
 SIS validates these at load and at resolution. `M3` with no endings available is a build
@@ -194,7 +193,7 @@ from an incompatible version" error.
 
 ## 10. Verification
 
-The reference implementation (`Prototype`) ships with 14 tests covering:
+The reference implementation (`Prototype`) ships with 22 tests covering:
 
 - content validation and requirement parsing;
 - deterministic replay of the three-mission slice;
@@ -222,7 +221,7 @@ slice in Play Mode without a scene build.
 The SIS is never named in the game. The player hears:
 
 - "They know you came in through the front."
-- "Tendai talked."
+- "Lovemore talked."
 - "You made her too useful to trust."
 - "There are more of them now."
 

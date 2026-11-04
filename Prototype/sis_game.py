@@ -38,32 +38,25 @@ BASE_STATS = {
 
 DEFAULT_DEMO_SCRIPT = {
     "M1": {
-        "M1_BRIEF": ["accept"],
-        "M1_APPROACH": ["service_roof"],
-        "M1_YARD": ["office", "loading_bay"],
-        "M1_TENDAI": ["empathy"],
-        "M1_FATE": ["spare"],
-        "M1_ARCHIVE": ["take"],
-        "M1_EXFIL": ["evade"],
-        "M1_DEBRIEF": ["warn"],
+        "M1_BRIEF": ["who_else"],
+        "M1_AMARA_ANSWERS": ["accept"],
+        "M1_APPROACH": ["back_alley"],
+        "M1_SWEEP": ["evade"],
+        "M1_LOVEMORE": ["stop"],
+        "M1_CLOCK": ["go"],
     },
     "M2": {
-        "M2_OPEN": ["ask_nyasha"],
-        "M2_NYASHA": ["thanks"],
-        "M2_PARTNER": ["tariro"],
-        "M2_ENTRY": ["service_corridor"],
-        "M2_SURVEILLANCE": ["locker", "cafe"],
-        "M2_FINGERS": ["empathy"],
-        "M2_FATE": ["spare"],
-        "M2_LEDGER": ["publish"],
-        "M2_END": ["continue"],
+        "M2_OPEN": ["lovemore"],
+        "M2_ENTRY": ["drain"],
+        "M2_CULVERT": ["phone", "lovemore"],
+        "M2_MSG09": ["silent_gate"],
+        "M2_MUPONDA": ["call"],
+        "M2_VAN": ["run"],
     },
     "M3": {
-        "M3_OPEN": ["ask_witness"],
-        "M3_WITNESS": ["listen"],
-        "M3_APPROACH": ["east_service"],
-        "M3_INFILTRATION": ["stealth"],
-        "M3_CONFRONTATION": ["expose_press"],
+        "M3_OPEN": ["brief"],
+        "M3_BREACH": ["stealth"],
+        "M3_TAFADZWA": ["extract"],
         "M3_EPILOGUE": ["finish"],
     },
 }
@@ -338,19 +331,19 @@ class Game:
         self.sis.apply_effects({"flags": [f"route_{chosen['id']}"]}, mission_id=self.current_mission_id, infer_behavior=False)
         if chosen["kind"] == "front":
             self.sis.apply_effects(
-                {"factions": [{"id": "nightjar", "heat": 1}]},
+                {"factions": [{"id": "meridian", "heat": 1}]},
                 mission_id=self.current_mission_id,
                 infer_behavior=False,
             )
         if chosen["id"] == "worker_bribe":
-            self._apply_effects({"trust": [{"contact": "mukoma", "delta": 0.05}],
-                                 "behavior": [{"action": "trust_contact", "target": "mukoma", "value": 1}]})
+            self._apply_effects({"trust": [{"contact": "muponda", "delta": 0.05}],
+                                 "behavior": [{"action": "trust_contact", "target": "muponda", "value": 1}]})
         elif chosen["id"] == "hill_path":
-            self._apply_effects({"trust": [{"contact": "mukoma", "delta": 0.1}],
-                                 "behavior": [{"action": "trust_contact", "target": "mukoma", "value": 1}]})
+            self._apply_effects({"trust": [{"contact": "muponda", "delta": 0.1}],
+                                 "behavior": [{"action": "trust_contact", "target": "muponda", "value": 1}]})
         elif chosen["id"] == "press_convoy":
-            self._apply_effects({"trust": [{"contact": "tariro", "delta": 0.1}],
-                                 "behavior": [{"action": "trust_contact", "target": "tariro", "value": 1}]})
+            self._apply_effects({"trust": [{"contact": "tafadzwa", "delta": 0.1}],
+                                 "behavior": [{"action": "trust_contact", "target": "tafadzwa", "value": 1}]})
         return beat.get("next", "__MISSION_END__")
 
     def _execute_investigation(

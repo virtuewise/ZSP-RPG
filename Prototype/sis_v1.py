@@ -31,9 +31,9 @@ DEFAULT_CONTENT_DIR = Path(__file__).resolve().parent.parent / "Assets" / "Strea
 KIND_BY_VALUE = {1: "front", 2: "side", 3: "social", 4: "stealth", 5: "insider"}
 
 COMPROMISE_RULES = {
-    "nyasha": (0.55, 3),
-    "tariro": (0.40, 2),
-    "mukoma": (0.50, 2),
+    "amara": (0.55, 3),
+    "tafadzwa": (0.40, 2),
+    "muponda": (0.50, 2),
     "rudo": (0.60, 3),
 }
 DEFAULT_COMPROMISE_RULE = (0.55, 2)
@@ -650,9 +650,9 @@ class ShadowIntelligenceSystem:
             status = self.witness_status(contact_id)
             if status in ("killed", "captured"):
                 return False
-        if contact_id == "nyasha" and self.has_flag("nyasha_captured"):
+        if contact_id == "amara" and self.has_flag("amara_captured"):
             return False
-        if contact_id == "tariro" and self.has_flag("tariro_captured"):
+        if contact_id == "tafadzwa" and self.has_flag("tafadzwa_captured"):
             return False
         return self.trust(contact_id) > 0.0
 
@@ -792,26 +792,26 @@ class ShadowIntelligenceSystem:
         mid = mission["id"]
         order = int(mission.get("order", 1))
         effects: Dict[str, Any] = {"flags": [], "intel": [], "factions": []}
-        if order >= 2 and self.is_compromised("nyasha"):
-            effects["flags"].append("nyasha_captured")
-        if mid == "M2" and self.witness_status("tendai") == "spared":
-            if self.witness_cooperative("tendai"):
-                effects["intel"].append("nightjar_patrol")
-                effects["flags"].append("tendai_informant")
+        if order >= 2 and self.is_compromised("amara"):
+            effects["flags"].append("amara_captured")
+        if mid == "M2" and self.witness_status("lovemore") == "spared":
+            if self.witness_cooperative("lovemore"):
+                effects["intel"].append("cleaner_roster")
+                effects["flags"].append("lovemore_informant")
             else:
-                effects["flags"].append("tendai_liability")
-                if not self.has_flag("tendai_liability_applied"):
-                    effects["factions"].append({"id": "nightjar", "heat": 1})
-                    effects["flags"].append("tendai_liability_applied")
+                effects["flags"].append("lovemore_liability")
+                if not self.has_flag("lovemore_liability_applied"):
+                    effects["factions"].append({"id": "meridian", "heat": 1})
+                    effects["flags"].append("lovemore_liability_applied")
         if mid == "M3":
-            if self.witness_status("fingers") == "spared" and self.witness_cooperative("fingers"):
-                effects["intel"].append("fingers_testimony")
-                effects["flags"].append("fingers_whistleblower")
+            if self.witness_status("tafadzwa") == "spared" and self.witness_cooperative("tafadzwa"):
+                effects["intel"].append("tafadzwa_tip")
+                effects["flags"].append("tafadzwa_whistleblower")
             if self.witness_status("mhofu") == "spared":
                 effects["intel"].append("mhofu_keycard")
                 effects["flags"].append("mhofu_ally")
-            if self.is_compromised("tariro"):
-                effects["flags"].append("tariro_targeted")
+            if self.is_compromised("tafadzwa"):
+                effects["flags"].append("tafadzwa_targeted")
         if effects["flags"] or effects["intel"] or effects["factions"]:
             self.apply_effects(effects, mission_id=mid, infer_behavior=False)
 
@@ -828,24 +828,24 @@ class ShadowIntelligenceSystem:
             difficulty = int(route.get("baseDifficulty", 1))
             reasons: List[str] = []
             available = True
-            if rid == "hill_path" and not (self.trust("mukoma") >= 0.5 or self.has_flag("mukoma_route")):
+            if rid == "hill_path" and not (self.trust("muponda") >= 0.5 or self.has_flag("muponda_route")):
                 available = False
-                reasons.append("Mukoma has not offered the hunter's path.")
-            if rid == "press_convoy" and not (self.trust("tariro") >= 0.4 or self.has_flag("ledger_published")):
+                reasons.append("Muponda has not offered the hunter's path.")
+            if rid == "press_convoy" and not (self.trust("tafadzwa") >= 0.4 or self.has_flag("ledger_published")):
                 available = False
-                reasons.append("Tariro cannot attach you to the press convoy.")
+                reasons.append("Tafadzwa cannot attach you to the press convoy.")
             if rid == "mhofu_keycard" and not (self.witness_status("mhofu") == "spared" and self.has_intel("mhofu_keycard")):
                 available = False
                 reasons.append("Mhofu's keycard is not available.")
             if route.get("kind") == "front" and profile.entries >= 2 and profile.front_ratio >= 0.6:
                 difficulty += 2
-                reasons.append("Front approaches have been used repeatedly; Nightjar reinforced the gate.")
+                reasons.append("Front approaches have been used repeatedly; Meridian reinforced the gate.")
             if profile.stealth_ratio >= 0.5:
                 difficulty += 1
-                reasons.append("Your stealth profile raised Nightjar's camera budget.")
-            if self.faction("nightjar", "heat") >= 4 and route.get("kind") in ("front", "side"):
+                reasons.append("Your stealth profile raised Meridian's camera budget.")
+            if self.faction("meridian", "heat") >= 4 and route.get("kind") in ("front", "side"):
                 difficulty += 1
-                reasons.append("Nightjar is on high alert.")
+                reasons.append("Meridian is on high alert.")
             if mission_id == "M3" and rid == "main_gate":
                 difficulty += 1
                 reasons.append("The main gate is a killing box.")
@@ -877,26 +877,26 @@ class ShadowIntelligenceSystem:
         if profile.entries >= 2 and profile.front_ratio >= 0.6:
             adaptation["strategy"] += 2
             adaptation["reinforcements"] += 1
-            notes.append("Front-door pattern: Nightjar has reinforced entrances.")
+            notes.append("Front-door pattern: Meridian has reinforced entrances.")
         if profile.witness_spared >= 1:
             adaptation["strategy"] += 1
-            notes.append("Spared witnesses: Nightjar is asking questions.")
+            notes.append("Spared witnesses: Meridian is asking questions.")
         if any(self.is_compromised(cid) for cid in self.content.contacts):
             adaptation["detection"] += 1
-            notes.append("A contact relationship is exposed: Nightjar is watching your network.")
-        if self.faction("nightjar", "heat") >= 4:
+            notes.append("A contact relationship is exposed: Meridian is watching your network.")
+        if self.faction("meridian", "heat") >= 4:
             adaptation["detection"] += 1
             adaptation["armor"] += 1
-            notes.append("Nightjar heat is high: heavier response.")
+            notes.append("Meridian heat is high: heavier response.")
         if profile.keychar_killed >= 1:
             adaptation["strategy"] += 1
-            notes.append("A key character is dead: Nightjar has reorganised.")
-        if self.has_flag("tendai_informant"):
+            notes.append("A key character is dead: Meridian has reorganised.")
+        if self.has_flag("lovemore_informant"):
             adaptation["detection"] = max(0, adaptation["detection"] - 1)
-            notes.append("Tendai's patrol schedule reduces detection.")
-        if self.has_flag("tendai_liability"):
+            notes.append("Lovemore's patrol schedule reduces detection.")
+        if self.has_flag("lovemore_liability"):
             adaptation["detection"] += 1
-            notes.append("Tendai may have warned Nightjar: detection increased.")
+            notes.append("Lovemore may have warned Meridian: detection increased.")
         total_adaptation = sum(adaptation.values())
         if total_adaptation > ADAPTATION_BUDGET:
             scale = ADAPTATION_BUDGET / total_adaptation
@@ -915,12 +915,12 @@ class ShadowIntelligenceSystem:
                 continue
             role = "witness"
             effect = ""
-            if wid == "tendai":
+            if wid == "lovemore":
                 if self.witness_cooperative(wid):
                     role, effect = "informant", "reveals patrol routes"
                 else:
-                    role, effect = "liability", "may warn Nightjar"
-            elif wid == "fingers":
+                    role, effect = "liability", "may warn Meridian"
+            elif wid == "tafadzwa":
                 if self.witness_cooperative(wid):
                     role, effect = "whistleblower", "testimony available"
                 else:
@@ -954,26 +954,26 @@ class ShadowIntelligenceSystem:
 
         objectives = list(mission.get("objectives", []))
         if mission_id == "M3":
-            if self.has_flag("nyasha_captured"):
-                objectives.append("Rescue Nyasha from the estate")
-            if self.has_flag("tariro_targeted"):
-                objectives.append("Protect Tariro")
-            if self.witness_status("fingers") == "captured":
-                objectives.append("Recover Fingers from Nightjar")
-            if self.witness_status("tendai") == "killed" and self.witness_status("fingers") == "killed":
+            if self.has_flag("amara_captured"):
+                objectives.append("Protect Amara's safehouse")
+            if self.has_flag("tafadzwa_targeted"):
+                objectives.append("Protect Tafadzwa")
+            if self.witness_status("tafadzwa") == "captured":
+                objectives.append("Recover Tafadzwa from Meridian")
+            if self.witness_status("lovemore") == "killed" and self.witness_status("tafadzwa") == "killed":
                 objectives.append("Hack the estate terminal for the core file")
 
         endings = list(mission.get("endings", []))
         if mission_id == "M3" and not endings:
             raise SISError("M3 resolved with no available endings")
-        if mission_id == "M3" and "confrontation" not in mission.get("invariants", []):
-            raise SISError("M3 must retain the confrontation invariant")
+        if mission_id == "M3" and not mission.get("invariants"):
+            raise SISError("M3 must retain its narrative invariants")
 
         dialogue = {
-            "m2_open": "burned" if self.is_compromised("nyasha") else "safehouse",
-            "m3_open": "captured" if self.has_flag("nyasha_captured") else "default",
+            "m2_open": "burned" if self.is_compromised("amara") else "safehouse",
+            "m3_open": "captured" if self.has_flag("amara_captured") else "default",
             "m3_witness": "available" if any(w["status"] == "spared" for w in witnesses) else "none",
-            "m3_confrontation": "evidence" if (self.has_flag("ledger_published") or self.has_intel("fingers_testimony")) else "limited",
+            "m3_confrontation": "evidence" if (self.has_flag("ledger_published") or self.has_intel("tafadzwa_tip")) else "limited",
         }
 
         return {

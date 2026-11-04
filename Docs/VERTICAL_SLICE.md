@@ -1,4 +1,4 @@
-> **SUPERSEDED (4 Nov 2026):** The milestone plan still stands, but the story content is superseded by `ZSP_SEASON_01_STORY_BIBLE.md` at the workspace root. Milestone 4 (Mission 001) will be **Episode 01: The Message**, not "The Courier's Warning". The SIS engine and tests are unaffected and will be re-pointed at the new episodes.
+> **Status (4 Nov 2026):** The story content has been re-keyed to `ZSP_SEASON_01_STORY_BIBLE.md` — M1–M3 are Episodes 01–03, the cast is Tinashe/Amara/Muponda/Victor/Tafadzwa/Lovemore, and the slice ends on the Season One interlude. The engine and SIS logic are unchanged; only content and tests were re- pointed.
 
 # Vertical Slice — Acceptance, Build Order and Status
 
@@ -22,19 +22,20 @@ It replaces the old "Milestones 0–2" plan in ROADMAP.md.
 - Select a suitable rigged humanoid from the bundle (`Final Men`, `EnemyBadNew3/4`, `Character001`) as the reference; **no character modelling by the player** — clothing, weapons, capability only.
 - Swap the temporary extraction for an original-rig or license-cleaned CGTrader character (see Art Direction).
 - Connect at minimum: locomotion, aim, reload, fire, melee, crouch, death/ragdoll, vault.
-- **Acceptance:** Kuda walks, aims and fires with body/arms layered correctly; hair/clothing/equipment customisation hooks exist; no Commando-branded skins or textures.
+- **Acceptance:** Tinashe walks, aims and fires with body/arms layered correctly; hair/clothing/equipment customisation hooks exist; no Commando-branded skins or textures.
 
 ### Milestone 3 — First Harare environment
-- Convert the Mirage airport kit → **Msasa Freight Yard** (M1).
-- Convert the Mirage town kit → **Eastgate / Samora Machel Avenue** (M2).
-- Mountain kit → **Kaguvi Hill estate** (M3).
+- Convert the Mirage airport kit → **Avondale safehouse / Mbare terminus** (M1).
+- Convert the Mountain kit → **Chitungwiza** (M2) and back to **Avondale safehouse** (M3).
+- Later: Eastgate/Samora Machel (Episodes 04–06), Kaguvi Hill estate (Episode 12).
+- Replace all branded textures with original ZSP set (`Assets/Art/`).
 - Replace all branded textures with original ZSP set (`Assets/Art/`).
 - Audio: convert FSB banks or use direct bundle playback; at minimum rifle, footsteps, ambient crowd, door, radio chatter.
 - **Acceptance:** three playable blockouts with fictional Harare signage, original textures, no Commando/branded assets; 60 minutes of playable ambient loop at 30 fps on a mid-tier Android device.
 
 ### Milestone 4 — Mission 001
-- **"The Courier's Warning"** — opening cinematic (helicopter/radio), Nyasha briefing, Msasa approach choice, investigation, Tendai encounter, archive resolution, exfiltration, debrief.
-- **Acceptance:** complete playthrough; choices alter M2 conditions; save/load mid-mission rehydrates correctly; 45–75 minutes of authored content; zero developer menus visible to the player.
+- **Episode 01 — THE MESSAGE** — cinematic, Amara radio briefing, Avondale approach, Mbare terminus encounter, Lovemore choice, exfiltration.
+- **Acceptance:** complete playthrough; choices alter M2/M3 conditions; save/load mid-mission rehydrates correctly; 45–75 minutes of authored content; zero developer menus visible to the player.
 
 ### Milestone 5 — Shadow Intelligence System
 - SIS integrated into the mission director, enemy spawning, HUD and save system.
@@ -51,11 +52,11 @@ It replaces the old "Milestones 0–2" plan in ROADMAP.md.
 cd Prototype
 python sis_game.py --demo          # deterministic demo run
 python sis_game.py --interactive   # play it
-python -m pytest test_sis_v1.py -q # 14 tests
+python -m pytest test_sis_v1.py -q # 22 tests
 python -m pytest test_amc.py -q    # 3 AMC tests
 ```
 
-Includes: content loader, BICL, replay reconciliation, contact exposure graph, witness/key-character registry, adaptation budget, three authored missions with seized endings, save/load.
+Includes: content loader, BICL, replay reconciliation, contact exposure graph, witness/key-character registry, adaptation budget, three authored episodes ending in the Season One interlude, save/load.
 
 ### Unity C# scaffolding
 - `MissionChain.cs`, `MissionChainDemo.cs` — legacy AMC prototype.
@@ -64,8 +65,8 @@ Includes: content loader, BICL, replay reconciliation, contact exposure graph, w
 - `ZSP/Create Bootstrap Scene`, `ZSP/Create Player Rig`, `ZSP/Create SIS Demo Scene` — one-click scaffolding.
 
 ### Content and art
-- `Assets/StreamingAssets/Content/` — season 1 data: characters, factions, contacts, locations (6), intel (11), witnesses (3), M1–M3 with full beats.
-- `Assets/Art/` — original emblem, logo, splash, app icon, crosshair, HUD bars, nightjar weave texture.
+- `Assets/StreamingAssets/Content/` — Season One data: Tinashe, Amara, Muponda, Victor, Tafadzwa, Mhara, Lovemore; Meridian/Directorate/Ledger/Shadow Network; 7 locations; 8 intel; 2 witnesses; Episodes 01–03 fully authored (M1–M3).
+- `Assets/Art/` — original emblem, logo, splash, app icon, crosshair, HUD bars, meridian weave texture.
 - `_Quarantine/CommandoBranding/` (54 files) and `_Quarantine/Ads/` (20 files) — none ship.
 
 ### Docs

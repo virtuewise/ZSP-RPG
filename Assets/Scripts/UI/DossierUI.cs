@@ -80,7 +80,7 @@ namespace ZSP.UI
                 var killed = behaviour.Count(b => b.action == "witness_killed");
                 var style = gunfire > stealth ? "STYLE: LOUD" : stealth > gunfire ? "STYLE: QUIET" : "STYLE: UNREADABLE";
                 var mercy = spared > killed ? "MERCY-MAJORITY" : killed > spared ? "NO SURVIVORS" : "UNDETERMINED";
-                var heat = _sis.FactionInt("meridian", f => f.heat) + _sis.FactionInt("nightjar", f => f.heat);
+                var heat = _sis.FactionInt("meridian", f => f.heat);
                 var reputation = heat >= 4 ? "HUNTED" : heat >= 2 ? "KNOWN" : "UNKNOWN";
                 sb.AppendLine($"  {style}   {mercy}");
                 sb.AppendLine($"  reputation   {reputation}");

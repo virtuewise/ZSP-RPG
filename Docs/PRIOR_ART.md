@@ -161,7 +161,7 @@ What is claimed as novel **in combination and in mechanism**:
 4. Narrative invariants are validated at load and at mission resolution; violating them is
    a build failure, not a runtime warning.
 5. Every SIS effect carries: mission id, behaviour digest, ledger entry, and a human-readable
-   audit line ("Nightjar reinforced the front gate because you used it four times").
+   audit line ("Meridian reinforced the front gate because you used it four times").
 6. Player-facing text must not mention "SIS"; it mentions consequences and shadows.
 
 ## 5. What this does **not** decide

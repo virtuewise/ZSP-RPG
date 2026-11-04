@@ -4,270 +4,142 @@
     {
       "id": "M3",
       "order": 3,
-      "title": "The House on Kaguvi Hill",
-      "location": "kaguvi_hill",
-      "premise": "The archive and the ledger converge on a private estate north-east of Harare. Gumbo and Mavhunga are preparing to move the Shadow Protocol. What you brought with you determines how the night ends.",
-      "invariants": ["confrontation", "protocol_revealed", "one_ending"],
+      "title": "Episode 03 - THE SAFEHOUSE",
+      "location": "avondale_safehouse",
+      "premise": "04:10. The fence is down. Meridian is inside the Avondale safehouse. Tafadzwa Dube is already there with a tip he should not have trusted.",
+      "invariants": ["safehouse_breach", "tafadzwa_resolved", "protocol_activated"],
       "objectives": [
-        "Reach Kaguvi Hill",
-        "Get inside the estate",
-        "Confront Gumbo and Mavhunga",
-        "Choose what happens to the Shadow Protocol"
+        "Get Tafadzwa out alive, or learn what he found",
+        "Survive the breach",
+        "Understand why he was here"
       ],
-      "contacts": ["nyasha", "tariro", "mukoma"],
-      "witnesses": ["tendai", "fingers", "mhofu"],
-      "keyCharacters": ["gumbo", "mavhunga"],
-      "endings": ["expose", "control", "burn"],
+      "contacts": ["amara", "tafadzwa"],
+      "witnesses": ["tafadzwa"],
+      "keyCharacters": ["mhara"],
+      "endings": ["interlude"],
       "start": "M3_OPEN",
       "beats": [
         {
           "id": "M3_OPEN",
           "type": "dialogue",
-          "speaker": "nyasha",
-          "text": "Kaguvi Hill. A colonial-era estate with a private road, a helipad, and a unit of Nightjar contractors. Somewhere inside, Gumbo and Mavhunga are preparing to move the Shadow Protocol. You have one night.",
+          "speaker": "amara",
+          "text": "Tafadzwa calls: he is in the garage. Meridian is inside the room. '{OIS_CALLSIGN},' he says. 'They know your name.'",
           "variants": [
             {
-              "requirements": ["contact_compromised:nyasha"],
-              "text": "Nyasha is not here. The Directorate took her from the Avondale safehouse three hours ago. Kaguvi Hill is still the target: a private estate, a helipad, and a unit of Nightjar contractors. Gumbo and Mavhunga are inside. So is she."
+              "requirements": ["contact_compromised:amara"],
+              "text": "They know you moved from the flat. They know you went to Chitungwiza. The safehouse is burned. Move now, {OIS_CALLSIGN}, and do not lead them to him."
             },
             {
-              "requirements": ["flag:ledger_published"],
-              "text": "Tariro's story is everywhere. Nightjar is burning documents and moving people. Kaguvi Hill is still the centre of it. Gumbo and Mavhunga are inside, and they know you are coming."
+              "requirements": ["contact_compromised:tafadzwa"],
+              "text": "Tafadzwa compromised the source. Meridian knows he called you. He is in the garage and they are in the house. Get there, {OIS_CALLSIGN}."
             }
           ],
           "choices": [
             {
               "id": "brief",
-              "text": "Tell me what I'm walking into.",
-              "next": "M3_APPROACH"
-            },
-            {
-              "id": "ask_witness",
-              "text": "Who else is inside?",
-              "requirements": ["any:witness:tendai:spared,witness:fingers:spared,witness:mhofu:spared"],
-              "next": "M3_WITNESS"
-            }
-          ]
-        },
-        {
-          "id": "M3_WITNESS",
-          "type": "dialogue",
-          "speaker": "tendai",
-          "text": "Tendai is waiting in the back of the car with a hand-drawn map. 'The guards change at eleven,' he says. 'The east cameras go offline for ten minutes. I used to drive the supply truck.'",
-          "variants": [
-            {
-              "requirements": ["witness:tendai:spared", "flag:tendai_cooperative"],
-              "text": "Tendai is waiting in the back of the car with a hand-drawn map. 'The guards change at eleven,' he says. 'The east cameras go offline for ten minutes. I used to drive the supply truck.'"
-            },
-            {
-              "requirements": ["witness:tendai:spared"],
-              "text": "Tendai is waiting in the back of the car. He does not look at you. 'I'm only here because they killed my cousin,' he says. 'The guards change at eleven. That's all I know.'"
-            },
-            {
-              "requirements": ["witness:fingers:spared"],
-              "text": "Fingers is in the back seat, wrapped in a borrowed jacket. 'Mavhunga keeps the core file in the drawing room,' he says. 'He likes to look at it while he drinks. The safe is behind the portrait of the old governor.'"
-            },
-            {
-              "requirements": ["witness:mhofu:spared"],
-              "text": "Mhofu meets you at the edge of the estate. He is out of uniform and looks older. 'I can open the east gate,' he says. 'But I am not killing anyone for you. And when this is over, I want my name out of it.'"
-            }
-          ],
-          "choices": [
-            {
-              "id": "listen",
-              "text": "Then let's use it.",
+              "text": "Get me there. Now.",
               "effects": {
-                "flags": ["used_witness_intel"],
-                "behavior": [{"action": "trust_contact", "target": "tendai", "value": 1}]
+                "flags": ["accepted_safehouse_breach"],
+                "behavior": [{"action": "trust_contact", "target": "amara", "value": 1}]
               },
-              "conditionalEffects": [
-                {
-                  "requirements": ["witness:tendai:spared"],
-                  "effects": {
-                    "intel": ["nightjar_patrol"],
-                    "flags": ["tendai_intel"]
-                  }
-                },
-                {
-                  "requirements": ["witness:fingers:spared"],
-                  "effects": {
-                    "intel": ["fingers_testimony"],
-                    "flags": ["fingers_intel"]
-                  }
-                },
-                {
-                  "requirements": ["witness:mhofu:spared"],
-                  "effects": {
-                    "intel": ["mhofu_keycard"],
-                    "flags": ["mhofu_ally"]
-                  }
-                }
-              ],
-              "next": "M3_APPROACH"
+              "next": "M3_BREACH"
             }
           ]
         },
         {
-          "id": "M3_APPROACH",
-          "type": "route",
-          "text": "Three ways up the hill. The main gate is a killing box. The east service road is watched by cameras. Mukoma knows a hunter's path through the msasa trees. Tariro can attach you to a press convoy. And if Mhofu is still alive and willing, his keycard opens the service gate.",
-          "routes": ["main_gate", "east_service", "hill_path", "press_convoy", "mhofu_keycard"],
-          "next": "M3_INFILTRATION"
-        },
-        {
-          "id": "M3_INFILTRATION",
-          "type": "choice",
-          "text": "The house is quiet in the way a trap is quiet. Somewhere above you, a radio crackles and goes silent. You have one move before the night decides what kind of night it is.",
+          "id": "M3_BREACH",
+          "type": "combat",
+          "text": "The safehouse is dark and full of boots. You can hear Tafadzwa coughing in the garage, and behind you, the front door is already open.",
+          "enemies": 3,
           "choices": [
             {
               "id": "stealth",
-              "text": "Move through the service corridors. No noise, no bodies.",
+              "text": "Move through the dark. No noise.",
               "check": {"stat": "stealth", "difficulty": 3},
               "success": {
-                "text": "You take the east stairwell two steps at a time. The cameras are off. The guards are where Tendai said they would be. The drawing room door is open.",
+                "text": "You cross the garage without a sound. The moon on the downpipe is the only witness.",
                 "effects": {
-                  "intel": ["shadow_protocol_core"],
-                  "flags": ["inside_quiet"],
-                  "behavior": [{"action": "stealth_avoid", "target": "kaguvi_security", "value": 1}]
+                  "flags": ["entered_quietly"],
+                  "behavior": [{"action": "stealth_avoid", "target": "meridian_breach", "value": 1}]
                 },
-                "next": "M3_CONFRONTATION"
+                "next": "M3_TAFADZWA"
               },
               "failure": {
-                "text": "A guard turns the corner at the wrong moment. You take him down, but his radio is already live.",
+                "text": "A marble cracks under your boot. The room turns. You are in the hallway before the first light finds you.",
                 "effects": {
-                  "intel": ["shadow_protocol_core"],
-                  "flags": ["inside_loud", "alarm_raised"],
+                  "flags": ["entered_loudly"],
                   "health": -1,
-                  "heat": 3,
-                  "behavior": [{"action": "stealth_takedown", "target": "nightjar_guard", "value": 1}]
+                  "heat": 2,
+                  "behavior": [{"action": "stealth_takedown", "target": "meridian_breach", "value": 1}]
                 },
-                "next": "M3_CONFRONTATION"
+                "next": "M3_TAFADZWA"
               }
             },
             {
               "id": "assault",
-              "text": "Go through the front of the house. Make them react to you.",
+              "text": "Hit them hard and fast.",
               "check": {"stat": "combat", "difficulty": 3},
               "success": {
-                "text": "You take the guard post before they can close the door. The house wakes up angry, but you are already inside, and the drawing room is at the end of the hall.",
+                "text": "You take the first two before the third understands. The house goes quiet. Tafadzwa is bleeding but breathing.",
                 "effects": {
-                  "intel": ["shadow_protocol_core"],
-                  "flags": ["inside_loud"],
+                  "flags": ["entered_loudly"],
                   "heat": 2,
-                  "behavior": [{"action": "gunfight", "target": "kaguvi_security", "value": 1}]
+                  "behavior": [{"action": "gunfight", "target": "meridian_breach", "value": 1}]
                 },
-                "next": "M3_CONFRONTATION"
+                "next": "M3_TAFADZWA"
               },
               "failure": {
-                "text": "They are waiting for you. You make the hall, but you leave blood on the marble and a lot of noise behind you.",
+                "text": "They are ready. You make it to the garage, but you leave blood on the floor and the door is coming down.",
                 "effects": {
-                  "intel": ["shadow_protocol_core"],
-                  "flags": ["inside_loud", "alarm_raised"],
+                  "flags": ["entered_loudly"],
                   "health": -2,
                   "heat": 3,
-                  "behavior": [{"action": "gunfight", "target": "kaguvi_security", "value": 1}]
+                  "behavior": [{"action": "gunfight", "target": "meridian_breach", "value": 1}]
                 },
-                "next": "M3_CONFRONTATION"
+                "next": "M3_TAFADZWA"
               }
-            },
-            {
-              "id": "insider",
-              "text": "Use Mhofu's keycard and walk in like you belong.",
-              "requirements": ["intel:mhofu_keycard"],
-              "effects": {
-                "intel": ["shadow_protocol_core"],
-                "flags": ["inside_insider"],
-                "behavior": [{"action": "stealth_avoid", "target": "kaguvi_gate", "value": 1}]
-              },
-              "next": "M3_CONFRONTATION"
-            },
-            {
-              "id": "rescue_nyasha",
-              "text": "Find Nyasha first. She knows where the core file is.",
-              "requirements": ["flag:nyasha_captured"],
-              "effects": {
-                "intel": ["shadow_protocol_core"],
-                "flags": ["nyasha_rescued", "inside_quiet"],
-                "trust": [{"contact": "nyasha", "delta": 0.2}],
-                "behavior": [{"action": "stealth_avoid", "target": "kaguvi_holding_room", "value": 1}]
-              },
-              "next": "M3_CONFRONTATION"
             }
           ]
         },
         {
-          "id": "M3_CONFRONTATION",
+          "id": "M3_TAFADZWA",
           "type": "choice",
-          "speaker": "gumbo",
-          "text": "Farai Gumbo waits in the drawing room with a glass of whisky and a pistol he does not need. Collin Mavhunga stands by the window. Between them, on a table, is the Shadow Protocol: a folder, a drive, and a list of names that could break the country or save it.",
+          "speaker": "tafadzwa",
+          "text": "Tafadzwa is propped against the garage door, bleeding from the shoulder. He holds up a phone. 'Someone told them everything,' he says. 'Including where you sleep.'",
           "choices": [
             {
-              "id": "expose_press",
-              "text": "Tariro's story is already live. The only thing missing is your confession.",
-              "requirements": ["flag:ledger_published"],
+              "id": "carry",
+              "text": "Get him to the Mbare room. You can't leave him.",
               "effects": {
-                "ending": "expose",
-                "flags": ["chose_expose"],
-                "behavior": [{"action": "expose_org", "target": "nightjar", "value": 2}]
-              },
-              "next": "M3_EPILOGUE"
-            },
-            {
-              "id": "expose_testimony",
-              "text": "Fingers will testify. Mhofu will talk. The truth does not need your permission.",
-              "requirements": ["intel:fingers_testimony", "trust:tariro:0.4"],
-              "effects": {
-                "ending": "expose",
-                "flags": ["chose_expose"],
-                "behavior": [{"action": "expose_org", "target": "nightjar", "value": 2}]
-              },
-              "next": "M3_EPILOGUE"
-            },
-            {
-              "id": "control_directorate",
-              "text": "The Directorate gets the file. I get the names. Nobody else has to know.",
-              "requirements": ["intel:archive_fragment", "intel:shadow_protocol_core", "flag:ledger_leveraged"],
-              "effects": {
-                "ending": "control",
-                "flags": ["chose_control"],
-                "factions": [{"id": "directorate", "influence": 2, "heat": 1}],
-                "behavior": [{"action": "protect_org", "target": "directorate", "value": 2}]
-              },
-              "next": "M3_EPILOGUE"
-            },
-            {
-              "id": "control_network",
-              "text": "I keep the protocol. Mukoma keeps the roads. We become the thing we were trying to stop.",
-              "requirements": ["intel:shadow_protocol_core", "flag:partner_mukoma", "trust:mukoma:0.4"],
-              "effects": {
-                "ending": "control",
-                "flags": ["chose_control"],
-                "factions": [{"id": "nightjar", "influence": -2, "alliance": "neutral"}],
-                "behavior": [{"action": "protect_org", "target": "independent", "value": 2}]
-              },
-              "next": "M3_EPILOGUE"
-            },
-            {
-              "id": "burn",
-              "text": "None of us get it. Burn the house and everything in it.",
-              "effects": {
-                "ending": "burn",
-                "flags": ["chose_burn"],
-                "factions": [{"id": "nightjar", "influence": -3, "heat": 2}],
-                "behavior": [{"action": "expose_org", "target": "nightjar", "value": 2}]
-              },
-              "next": "M3_EPILOGUE"
-            },
-            {
-              "id": "shoot",
-              "text": "No more speeches.",
-              "effects": {
-                "ending": "burn",
-                "flags": ["chose_burn", "gumbo_killed"],
-                "keyCharacters": [{"id": "gumbo", "status": "dead"}],
-                "health": -2,
+                "witnesses": [{"id": "tafadzwa", "status": "spared", "cooperative": true}],
+                "flags": ["tafadzwa_carried"],
+                "trust": [{"contact": "tafadzwa", "delta": 0.2}],
                 "heat": 2,
-                "behavior": [{"action": "gunfight", "target": "gumbo", "value": 2}]
+                "health": -1,
+                "behavior": [{"action": "witness_spared", "target": "tafadzwa", "value": 1}]
+              },
+              "next": "M3_EPILOGUE"
+            },
+            {
+              "id": "extract",
+              "text": "Call Amara. Surgical evac.",
+              "effects": {
+                "witnesses": [{"id": "tafadzwa", "status": "spared", "cooperative": true}],
+                "trust": [{"contact": "amara", "delta": 0.2}, {"contact": "tafadzwa", "delta": 0.1}],
+                "flags": ["tafadzwa_extracted"],
+                "heat": 1,
+                "behavior": [{"action": "trust_contact", "target": "amara", "value": 1}, {"action": "witness_spared", "target": "tafadzwa", "value": 1}]
+              },
+              "next": "M3_EPILOGUE"
+            },
+            {
+              "id": "leave",
+              "text": "Then someone gets their man first.",
+              "effects": {
+                "witnesses": [{"id": "tafadzwa", "status": "killed", "cooperative": false}],
+                "flags": ["tafadzwa_dead"],
+                "heat": 2,
+                "behavior": [{"action": "witness_killed", "target": "tafadzwa", "value": 1}]
               },
               "next": "M3_EPILOGUE"
             }
@@ -276,11 +148,15 @@
         {
           "id": "M3_EPILOGUE",
           "type": "ending",
-          "text": "The room goes quiet. Outside, the first helicopter begins its descent.",
+          "text": "Avondale burns behind you. The garage is a skeleton. Tafadzwa is somewhere safe. The phone he gave you is in your pocket.",
           "choices": [
             {
               "id": "finish",
-              "text": "End Season 1.",
+              "text": "Continue.",
+              "effects": {
+                "ending": "interlude",
+                "flags": ["completed_ep03"]
+              },
               "next": "M3_END"
             }
           ]
@@ -288,7 +164,7 @@
         {
           "id": "M3_END",
           "type": "mission_end",
-          "text": "Kaguvi Hill is behind you. The Shadow Protocol is no longer a secret. What happens next is a different season.",
+          "text": "SEASON ONE CONTINUES.",
           "nextMission": ""
         }
       ]

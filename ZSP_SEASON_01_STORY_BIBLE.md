@@ -387,19 +387,24 @@ Every episode emits behaviour events (approach, combat, stealth, interrogation, 
 
 ---
 
-## 12. Current build mapping (must be updated)
+## 12. Current build mapping (updated 2026-11-04)
 
-The existing playable slice implements an interim arc ("The Courier's Warning" / "The Ledger" /
-"The House on Kaguvi Hill") and a three-mission SIS prototype. **This bible supersedes that
-interim arc.** The engine, content pipeline, determinism tests and UI scaffolding remain valid.
+The playable slice has been **re-keyed to this bible**. The engine, content pipeline, determinism tests and UI scaffolding were unchanged; content and tests were rewritten.
 
-Required content migration after approval:
-- M1  ->  **Episode 01: The Message** (Avondale/Msasa composite; Amara, Mhara, the patrol).
-- M2  ->  **Episode 02/03 composite** (Chitungwiza safehouse; Tafadzwa introduced).
-- M3  ->  **Episode 06: The Informant** (Bulawayo; the page; Victor's first appearance).
-- Season One remainder (Episodes 04–12) authored as Unity-ready beats before the slice is called complete.
-- Factions relabeled: Directorate (fictional), Meridian Strategic Group, The Ledger, Shadow Network.
-- Kuda Moyo / Nyasha / Tariro / Mukoma  ->  **superseded** by Tinashe Mukasa / Amara Chikowore / General Daniel Muponda / Victor Nhari / Tafadzwa Dube / Adrian Voss.
+Done:
+- M1 -> **Episode 01: THE MESSAGE** (Avondale flat sweep; Amara briefing; Mbare terminus).
+- M2 -> **Episode 02: DEAD SIGNAL** (Chitungwiza; Mhara's phone in the drain; MSG-09 traced).
+- M3 -> **Episode 03: THE SAFEHOUSE** (04:10 breach; Tafadzwa wounded; the season interlude).
+- Factions relabelled: Directorate (fictional), Meridian Strategic Group, The Ledger, The Shadow Network.
+- Cast replaced: Tinashe Mukasa, Amara Chikowore, General Daniel Muponda, Victor Nhari (off-screen presence), Tafadzwa Dube, Lovemore Chigumba.
+- SIS references internally renamed; witnesses now persist across the slice (Lovemore informs/warns; Tafadzwa survives or dies by the player's choice).
+- OIS is live in the slice via `{OIS_CALLSIGN}` and end-of-mission dossier lines.
+
+Still required before "Season One complete":
+- Episodes 04–12 authored as Unity-ready beats.
+- The Episode 01 full cinematic and the customisation screen wired to the registrar UI.
+- Victor Nhari's on-screen debut (Episode 06).
+
 
 ## 13. Open creative questions for the next session
 
@@ -478,7 +483,7 @@ OIS is the *presentation layer* of the SIS:
 1. Whether, once VO is fully localised, the dossier voice may speak the callsign.
 2. Whether Season Two offers fixed preset appearances (three sanctioned faces) as a compromise between continuity and personalisation.
 3. Whether reputation tiers gain mechanical effects or remain cosmetic (recommended: cosmetic + dialogue variants only).
-4. Whether the dossier shows decisions as prose ("you left Tendai alive") or as pattern data ("STYLE: MERCY-MAJORITY").
+4. Whether the dossier shows decisions as prose ("you left Lovemore alive") or as pattern data ("STYLE: MERCY-MAJORITY").
 
 ---
 

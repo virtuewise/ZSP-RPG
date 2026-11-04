@@ -102,16 +102,16 @@ namespace ZSP.Narrative
         public int TrustEvents(string id) => Behavior.Count(e => e.action == "trust_contact" && e.target == id);
         public bool IsCompromised(string id)
         {
-            var threshold = id == "tariro" ? 0.40f : id == "mukoma" ? 0.50f : 0.55f;
-            var minEvents = id == "nyasha" ? 3 : 2;
+            var threshold = id == "tafadzwa" ? 0.40f : id == "muponda" ? 0.50f : 0.55f;
+            var minEvents = id == "amara" ? 3 : 2;
             return HasFlag($"contact_compromised_{id}") || (Exposure(id) >= threshold && TrustEvents(id) >= minEvents);
         }
         public bool ContactAvailable(string id)
         {
             if (Content.Contacts.TryGetValue(id, out var contact) && !contact.available) return false;
             if (Witnesses().TryGetValue(id, out var witness) && (witness.status == "killed" || witness.status == "captured")) return false;
-            if (id == "nyasha" && HasFlag("nyasha_captured")) return false;
-            if (id == "tariro" && HasFlag("tariro_captured")) return false;
+            if (id == "amara" && HasFlag("amara_captured")) return false;
+            if (id == "tafadzwa" && HasFlag("tafadzwa_captured")) return false;
             return Trust(id) > 0f;
         }
 
@@ -306,14 +306,14 @@ namespace ZSP.Narrative
                 int difficulty = route.baseDifficulty;
                 var reasons = new List<string>();
                 bool available = true;
-                if (route.id == "hill_path" && !(Trust("mukoma") >= 0.5f || HasFlag("mukoma_route"))) { available = false; reasons.Add("Mukoma has not offered the path."); }
-                if (route.id == "press_convoy" && !(Trust("tariro") >= 0.4f || HasFlag("ledger_published"))) { available = false; reasons.Add("Tariro cannot attach you to the convoy."); }
-                if (route.id == "mhofu_keycard" && !(WitnessStatus("mhofu") == "spared" && HasIntel("mhofu_keycard"))) { available = false; reasons.Add("Mhofu's keycard is not available."); }
+                if (route.id == "hill_path" && !(Trust("muponda") >= 0.5f || HasFlag("muponda_route"))) { available = false; reasons.Add("Muponda has not offered the path."); }
+                if (route.id == "press_convoy" && !(Trust("tafadzwa") >= 0.4f || HasFlag("ledger_published"))) { available = false; reasons.Add("Tafadzwa cannot attach you to the convoy."); }
+                if (route.id == "victor_keycard" && !(WitnessStatus("victor") == "spared" && HasIntel("victor_keycard"))) { available = false; reasons.Add("Victor's keycard is not available."); }
                 if (route.kind == "front" && entries >= 2 && frontRatio >= 0.6f) { difficulty += 2; reasons.Add("Front approaches used repeatedly; entrance reinforced."); }
                 if (stealthRatio >= 0.5f) { difficulty += 1; reasons.Add("Stealth profile raised camera budget."); }
-                if (FactionInt("nightjar", f => f.heat) >= 4 && (route.kind == "front" || route.kind == "side")) { difficulty += 1; reasons.Add("Nightjar is on high alert."); }
+                if (FactionInt("meridian", f => f.heat) >= 4 && (route.kind == "front" || route.kind == "side")) { difficulty += 1; reasons.Add("Meridian is on high alert."); }
                 if (missionId == "M3" && route.id == "main_gate") { difficulty += 1; reasons.Add("The main gate is a killing box."); }
-                if (WitnessStatus("mhofu") == "killed" && route.id == "east_service") { difficulty -= 1; reasons.Add("Mhofu's death left east patrols disorganised."); }
+                if (WitnessStatus("victor") == "killed" && route.id == "east_service") { difficulty -= 1; reasons.Add("Victor's death left east patrols disorganised."); }
                 conditions.Entry[route.id] = new MissionRouteCondition { id = route.id, name = route.name, kind = route.kind, difficulty = Mathf.Max(1, difficulty), available = available, reason = string.Join(" ", reasons) };
             }
 
@@ -321,13 +321,13 @@ namespace ZSP.Narrative
             int adaptationArmor = Mathf.FloorToInt(aggressionRatio * 4f);
             int adaptationStrategy = Mathf.FloorToInt(vehicleRatio * 3f);
             int adaptationReinforcements = 0;
-            if (entries >= 2 && frontRatio >= 0.6f) { adaptationStrategy += 2; adaptationReinforcements += 1; conditions.Notes.Add("Front-door pattern: Nightjar reinforced entrances."); }
-            if (Behavior.Count(e => e.action == "witness_spared") >= 1) { adaptationStrategy += 1; conditions.Notes.Add("Spared witnesses: Nightjar is asking questions."); }
-            if (Content.Contacts.Keys.Any(IsCompromised)) { adaptationDetection += 1; conditions.Notes.Add("A contact is exposed; Nightjar watches your network."); }
-            if (FactionInt("nightjar", f => f.heat) >= 4) { adaptationDetection += 1; adaptationArmor += 1; conditions.Notes.Add("Nightjar heat is high."); }
-            if (Behavior.Count(e => e.action == "key_character_killed") >= 1) { adaptationStrategy += 1; conditions.Notes.Add("A key character died; Nightjar reorganised."); }
-            if (HasFlag("tendai_informant")) { adaptationDetection = Mathf.Max(0, adaptationDetection - 1); conditions.Notes.Add("Tendai's patrol schedule reduces detection."); }
-            if (HasFlag("tendai_liability")) { adaptationDetection += 1; conditions.Notes.Add("Tendai may have warned Nightjar."); }
+            if (entries >= 2 && frontRatio >= 0.6f) { adaptationStrategy += 2; adaptationReinforcements += 1; conditions.Notes.Add("Front-door pattern: Meridian reinforced entrances."); }
+            if (Behavior.Count(e => e.action == "witness_spared") >= 1) { adaptationStrategy += 1; conditions.Notes.Add("Spared witnesses: Meridian is asking questions."); }
+            if (Content.Contacts.Keys.Any(IsCompromised)) { adaptationDetection += 1; conditions.Notes.Add("A contact is exposed; Meridian watches your network."); }
+            if (FactionInt("meridian", f => f.heat) >= 4) { adaptationDetection += 1; adaptationArmor += 1; conditions.Notes.Add("Meridian heat is high."); }
+            if (Behavior.Count(e => e.action == "key_character_killed") >= 1) { adaptationStrategy += 1; conditions.Notes.Add("A key character died; Meridian reorganised."); }
+            if (HasFlag("lovemore_informant")) { adaptationDetection = Mathf.Max(0, adaptationDetection - 1); conditions.Notes.Add("Lovemore's patrol schedule reduces detection."); }
+            if (HasFlag("lovemore_liability")) { adaptationDetection += 1; conditions.Notes.Add("Lovemore may have warned Meridian."); }
             int adaptationTotal = adaptationDetection + adaptationArmor + adaptationStrategy + adaptationReinforcements;
             if (adaptationTotal > 10)
             {
@@ -349,9 +349,9 @@ namespace ZSP.Narrative
                 var status = WitnessStatus(wid);
                 if (status == "unknown" || status == "killed") continue;
                 string role = "witness", effect = "";
-                if (wid == "tendai") { role = WitnessCooperative(wid) ? "informant" : "liability"; effect = WitnessCooperative(wid) ? "reveals patrol routes" : "may warn Nightjar"; }
-                else if (wid == "fingers") { role = WitnessCooperative(wid) ? "whistleblower" : "liability"; effect = WitnessCooperative(wid) ? "testimony available" : "will not testify"; }
-                else if (wid == "mhofu") { role = "potential_ally"; effect = "keycard route possible"; }
+                if (wid == "lovemore") { role = WitnessCooperative(wid) ? "informant" : "liability"; effect = WitnessCooperative(wid) ? "reveals patrol routes" : "may warn Meridian"; }
+                else if (wid == "tafadzwa") { role = WitnessCooperative(wid) ? "whistleblower" : "liability"; effect = WitnessCooperative(wid) ? "testimony available" : "will not testify"; }
+                else if (wid == "victor") { role = "potential_ally"; effect = "keycard route possible"; }
                 conditions.Witnesses.Add(new MissionWitnessCondition { id = wid, name = Content.Witnesses[wid].name, status = status, role = role, effect = effect });
                 conditions.Notes.Add($"Witness {Content.Witnesses[wid].name}: {role} ({effect}).");
             }
@@ -367,10 +367,10 @@ namespace ZSP.Narrative
             conditions.Objectives.AddRange(mission.objectives);
             if (missionId == "M3")
             {
-                if (HasFlag("nyasha_captured")) conditions.Objectives.Add("Rescue Nyasha from the estate");
-                if (HasFlag("tariro_targeted")) conditions.Objectives.Add("Protect Tariro");
-                if (WitnessStatus("fingers") == "captured") conditions.Objectives.Add("Recover Fingers from Nightjar");
-                if (WitnessStatus("tendai") == "killed" && WitnessStatus("fingers") == "killed") conditions.Objectives.Add("Hack the estate terminal for the core file");
+                if (HasFlag("amara_captured")) conditions.Objectives.Add("Rescue Amara from the estate");
+                if (HasFlag("tafadzwa_targeted")) conditions.Objectives.Add("Protect Tafadzwa");
+                if (WitnessStatus("tafadzwa") == "captured") conditions.Objectives.Add("Recover Tafadzwa from Meridian");
+                if (WitnessStatus("lovemore") == "killed" && WitnessStatus("tafadzwa") == "killed") conditions.Objectives.Add("Hack the estate terminal for the core file");
             }
             conditions.Endings.AddRange(mission.endings ?? new List<string>());
             conditions.Seed = (int)(BehaviorDigest().Substring(0, 8).Aggregate(0u, (h, c) => h * 131 + (uint)c));
@@ -380,17 +380,17 @@ namespace ZSP.Narrative
         private void ApplyMissionStartEffects(StoryMission mission)
         {
             int order = mission.order;
-            if (order >= 2 && IsCompromised("nyasha")) AddFlag("nyasha_captured");
-            if (mission.id == "M2" && WitnessStatus("tendai") == "spared")
+            if (order >= 2 && IsCompromised("amara")) AddFlag("amara_captured");
+            if (mission.id == "M2" && WitnessStatus("lovemore") == "spared")
             {
-                if (WitnessCooperative("tendai")) { AddIntel("nightjar_patrol"); AddFlag("tendai_informant"); }
-                else { AddFlag("tendai_liability"); if (!HasFlag("tendai_liability_applied")) { SetFaction("nightjar", FactionInt("nightjar", f => f.influence), FactionInt("nightjar", f => f.heat) + 1, FactionBool("nightjar", f => f.exposed), FactionString("nightjar", f => f.alliance)); AddFlag("tendai_liability_applied"); } }
+                if (WitnessCooperative("lovemore")) { AddIntel("cleaner_roster"); AddFlag("lovemore_informant"); }
+                else { AddFlag("lovemore_liability"); if (!HasFlag("lovemore_liability_applied")) { SetFaction("meridian", FactionInt("meridian", f => f.influence), FactionInt("meridian", f => f.heat) + 1, FactionBool("meridian", f => f.exposed), FactionString("meridian", f => f.alliance)); AddFlag("lovemore_liability_applied"); } }
             }
             if (mission.id == "M3")
             {
-                if (WitnessStatus("fingers") == "spared" && WitnessCooperative("fingers")) { AddIntel("fingers_testimony"); AddFlag("fingers_whistleblower"); }
-                if (WitnessStatus("mhofu") == "spared") { AddIntel("mhofu_keycard"); AddFlag("mhofu_ally"); }
-                if (IsCompromised("tariro")) AddFlag("tariro_targeted");
+                if (WitnessStatus("tafadzwa") == "spared" && WitnessCooperative("tafadzwa")) { AddIntel("tafadzwa_tip"); AddFlag("tafadzwa_whistleblower"); }
+                if (WitnessStatus("victor") == "spared") { AddIntel("victor_keycard"); AddFlag("victor_ally"); }
+                if (IsCompromised("tafadzwa")) AddFlag("tafadzwa_targeted");
             }
         }
 

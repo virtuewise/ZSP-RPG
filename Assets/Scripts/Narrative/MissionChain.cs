@@ -371,8 +371,8 @@ namespace ZSP.Narrative
 
         private void RegisterDefaultContacts()
         {
-            contacts.AddContact("C1", "Tariro", 0.9f);
-            contacts.AddContact("C2", "Mukoma", 0.6f);
+            contacts.AddContact("C1", "Tafadzwa", 0.9f);
+            contacts.AddContact("C2", "Muponda", 0.6f);
             contacts.AddContact("C3", "Rudo", 0.4f);
         }
 

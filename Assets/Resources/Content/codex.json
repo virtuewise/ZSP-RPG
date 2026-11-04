@@ -2,130 +2,104 @@
   "schemaVersion": 1,
   "intel": [
     {
-      "id": "nyasha_message",
-      "name": "Nyasha's warning",
-      "description": "An encrypted voice message: a freight manifest, a date, and the sentence 'Never trust the people who send you.'",
-      "source": "Nyasha Chikore",
-      "tags": ["M1", "briefing"]
+      "id": "activation_message",
+      "name": "Activation message",
+      "description": "A dead phone. One message, six words: 'They have activated the protocol. Run.' The metadata points at a locker in Mbare bus terminus.",
+      "source": "Emmanuel Mhara",
+      "tags": ["M1", "ep01", "briefing"]
     },
     {
-      "id": "archive_fragment",
-      "name": "Shadow Protocol archive fragment",
-      "description": "A partial file from the Directorate archive. It describes a deniable support network, a funding stream and a site called Kaguvi Hill.",
-      "source": "Msasa Freight Yard",
-      "tags": ["M1", "core", "shadow_protocol"]
+      "id": "mhara_phone",
+      "name": "Mhara's phone",
+      "description": "The deputy director's handset. Dumped in a drain in Chitungwiza. One unsent message, one photograph of Tinashe, one account number: MSG-09.",
+      "source": "Chitungwiza culvert",
+      "tags": ["M2", "ep02", "core"]
     },
     {
-      "id": "nightjar_manifest",
-      "name": "Nightjar cargo manifest",
-      "description": "A manifest for bay six: communications equipment, body armour, and a sealed container addressed to the Kaguvi Hill estate.",
-      "source": "Msasa Freight Yard",
-      "tags": ["M1", "nightjar"]
+      "id": "lovemore_statement",
+      "name": "Lovemore's statement",
+      "description": "A porter saw who emptied the locker: a man with a Meridian badge that did not scan. He remembers the car's plate and the silence after.",
+      "source": "Lovemore Chigumba",
+      "tags": ["M1", "M2", "ep01", "witness"]
     },
     {
-      "id": "payment_ledger",
-      "name": "The Ledger",
-      "description": "A handwritten and partly encrypted accounts book. It links Nightjar, a bureau de change at Eastgate, and a Directorate deputy director.",
-      "source": "Farai 'Fingers' Nyandoro",
-      "tags": ["M2", "core", "ledger"]
+      "id": "msg09_account",
+      "name": "MSG-09",
+      "description": "A shell account routed through Meridian Strategic Group's Harare office. Identical payments from three ministries over four years.",
+      "source": "Mhara's phone",
+      "tags": ["M2", "ep02", "meridian", "core"]
     },
     {
-      "id": "fingers_testimony",
-      "name": "Fingers' testimony",
-      "description": "A recorded statement from the bagman. He names Collin Mavhunga and describes the Kaguvi Hill payments.",
-      "source": "Farai 'Fingers' Nyandoro",
-      "tags": ["M2", "witness", "testimony"]
+      "id": "cleaner_roster",
+      "name": "Cleaner roster",
+      "description": "A Meridian internal duty sheet. Two names circled: Sable is a callsign, not a person. The other is Victor Nhari. Officially dead.",
+      "source": "Mbare terminus",
+      "tags": ["M1", "ep01", "meridian"]
     },
     {
-      "id": "chiweshe_memo",
-      "name": "Chiweshe memo",
-      "description": "A ministry memo authorising a 'special liaison budget' for Nightjar. Rutendo Chiweshe's signature is on the last page.",
-      "source": "Eastgate",
-      "tags": ["M2", "directorate", "political"]
+      "id": "tafadzwa_tip",
+      "name": "Tafadzwa's tip",
+      "description": "A tip about a meeting at the Avondale safehouse. The timing is exact. The source is compromised. Someone knows where Tinashe sleeps.",
+      "source": "The Ledger",
+      "tags": ["M3", "ep03", "safehouse"]
     },
     {
-      "id": "mhofu_keycard",
-      "name": "Mhofu's keycard",
-      "description": "A Nightjar access card, still warm. It opens the east service gate and the stairwell to the estate's private wing.",
-      "source": "Captain Dereck Mhofu",
-      "tags": ["M3", "access", "nightjar"]
+      "id": "safehouse_leak",
+      "name": "Safehouse leak",
+      "description": "The precise layout of Tinashe's flat is on a Meridian planning sheet. The fence, the garage, the dog that does not bark.",
+      "source": "Meridian planning sheet",
+      "tags": ["M3", "ep03", "core"]
     },
     {
-      "id": "shadow_protocol_core",
-      "name": "Shadow Protocol core file",
-      "description": "The complete operational plan: a deniable network, a list of judges and officers on the payroll, and a contingency for 'post-electoral disruption'.",
-      "source": "Kaguvi Hill",
-      "tags": ["M3", "core", "ending"]
-    },
-    {
-      "id": "tariro_draft",
-      "name": "Tariro's unpublished draft",
-      "description": "A 9,000-word investigation into Nightjar's government contracts. It needs one more named source. It might be you.",
-      "source": "Tariro Mupfumi",
-      "tags": ["M2", "civic_front", "exposure"]
-    },
-    {
-      "id": "mukoma_route",
-      "name": "Mukoma's route map",
-      "description": "A hand-drawn map of the old hunting paths around Kaguvi Hill, with a note: 'The fence has a blind spot at the dry riverbed.'",
-      "source": "Mukoma Simba",
-      "tags": ["M3", "access", "ally"]
-    },
-    {
-      "id": "nightjar_patrol",
-      "name": "Nightjar patrol schedule",
-      "description": "A copied duty roster showing when the Kaguvi Hill guards change shifts and which cameras go offline for maintenance.",
-      "source": "Tendai Chuma",
-      "tags": ["M2", "M3", "informant"]
+      "id": "victor_sighting",
+      "name": "Victor sighting",
+      "description": "A witness saw Victor Nhari at the terminus at 03:17. He watched the cleaner work as if noting a pattern he had seen before.",
+      "source": "Lovemore Chigumba",
+      "tags": ["M2", "ep02", "victor"]
     }
   ],
   "witnesses": [
     {
-      "id": "tendai",
-      "name": "Tendai Chuma",
-      "faction": "nightjar",
-      "role": "courier",
-      "loyalty": 0.35,
-      "fear": 0.65,
-      "canTestify": true,
-      "description": "A young contract driver. He saw the manifest being loaded and knows the name of the man who signed it."
-    },
-    {
-      "id": "fingers",
-      "name": "Farai 'Fingers' Nyandoro",
-      "faction": "ledger",
-      "role": "bagman",
-      "loyalty": 0.2,
+      "id": "lovemore",
+      "name": "Lovemore Chigumba",
+      "faction": "meridian",
+      "role": "porter",
+      "loyalty": 0.3,
       "fear": 0.8,
       "canTestify": true,
-      "description": "The money launderer. He can connect the payments to Mavhunga, but only if he believes he will survive the week."
+      "description": "Witnessed the locker kill. If sparing him wiser than killing him, the Shadow Network will wish he had gone with the others."
     },
     {
-      "id": "mhofu",
-      "name": "Captain Dereck Mhofu",
-      "faction": "nightjar",
-      "role": "field commander",
-      "loyalty": 0.6,
-      "fear": 0.2,
-      "canTestify": false,
-      "description": "The officer who runs Kaguvi Hill's security. He is not a true believer, but he is not a traitor either."
+      "id": "tafadzwa",
+      "name": "Tafadzwa Dube",
+      "faction": "ledger",
+      "role": "journalist",
+      "loyalty": 0.7,
+      "fear": 0.3,
+      "canTestify": true,
+      "description": "Pulled the tip about the Avondale safehouse. Did not know the source was Meridian. Is not sure he wants to know."
     }
   ],
   "epilogues": [
     {
+      "id": "interlude",
+      "title": "SEASON ONE CONTINUES",
+      "text": "Avondale burns behind you. Tafadzwa is in a bed in Mbare, alive because you carried him or because Amara was faster. Emmanuel Mhara is still missing. Victor Nhari is still walking the city. Somewhere in the dark, a file opens on a desk that does not exist: SUBJECT: TINASHE MUKASA — STATUS: ACTIVE THREAT. The Black Ledger is not found yet. The Lockout is not yet a blackout. Episode 04 — BROKEN TRUST — begins soon. But nobody sends word to run. They do not have to anymore."
+    },
+    {
       "id": "expose",
-      "title": "The Sunlight Option",
-      "text": "By morning, the Shadow Protocol is a headline. Tariro's story runs with documents, testimony and a photograph of the Kaguvi Hill estate. The Directorate denies everything, then announces an internal review, then loses three senior officers to early retirement. Nightjar's contracts are suspended. Gumbo is found dead in a safehouse outside Nyanga, a pistol in his hand and no note. Mavhunga disappears. Kuda watches the news in a Mbare garage, drinking tea, waiting for the next thing. The truth is out. It does not make anyone safe. But it makes the next lie harder."
+      "title": "THE LEDGER PUBLISHED",
+      "text": "Held for a later episode."
     },
     {
       "id": "control",
-      "title": "The Quiet Option",
-      "text": "The Shadow Protocol changes hands. Mavhunga is arrested by officers who do not know they are arresting the wrong man. Gumbo retires to a farm in Mashonaland. Nightjar gets a new board and the same contracts. Kuda keeps the core file and a list of names. The Directorate gives him a desk, a budget and a title nobody outside the building will ever hear. Nyasha stops calling. Tariro publishes a story without his name and never speaks to him again. The country is calmer. The shadows are better organised."
+      "title": "THE QUIET OPTION",
+      "text": "Held for a later episode."
     },
     {
       "id": "burn",
-      "title": "The Ash Option",
-      "text": "The estate burns for six hours. By the time the fire brigade reaches Kaguvi Hill, the archive room is a steel skeleton and the guest house is open to the sky. Gumbo is dead. Mavhunga is dead. The Shadow Protocol exists only in the memories of the people who built it. Tariro's story runs without documents. It is a good story. It changes nothing. Kuda walks away from the smoke with a burned hand and the names of the dead in his pocket. Zimbabwe is still standing. The truth is not."
+      "title": "ASH",
+      "text": "Held for a later episode."
     }
   ]
 }

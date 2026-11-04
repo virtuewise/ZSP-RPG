@@ -2,7 +2,7 @@
 
 **ZIMBABWE: THE SHADOW PROTOCOL** · 4 November 2026
 
-Canon: **`ZSP_SEASON_01_STORY_BIBLE.md` at the workspace root.** Milestone 4 is **Episode 01: The Message**. The interim arc is retired.
+Canon: **`ZSP_SEASON_01_STORY_BIBLE.md` at the repo root.** Milestone 4 is **Episode 01 — THE MESSAGE**; the slice now ends on the Season One interlude after Episode 03.
 
 Engine: **Unity 6000.6.8f1** (Unity 6). Android first, iOS later.
 
@@ -20,31 +20,31 @@ Engine: **Unity 6000.6.8f1** (Unity 6). Android first, iOS later.
 - **Pending:** licensed character acquisition; animation-event reassembly in Unity.
 
 ## Milestone 3 — First Harare environment
-- Msasa Freight Yard (M1) ← Mirage airport/storage kit.
-- Eastgate / Samora Machel Avenue (M2) ← Mirage town kit.
-- Kaguvi Hill estate (M3) ← Mountain kit.
+- Avondale flat + Mbare terminus (M1) ← Mirage airport/storage kit.
+- Chitungwiza township (M2) ← town kit; back to Avondale (M3).
 - Original textures only; branded/SDK/watermarked assets quarantined.
 - Audio: weapon/footstep/ambience/VO pass.
 - **Pending:** dressing pass, lighting, weather, LODs, Android profile.
 
 ## Milestone 4 — Mission 001
-- "The Courier's Warning" end-to-end: cinematic, briefing, Msasa approach, investigation, Tendai encounter, exfiltration, debrief.
+- "Episode 01 — THE MESSAGE" end-to-end: cinematic, briefing, Avondale approach, investigation, Lovemore encounter, exfiltration.
 - Dialogue, investigation, first combat encounter, mission conclusion.
 - Save/load mid-mission; deterministic replay.
-- **Pending:** import content into Unity scenes, wire dialogue/investigation UI.
+- **Done (content):** Episode 01–03 fully authored; SIS tests re-keyed; OIS registrar implemented in Unity (`UI/IdentityRegistrar.cs`).
+- **Pending:** wire identity registration and mission flows into the actual Unity scenes; Unity 6000.6.8f1 verification (this machine lacks the editor).
 
 ## Milestone 5 — Shadow Intelligence System
 - SIS driving enemy profile, entry security, witness/key-character persistence, contact exposure, dialogue variants and ending availability.
 - Deterministic replay; contradictions detected, never shown to the player.
-- **Done (by reference):** Python SIS slice, 14 tests; Unity C# port written.
+- **Done (by reference):** Python SIS slice, 22 tests; Unity C# port written.
 - **Pending:** wire SIS to Unity spawn points, verify Android build.
 
 ## Delivered so far
 - Clean project stripped of Commando branding/SDK/ads (no Commando assets ship).
 - Original brand kit: emblem, logo, splash, icon, crosshair, HUD bars.
-- Season 1 story data: Kuda, Nyasha, Tariro, Mukoma; Msasa, Eastgate, Kaguvi Hill; M1–M3.
-- Python SIS prototype: deterministic replay, contact exposure, witness persistence, adaptation budget.
-- Docs: story bible, prior art (Nemesis patent/AI Director/DDA/storylets), vertical slice.
+- Season 1 story data (canon): Tinashe, Amara, Muponda, Tafadzwa, Lovemore; Meridian / Directorate / The Ledger / Shadow Network; Avondale, Mbare terminus, Chitungwiza; Episodes 01–03.
+- Python SIS prototype: deterministic replay, contact exposure, witness persistence, adaptation budget, OIS.
+- Docs: story bible, prior art (Nemesis patent/AI Director/DDA/storylets), vertical slice, **EP01 development spec**, **OPERATIVE_IDENTITY_SYSTEM**.
 
 ## Explicitly later
 - Seasons 2+, live ops, co-op, purchases, leaderboards, analytics/IAP (never without consent).
@@ -54,6 +54,6 @@ Engine: **Unity 6000.6.8f1** (Unity 6). Android first, iOS later.
 
 ```powershell
 cd Prototype
-python -m pytest test_sis_v1.py -q   # 14 passed
+python -m pytest test_sis_v1.py -q   # 22 passed
 python sis_game.py --demo            # three-mission slice
 ```

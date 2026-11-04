@@ -9,7 +9,7 @@ A cinematic, mobile-first third-person espionage action RPG built on Unity 6.
 ```
 .
 ├── ZSP_SEASON_01_STORY_BIBLE.md   ← canonical Season One story (THE BLACK LEDGER)
-├── Docs/                          ← SIS design, prior art, vertical slice, roadmap
+├── Docs/                          ← SIS design, prior art, vertical slice, roadmap, EP01 spec, OIS, current docs
 ├── Prototype/                     ← Python SIS prototype (playable, tested)
 ├── Assets/                        ← Original art, content, scripts, resources
 │   ├── Art/                       ← Original emblem, logo, splash, icon, HUD bars
@@ -29,7 +29,7 @@ A cinematic, mobile-first third-person espionage action RPG built on Unity 6.
 cd Prototype
 python sis_game.py --demo
 python sis_game.py --interactive
-python -m pytest test_sis_v1.py -q   # 14 passed
+python -m pytest test_sis_v1.py -q   # 22 passed
 ```
 
 ## First run in the editor
@@ -48,6 +48,10 @@ python -m pytest test_sis_v1.py -q   # 14 passed
 - `ZSP_SEASON_01_STORY_BIBLE.md` — canon.
 - `Docs/PRIOR_ART.md` — Nemesis patent, AI Director, DDA, storylets; no novelty claim without counsel.
 - `Docs/STORY_BIBLE.md` — superseded interim arc (kept for history).
+
+## Scenes and prefabs
+
+Unity creates `.unity` scene files and `.prefab` assets only when the Editor opens the project; hand-authoring them is not reliable. The `ZSP` menu (`Create Bootstrap Scene`, `Create Player Rig`, `Create SIS Demo Scene`, `Create Vertical Slice Scene`) regenerates them deterministically on first open. `.meta` files are generated likewise, which is why scenes and prefabs are **not** committed yet — once the first scene/prefab is verified in the editor, those YAML assets will be committed.
 
 ## Licence posture
 

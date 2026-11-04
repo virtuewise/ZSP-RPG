@@ -13,7 +13,8 @@ Run:
 
 ```powershell
 python adaptive_mission_chain.py
-python -m pytest test_amc.py -q
+python -m pip install -r ../requirements-dev.txt
+python -m pytest -q
 ```
 
 The C# port keeps the same core concepts but is intentionally smaller; use the

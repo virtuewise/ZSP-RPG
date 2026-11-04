@@ -36,8 +36,8 @@ python -m pytest -q   # complete prototype suite
 ## First run in the editor
 
 1. Open `.` in Unity 6000.6.8f1 with Android Build Support.
-2. **ZSP → Create Bootstrap Scene**, **ZSP → Create Player Rig**, optionally **ZSP → Create SIS Demo Scene**.
-3. Press Play. The bootstrap streams the Mirage or Mountain bundle (local only — `zsp_assets.unity3d` is not in this repo).
+2. Run **ZSP → Create Bootstrap Scene**, **ZSP → Create Player Rig** and **ZSP → Create Vertical Slice Scene**; optionally run **ZSP → Create SIS Demo Scene**.
+3. Open `Assets/Scenes/Bootstrap.unity` and press Play to check bundle loading (the optional `zsp_assets.unity3d` is local-only and is not in this repo). Open `Assets/Scenes/VerticalSlice.unity` and press Play to test the generated blockout scene.
 
 `ZSP → Create Vertical Slice Scene` builds the current blockout scaffold, including the player, health, interactive identity-registration panel, EventSystem and fallback enemy spawner. The generated enemies have damage receivers and target the tagged player. These are source-level scaffolding features; complete the Unity play-mode and Android checks in `Docs/RELEASE_READINESS.md` before treating them as verified gameplay. The checked-in `Assets/Scenes/VerticalSlice.unity` and `Assets/Prefabs/Player.prefab` predate these generator fixes; regenerate them from the ZSP menu in Unity 6000.6.8f1 and commit the updated scene/prefab before testing.
 

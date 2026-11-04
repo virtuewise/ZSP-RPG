@@ -101,6 +101,7 @@ namespace ZSP.UI
                 director.Save();
             }
             Confirmed?.Invoke(identity);
+            gameObject.SetActive(false);
             Debug.Log($"[OIS] Identity registered: {identity.callsign} ({identity.displayName})");
         }
     }

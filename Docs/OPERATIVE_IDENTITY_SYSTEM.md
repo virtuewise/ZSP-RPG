@@ -10,7 +10,7 @@ Tinashe Mukasa is fixed. The player personalises how the campaign *identifies* t
 |---|---|---|---|
 | Display name | `Tinashe Mukasa` | ≤ 28 chars; letters/spaces/apostrophes/hyphens; homoglyph-normalised; block-list | Menus, mission records, campaign profile, save slots |
 | Callsign | `SHADOW-07` | ≤ 12 chars; `[A-Za-z0-9- ]`; upper cased; block-list | Intercepts, enemy intel files, briefings, debriefs, SIS audit, Victor's transmission |
-| Nickname | empty | ≤ 14 chars; plain text | Selected conversational barks (text only; never VO) |
+| Nickname | empty | ≤ 14 chars; Unicode letters/numbers, spaces, apostrophes, hyphens and periods only; rich-text markup rejected | Selected conversational barks (text only; never VO) |
 | Campaign profile | auto | read-only | Dossier screen |
 
 ## Validation rules

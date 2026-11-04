@@ -31,6 +31,7 @@ namespace ZSP.Player
         private float yaw;
         private float pitch;
         private bool aiming;
+        private readonly RaycastHit[] collisionHits = new RaycastHit[16];
 
         public bool IsAiming => aiming;
 
@@ -58,11 +59,18 @@ namespace ZSP.Player
             Vector3 backward = rotation * Vector3.back;
             Vector3 desired = pivot + backward * desiredDistance;
 
-            if (Physics.SphereCast(pivot, collisionRadius, backward, out RaycastHit hit,
-                    desiredDistance, collisionMask, QueryTriggerInteraction.Ignore))
+            int hitCount = Physics.SphereCastNonAlloc(pivot, collisionRadius, backward, collisionHits,
+                desiredDistance, collisionMask, QueryTriggerInteraction.Ignore);
+            float nearestObstacle = desiredDistance;
+            for (int i = 0; i < hitCount; i++)
             {
-                desired = pivot + backward * Mathf.Max(0.4f, hit.distance - 0.05f);
+                var collider = collisionHits[i].collider;
+                if (collider == null || collider.transform.root == target.root) continue;
+                if (collisionHits[i].distance < nearestObstacle)
+                    nearestObstacle = collisionHits[i].distance;
             }
+            if (nearestObstacle < desiredDistance)
+                desired = pivot + backward * Mathf.Max(0.4f, nearestObstacle - 0.05f);
 
             transform.position = Vector3.Lerp(transform.position, desired, Time.deltaTime * followLerp);
             transform.rotation = rotation;

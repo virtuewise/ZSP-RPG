@@ -39,6 +39,8 @@ python -m pytest -q   # complete prototype suite
 2. **ZSP → Create Bootstrap Scene**, **ZSP → Create Player Rig**, optionally **ZSP → Create SIS Demo Scene**.
 3. Press Play. The bootstrap streams the Mirage or Mountain bundle (local only — `zsp_assets.unity3d` is not in this repo).
 
+`ZSP → Create Vertical Slice Scene` builds the current blockout scaffold, including the player, health, interactive identity-registration panel, EventSystem and fallback enemy spawner. The generated enemies have damage receivers and target the tagged player. These are source-level scaffolding features; complete the Unity play-mode and Android checks in `Docs/RELEASE_READINESS.md` before treating them as verified gameplay.
+
 ## The two systems that make the game
 
 - **SHADOW INTELLIGENCE — Adaptive Enemy Doctrine** (`Docs/SHADOW_INTELLIGENCE_SYSTEM.md`, `Assets/Scripts/Narrative/ShadowIntelligenceSystem.cs`, `Prototype/sis_v1.py`): the game remembers how you enter, fight, trust and spare; it reconciles the story by replay and stays inside a fixed adaptation budget.

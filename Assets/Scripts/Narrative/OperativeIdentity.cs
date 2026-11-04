@@ -44,7 +44,7 @@ namespace ZSP.Narrative
             foreach (var ch in value)
             {
                 if (!(char.IsLetter(ch) || ch == ' ' || ch == '\'' || ch == '’' || ch == '-' || ch == '.'))
-                    throw new ArgumentException("Display name: letters, spaces, apostrophes and hyphens only.");
+                    throw new ArgumentException("Display name: letters, spaces, apostrophes, hyphens and periods only.");
             }
             CheckBlocked(value);
             return value;
@@ -65,6 +65,11 @@ namespace ZSP.Narrative
             value = Clean(value);
             if (value.Length == 0) return DefaultNickname;
             if (value.Length > 14) throw new ArgumentException("Nickname: 14 characters max.");
+            foreach (var ch in value)
+            {
+                if (!(char.IsLetterOrDigit(ch) || ch == ' ' || ch == '\'' || ch == '’' || ch == '-' || ch == '.'))
+                    throw new ArgumentException("Nickname: letters, numbers, spaces, apostrophes and hyphens only.");
+            }
             CheckBlocked(value);
             return value;
         }

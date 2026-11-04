@@ -59,7 +59,7 @@ def validate_display_name(value: str) -> str:
     if len(value) > 28:
         raise OISError("display name: 28 characters max")
     if not _letters_only(value):
-        raise OISError("display name: letters, spaces, apostrophes and hyphens only")
+        raise OISError("display name: letters, spaces, apostrophes, hyphens and periods only")
     _check_blocked(value)
     return value
 
@@ -80,6 +80,8 @@ def validate_nickname(value: str) -> str:
         return DEFAULT_NICKNAME
     if len(value) > 14:
         raise OISError("nickname: 14 characters max")
+    if not all(ch.isalpha() or ch.isdigit() or ch in " '\u2019-." for ch in value):
+        raise OISError("nickname: letters, numbers, spaces, apostrophes and hyphens only")
     _check_blocked(value)
     return value
 

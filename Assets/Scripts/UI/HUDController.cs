@@ -14,12 +14,14 @@ namespace ZSP.UI
         public ThirdPersonController controller;
         public WeaponSystem weapons;
         public StealthSystem stealth;
+        public PlayerHealth playerHealth;
 
         [Header("UI")]
         public Text ammoText;
         public Text detectionText;
         public Text objectiveText;
         public Image detectionFill;
+        public Text healthText;
 
         [Header("Colours")]
         public Color calmColor = new Color(0.2f, 0.8f, 0.3f);
@@ -29,13 +31,23 @@ namespace ZSP.UI
 
         private void Start()
         {
-            if (weapons != null) weapons.OnAmmoChanged += UpdateAmmo;
+            if (weapons != null)
+            {
+                weapons.OnAmmoChanged += UpdateAmmo;
+                UpdateAmmo(weapons.CurrentAmmo, weapons.CurrentMagazineSize);
+            }
+            if (playerHealth != null)
+            {
+                playerHealth.OnHealthChanged += UpdateHealth;
+                UpdateHealth(playerHealth.health);
+            }
             SetObjective(CurrentObjective);
         }
 
         private void OnDestroy()
         {
             if (weapons != null) weapons.OnAmmoChanged -= UpdateAmmo;
+            if (playerHealth != null) playerHealth.OnHealthChanged -= UpdateHealth;
         }
 
         private void Update()
@@ -56,7 +68,13 @@ namespace ZSP.UI
 
         private void UpdateAmmo(int current, int max)
         {
-            if (ammoText != null) ammoText.text = $"{current} / {max}";
+            if (ammoText != null) ammoText.text = $"AMMO {current} / {max}";
+        }
+
+        private void UpdateHealth(int current)
+        {
+            if (healthText != null && playerHealth != null)
+                healthText.text = $"HEALTH {current} / {playerHealth.maxHealth}";
         }
 
         public void SetObjective(string objective)

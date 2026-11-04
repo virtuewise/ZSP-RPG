@@ -179,7 +179,10 @@ namespace ZSP.EditorTools
             var canvas = new GameObject("Canvas");
             var uiCanvas = canvas.AddComponent<Canvas>();
             uiCanvas.renderMode = RenderMode.ScreenSpaceOverlay;
-            canvas.AddComponent<CanvasScaler>();
+            var canvasScaler = canvas.AddComponent<CanvasScaler>();
+            canvasScaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
+            canvasScaler.referenceResolution = new Vector2(1920f, 1080f);
+            canvasScaler.matchWidthOrHeight = 0.5f;
             canvas.AddComponent<GraphicRaycaster>();
 
             // Legacy UGUI controls require an EventSystem to receive pointer/keyboard input.

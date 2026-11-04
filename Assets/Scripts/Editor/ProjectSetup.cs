@@ -3,6 +3,7 @@ using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 using ZSP.Core;
 using ZSP.Player;
 using ZSP.Narrative;
@@ -159,6 +160,10 @@ namespace ZSP.EditorTools
             canvas.AddComponent<CanvasScaler>();
             canvas.AddComponent<GraphicRaycaster>();
 
+            // Legacy UGUI controls require an EventSystem to receive pointer/keyboard input.
+            if (Object.FindObjectOfType<EventSystem>() == null)
+                new GameObject("EventSystem", typeof(EventSystem), typeof(StandaloneInputModule));
+
             var spawner = new GameObject("EnemySpawner");
             spawner.AddComponent<EnemySpawner>();
 
@@ -189,7 +194,7 @@ namespace ZSP.EditorTools
             registrar.callsignField = CreateInputField(registrarPanel.transform, "Callsign", "Callsign (SHADOW-07)", new Vector2(0.04f, 0.74f), new Vector2(0.96f, 0.82f));
             registrar.nicknameField = CreateInputField(registrarPanel.transform, "Nickname", "Nickname (optional)", new Vector2(0.04f, 0.84f), new Vector2(0.96f, 0.92f));
             registrar.confirmButton = CreateButton(registrarPanel.transform, "Confirm", new Vector2(0.04f, 0.93f), new Vector2(0.96f, 0.99f));
-            registrar.confirmButton.onClick.AddListener(registrar.OnConfirm);
+            // IdentityRegistrar.Start() owns the confirmation listener; do not register it twice.
             registrar.RefreshPreview();
 
             const string path = "Assets/Scenes/VerticalSlice.unity";

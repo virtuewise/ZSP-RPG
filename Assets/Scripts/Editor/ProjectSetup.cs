@@ -211,14 +211,22 @@ namespace ZSP.EditorTools
             detectionFill.fillAmount = 0f;
             hud.detectionFill = detectionFill;
 
+            var informant = GameObject.CreatePrimitive(PrimitiveType.Capsule);
+            informant.name = "Informant";
+            informant.transform.position = new Vector3(4f, 0f, 4f);
+            var informantRenderer = informant.GetComponent<MeshRenderer>();
+            if (informantRenderer != null)
+                informantRenderer.sharedMaterial = new Material(Shader.Find("Standard")) { color = new Color(0.42f, 0.48f, 0.40f) };
+            informant.AddComponent<InterrogationTarget>();
+
             var spawner = new GameObject("EnemySpawner");
             var enemySpawner = spawner.AddComponent<EnemySpawner>();
             var spawnPoints = new Transform[3];
             var spawnPositions = new[]
             {
-                new Vector3(-7f, 0f, 8f),
-                new Vector3(7f, 0f, 8f),
-                new Vector3(0f, 0f, 12f)
+                new Vector3(-22f, 0f, 15f),
+                new Vector3(22f, 0f, 15f),
+                new Vector3(0f, 0f, 28f)
             };
             for (int i = 0; i < spawnPositions.Length; i++)
             {
@@ -250,6 +258,8 @@ namespace ZSP.EditorTools
 
             var registrar = registrarPanel.AddComponent<IdentityRegistrar>();
             registrar.director = director;
+            registrar.beginMissionOnConfirm = true;
+            registrar.missionToBeginOnConfirm = "M1";
             registrar.previewText = CreateUIText(registrarPanel.transform, "Preview", new Vector2(0.04f, 0.02f), new Vector2(0.96f, 0.55f), 16, new Color(0.93f, 0.86f, 0.60f));
             registrar.errorText = CreateUIText(registrarPanel.transform, "Error", new Vector2(0.04f, 0.55f), new Vector2(0.96f, 0.62f), 14, new Color(0.95f, 0.35f, 0.30f));
             registrar.displayNameField = CreateInputField(registrarPanel.transform, "DisplayName", "Display name", new Vector2(0.04f, 0.64f), new Vector2(0.96f, 0.72f));
@@ -257,7 +267,6 @@ namespace ZSP.EditorTools
             registrar.nicknameField = CreateInputField(registrarPanel.transform, "Nickname", "Nickname (optional)", new Vector2(0.04f, 0.84f), new Vector2(0.96f, 0.92f));
             registrar.confirmButton = CreateButton(registrarPanel.transform, "Confirm", new Vector2(0.04f, 0.93f), new Vector2(0.96f, 0.99f));
             // IdentityRegistrar.Start() owns the confirmation listener; do not register it twice.
-            registrar.Confirmed += _ => director.BeginMission("M1");
             registrar.RefreshPreview();
 
             const string path = "Assets/Scenes/VerticalSlice.unity";

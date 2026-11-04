@@ -16,7 +16,7 @@ It replaces the old "Milestones 0–2" plan in ROADMAP.md.
 - `GameBootstrap` loads `StreamingAssets/zsp_assets.unity3d` and streams `level3` (Mirage) or `level7` (Mountain).
 - Player can walk/run/jump/crouch/aim/shoot; orbit camera works; HUD shows ammo/detection/objective.
 - **Status:** Unity 6000.6.8f1 upgrade is complete and the project opens in that editor. Bootstrap/runtime scene execution, bundle streaming, gameplay acceptance and Android performance are still pending. The local environment bundle is not tracked in this public repository.
-- **Acceptance:** 30 seconds of uninterrupted third-person control on Android and Windows Editor; no console errors; save/load works.
+- **Acceptance:** 30 seconds of uninterrupted third-person control on Android and Windows Editor; no console errors; save/load works. Generated UI receives input; enemies acquire the tagged player, respect world-geometry line of sight, take damage and die.
 
 ### Milestone 2 — Character creation
 - Select a suitable rigged humanoid from the bundle (`Final Men`, `EnemyBadNew3/4`, `Character001`) as the reference; **no character modelling by the player** — clothing, weapons, capability only.

@@ -22,6 +22,8 @@ namespace ZSP.EditorTools
         public static void CreateBootstrapScene()
         {
             var scene = EditorSceneManager.NewScene(NewSceneSetup.DefaultGameObjects, NewSceneMode.Single);
+            var defaultCamera = Camera.main;
+            if (defaultCamera != null) Object.DestroyImmediate(defaultCamera.gameObject);
 
             var boot = new GameObject("GameBootstrap");
             boot.AddComponent<AssetBundleLoader>();
@@ -50,6 +52,7 @@ namespace ZSP.EditorTools
             var move = player.AddComponent<ThirdPersonController>();
 
             var camGo = new GameObject("PlayerCamera");
+            camGo.tag = "MainCamera";
             camGo.transform.SetParent(player.transform, false);
             camGo.transform.localPosition = new Vector3(0f, 1.55f, 0f);
             var cam = camGo.AddComponent<Camera>();
@@ -174,6 +177,7 @@ namespace ZSP.EditorTools
             stealth.controller = move;
             stealth.progression = progression;
             var camGo = new GameObject("PlayerCamera");
+            camGo.tag = "MainCamera";
             camGo.transform.SetParent(player.transform, false);
             camGo.transform.localPosition = new Vector3(0f, 1.55f, 0f);
             var cam = camGo.AddComponent<Camera>();

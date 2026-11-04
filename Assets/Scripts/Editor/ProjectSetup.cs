@@ -296,6 +296,7 @@ namespace ZSP.EditorTools
 
             const string path = "Assets/Scenes/VerticalSlice.unity";
             System.IO.Directory.CreateDirectory("Assets/Scenes");
+            AssetDatabase.SaveAssets();
             EditorSceneManager.SaveScene(scene, path);
             AssetDatabase.Refresh();
             Selection.activeGameObject = player;

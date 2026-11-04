@@ -11,7 +11,7 @@
 |---|---|---|---|
 | CodeQL C# extraction | CodeQL main-branch run 41851065355 | Passed | Source analysis completed with build-mode `none`; this is not a Unity compile. |
 | Python reference prototypes | Python main-branch run 41851066207 | 22 tests passed | SIS, OIS and adaptive mission-chain reference suite. |
-| Project content integrity | Python validation run 41850281041 | Passed | Unity version pin, JSON parsing, Resources/StreamingAssets byte parity, M1–M3 mission IDs and start/beat IDs. |
+| Project content integrity | Python main-branch run 41851066207 | Passed | Unity version pin, JSON parsing, Resources/StreamingAssets byte parity, M1–M3 mission IDs and start/beat IDs. |
 | Unity editor compilation | Not available in hosted workflow | Not verified | Requires Unity Editor 6000.6.8f1 and a configured licensed runner or local editor. |
 | Android build and device performance | Not available in hosted workflow | Not verified | Requires Android Build Support, a signing setup and physical-device profiling. |
 
@@ -45,11 +45,7 @@ Run the remaining checks on the machine with Unity **6000.6.8f1** and Android Bu
 
 ## Repository metadata correction
 
-The GitHub repository description currently still advertises Unity **2022.3.62f2**, while `ProjectSettings/ProjectVersion.txt`, the README and the production baseline specify **6000.6.8f1**. Correct the description in GitHub repository Settings → General to:
-
-> Development repository for ZIMBABWE: THE SHADOW PROTOCOL — a cinematic third-person mobile action RPG built with Unity 6 (6000.6.8f1), featuring an evolving espionage thriller, adaptive mission systems, stealth, combat and a fictionalised Zimbabwean world.
-
-The connected GitHub tools available in this session support repository reads and file/PR writes but do not expose repository-description editing. This metadata correction therefore remains a repository-owner settings action.
+The live repository metadata was checked on 4 November 2026 and already reports Unity **6000.6.8f1**. The repository description is current; no owner action is outstanding for this item.
 
 ## Working rule
 

@@ -80,6 +80,8 @@ def validate_nickname(value: str) -> str:
         return DEFAULT_NICKNAME
     if len(value) > 14:
         raise OISError("nickname: 14 characters max")
+    if not all(ch.isalpha() or ch.isdigit() or ch in " '\u2019-." for ch in value):
+        raise OISError("nickname: letters, numbers, spaces, apostrophes and hyphens only")
     _check_blocked(value)
     return value
 

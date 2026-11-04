@@ -26,6 +26,7 @@ Run the remaining checks on the machine with Unity **6000.6.8f1** and Android Bu
 - [ ] Open and play the Bootstrap scene.
 - [ ] Verify environment bundle loading; the optional local bundle is not part of this public repository.
 - [ ] Verify player movement, camera, weapon, stealth, melee, health and HUD interactions.
+- [ ] Verify EventSystem input, player/enemy tags, enemy target acquisition, line of sight, damage and death.
 - [ ] Verify OIS registration, save/load, dossier display and dialogue token substitution.
 - [ ] Play Episodes M1, M2 and M3 through the actual Unity scenes, not only the Python reference.
 - [ ] Verify SIS state changes reach enemy spawning, contact state, dialogue variants and mission transitions.

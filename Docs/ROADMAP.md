@@ -10,9 +10,9 @@ Engine: **Unity 6000.6.8f1** (Unity 6). Android first, iOS later.
 - Unity 6000.6.8f1 + Android Build Support installed locally.
 - `ZSP → Create Bootstrap Scene` → streams `level3` (Mirage) / `level7` (Mountain).
 - `ZSP → Create Player Rig` → third-person control, orbit camera, hitscan weapons.
-- **Done (by code):** controller, camera, weapons, stealth, HUD scripts, bundle loader.
+- **Done (by code):** controller, camera, weapons, stealth, HUD scripts, bundle loader; generated player health/tag; vertical-slice EventSystem and identity registrar; enemy health, player targeting and line-of-sight filtering.
 - **Done:** Unity 6000.6.8f1 is installed and the project opens in the editor.
-- **Pending:** run Bootstrap/SIS Demo/Vertical Slice, verify scene and bundle streaming, gameplay systems, and 30 fps on device.
+- **Pending:** regenerate the checked-in Player prefab and Vertical Slice scene from the updated menu tooling; run Bootstrap/SIS Demo/Vertical Slice; verify scene and bundle streaming, gameplay systems, and 30 fps on device.
 
 ## Milestone 2 — Character creation
 - Identify a licensed humanoid from the bundle; keep the rig, replace the face.
@@ -37,14 +37,15 @@ Engine: **Unity 6000.6.8f1** (Unity 6). Android first, iOS later.
 ## Milestone 5 — Shadow Intelligence System
 - SIS driving enemy profile, entry security, witness/key-character persistence, contact exposure, dialogue variants and ending availability.
 - Deterministic replay; contradictions detected, never shown to the player.
-- **Done (by reference):** Python SIS slice, 22 tests; Unity C# port written.
+- **Done (by reference):** Python SIS slice and 23-test full suite; Unity C# port written with beat/choice/branch transition validation.
 - **Pending:** wire SIS to Unity spawn points, verify Android build.
 
 ## Delivered so far
 - Clean project stripped of Commando branding/SDK/ads (no Commando assets ship).
 - Original brand kit: emblem, logo, splash, icon, crosshair, HUD bars.
 - Season 1 story data (canon): Tinashe, Amara, Muponda, Tafadzwa, Lovemore; Meridian / Directorate / The Ledger / Shadow Network; Avondale, Mbare terminus, Chitungwiza; Episodes 01–03.
-- Python SIS prototype: deterministic replay, contact exposure, witness persistence, adaptation budget, OIS.
+- Python SIS prototype: deterministic replay, contact exposure, witness persistence, adaptation budget, OIS; 23 tests pass in CI.
+- Static project validator: 9 mirrored JSON files, six missions, and mission/beat/choice/branch/next-mission references validated in CI.
 - Docs: story bible, prior art (Nemesis patent/AI Director/DDA/storylets), vertical slice, **EP01 development spec**, **OPERATIVE_IDENTITY_SYSTEM**.
 
 ## Explicitly later

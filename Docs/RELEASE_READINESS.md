@@ -9,8 +9,8 @@
 
 | Area | Evidence | Result | Scope / limitation |
 |---|---|---|---|
-| CodeQL C# extraction | Main run 41851065355; PR #4 run 41873657627 | Passed | Source analysis completed with build-mode `none`; this is not a Unity compile. |
-| Python reference prototypes | Main run 41851066207; PR #4 run 41873657630 | 23 tests passed on PR #4 | SIS, OIS and adaptive mission-chain reference suite. |
+| CodeQL C# extraction | Main run 41851065355; PR #4 run 41873657627; PR #5 run 41876391930 | Passed | Source analysis completed with build-mode `none`; this is not a Unity compile. |
+| Python reference prototypes | Main run 41851066207; PR #4 run 41873657630; PR #5 run 41876391912; PR #5 run 41876391912 | 23 tests passed on PR #4 | SIS, OIS and adaptive mission-chain reference suite. |
 | Project content integrity | PR #4 run 41873657630 | Passed | Unity version pin, 9 mirrored JSON files, 6 missions, Resources/StreamingAssets parity, mission/beat/choice/branch/next-mission references. |
 | Unity editor compilation | Not available in hosted workflow | Not verified | Requires Unity Editor 6000.6.8f1 and a configured licensed runner or local editor. |
 | Android build and device performance | Not available in hosted workflow | Not verified | Requires Android Build Support, a signing setup and physical-device profiling. |

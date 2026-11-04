@@ -216,10 +216,12 @@ namespace ZSP.EditorTools
             hud.weapons = weapons;
             hud.stealth = stealth;
             hud.playerHealth = health;
+            hud.interrogation = interrogation;
             hud.healthText = CreateUIText(canvas.transform, "HealthText", new Vector2(0.02f, 0.92f), new Vector2(0.22f, 0.99f), 18, new Color(0.95f, 0.88f, 0.68f));
             hud.ammoText = CreateUIText(canvas.transform, "AmmoText", new Vector2(0.78f, 0.92f), new Vector2(0.98f, 0.99f), 18, new Color(0.95f, 0.88f, 0.68f));
             hud.detectionText = CreateUIText(canvas.transform, "DetectionText", new Vector2(0.35f, 0.92f), new Vector2(0.65f, 0.99f), 16, Color.white);
             hud.objectiveText = CreateUIText(canvas.transform, "ObjectiveText", new Vector2(0.02f, 0.02f), new Vector2(0.58f, 0.10f), 16, Color.white);
+            hud.intelText = CreateUIText(canvas.transform, "IntelText", new Vector2(0.02f, 0.11f), new Vector2(0.58f, 0.22f), 15, new Color(0.86f, 0.88f, 0.78f));
 
             var detectionFillObject = new GameObject("DetectionFill", typeof(RectTransform), typeof(Image));
             detectionFillObject.transform.SetParent(canvas.transform, false);

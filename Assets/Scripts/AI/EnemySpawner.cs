@@ -52,25 +52,32 @@ namespace ZSP.AI
             return spawned;
         }
 
+        private Material GetRuntimeFallbackMaterial()
+        {
+            if (fallbackMaterial != null) return fallbackMaterial;
+            if (_runtimeFallbackMaterial != null) return _runtimeFallbackMaterial;
+
+            var shader = Shader.Find("Standard") ??
+                         Shader.Find("Universal Render Pipeline/Lit") ??
+                         Shader.Find("Sprites/Default");
+            if (shader != null)
+                _runtimeFallbackMaterial = new Material(shader) { color = new Color(0.16f, 0.19f, 0.17f) };
+            return _runtimeFallbackMaterial;
+        }
+
+        private void OnDestroy()
+        {
+            if (_runtimeFallbackMaterial != null) Destroy(_runtimeFallbackMaterial);
+        }
+
         private GameObject CreateFallback(Vector3 position)
         {
             var capsule = GameObject.CreatePrimitive(PrimitiveType.Capsule);
             capsule.transform.position = position + Vector3.up * 0.9f;
             capsule.transform.localScale = new Vector3(0.8f, 0.95f, 0.8f);
-            if (fallbackMaterial != null)
-            {
-                var renderer = capsule.GetComponent<MeshRenderer>();
-                if (renderer != null) renderer.sharedMaterial = fallbackMaterial;
-            }
-            else
-            {
-                var renderer = capsule.GetComponent<MeshRenderer>();
-                if (renderer != null)
-                {
-                    var material = new Material(Shader.Find("Standard")) { color = new Color(0.16f, 0.19f, 0.17f) };
-                    renderer.sharedMaterial = material;
-                }
-            }
+            var renderer = capsule.GetComponent<MeshRenderer>();
+            var material = GetRuntimeFallbackMaterial();
+            if (renderer != null && material != null) renderer.sharedMaterial = material;
             capsule.AddComponent<EnemyAI>();
             return capsule;
         }

@@ -39,6 +39,9 @@ namespace ZSP.EditorTools
         [MenuItem("ZSP/Create Player Rig")]
         public static void CreatePlayerRig()
         {
+            var existingPlayer = GameObject.Find("Player");
+            if (existingPlayer != null) Object.DestroyImmediate(existingPlayer);
+
             var existingCamera = Camera.main;
             if (existingCamera != null) Object.DestroyImmediate(existingCamera.gameObject);
 

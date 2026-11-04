@@ -25,11 +25,13 @@ Run the remaining checks on the machine with Unity **6000.6.8f1** and Android Bu
 - [ ] Regenerate `Assets/Prefabs/Player.prefab` and `Assets/Scenes/VerticalSlice.unity` from the updated ZSP menu commands; the checked-in copies predate the latest generator fixes and do not yet contain the EventSystem, current player tag/health or identity-registration panel. Commit the regenerated assets.
 - [ ] Run the ZSP project setup commands documented in the root README.
 - [ ] Open and play the Bootstrap scene.
-- [ ] Confirm the regenerated Vertical Slice scene contains the EventSystem, Player tag/health, identity registrar and enemy setup.
+- [ ] Confirm the regenerated Vertical Slice scene contains one MainCamera, EventSystem, Player tag/health, identity registrar, HUD, default rifle, melee/interrogation setup, informant and enemy spawn points.
 - [ ] Verify environment bundle loading; the optional local bundle is not part of this public repository.
-- [ ] Verify player movement, camera, weapon, stealth, melee, health and HUD interactions.
+- [ ] Verify player movement, camera, default service rifle, reload, stealth, melee, health and HUD interactions (health/ammo/detection/objective).
+- [ ] Confirm identity registration closes the panel and starts M1 conditions/enemy wave; interrogate the generated informant and verify the returned intel appears in the HUD.
 - [ ] Verify EventSystem input, player/enemy tags, enemy target acquisition, line of sight, damage and death.
 - [ ] Verify OIS registration, save/load, dossier display and dialogue token substitution.
+- [ ] Implement/connect the story beat runner, dialogue/choice UI, objective and interaction triggers, mission completion and episode transitions; the current MissionDirector resolves mission conditions and spawns the initial enemy wave but does not yet drive the full authored beat graph.
 - [ ] Play Episodes M1, M2 and M3 through the actual Unity scenes, not only the Python reference.
 - [ ] Verify SIS state changes reach enemy spawning, contact state, dialogue variants and mission transitions.
 - [ ] Build an Android development APK and test on at least one affordable/low-memory device and one mid-range device.

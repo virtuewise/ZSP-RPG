@@ -8,6 +8,7 @@ using ZSP.Core;
 using ZSP.Player;
 using ZSP.Narrative;
 using ZSP.AI;
+using ZSP.UI;
 
 namespace ZSP.EditorTools
 {
@@ -29,6 +30,7 @@ namespace ZSP.EditorTools
 
             const string path = "Assets/Scenes/Bootstrap.unity";
             System.IO.Directory.CreateDirectory("Assets/Scenes");
+            AssetDatabase.SaveAssets();
             EditorSceneManager.SaveScene(scene, path);
             AssetDatabase.Refresh();
             Debug.Log("[ZSP] Created " + path + ". Press Play to load the asset bundle.");
@@ -37,6 +39,16 @@ namespace ZSP.EditorTools
         [MenuItem("ZSP/Create Player Rig")]
         public static void CreatePlayerRig()
         {
+            var existingPlayer = GameObject.Find("Player");
+            if (existingPlayer != null) Object.DestroyImmediate(existingPlayer);
+
+            var existingCamera = Camera.main;
+            if (existingCamera != null) Object.DestroyImmediate(existingCamera.gameObject);
+
+            System.IO.Directory.CreateDirectory("Assets/Materials");
+            AssetDatabase.Refresh();
+            var playerMaterial = GetOrCreateMaterial("Assets/Materials/ZSP_Blockout_Player.mat", new Color(0.34f, 0.38f, 0.43f));
+
             var player = new GameObject("Player");
             player.tag = "Player";
             player.transform.position = Vector3.zero;
@@ -45,10 +57,12 @@ namespace ZSP.EditorTools
             cc.height = 1.8f;
             cc.radius = 0.35f;
             cc.center = new Vector3(0f, 0.9f, 0f);
+            CreatePlayerBlockoutVisual(player.transform, playerMaterial);
 
             var move = player.AddComponent<ThirdPersonController>();
 
             var camGo = new GameObject("PlayerCamera");
+            camGo.tag = "MainCamera";
             camGo.transform.SetParent(player.transform, false);
             camGo.transform.localPosition = new Vector3(0f, 1.55f, 0f);
             var cam = camGo.AddComponent<Camera>();
@@ -60,6 +74,19 @@ namespace ZSP.EditorTools
 
             var weapons = player.AddComponent<WeaponSystem>();
             weapons.aimCamera = cam;
+            weapons.weapons.Add(new WeaponStats
+            {
+                displayName = "Service Rifle",
+                damage = 34,
+                fireRate = 7.5f,
+                magazineSize = 30,
+                reloadTime = 2.1f,
+                range = 100f,
+                spreadDegrees = 0.8f,
+                automatic = true,
+                recoil = 0.8f
+            });
+            weapons.startingWeapon = 0;
 
             var progression = player.AddComponent<ProgressionSystem>();
             player.AddComponent<PlayerHealth>();
@@ -82,6 +109,7 @@ namespace ZSP.EditorTools
             audio.playOnAwake = false;
 
             System.IO.Directory.CreateDirectory("Assets/Prefabs");
+            AssetDatabase.SaveAssets();
             PrefabUtility.SaveAsPrefabAsset(player, "Assets/Prefabs/Player.prefab");
             AssetDatabase.Refresh();
 
@@ -119,17 +147,20 @@ namespace ZSP.EditorTools
         public static void CreateVerticalSliceScene()
         {
             var scene = EditorSceneManager.NewScene(NewSceneSetup.DefaultGameObjects, NewSceneMode.Single);
+            var defaultCamera = Camera.main;
+            if (defaultCamera != null) Object.DestroyImmediate(defaultCamera.gameObject);
 
-            var boot = new GameObject("GameBootstrap");
-            boot.AddComponent<AssetBundleLoader>();
-            var bootstrap = boot.AddComponent<GameBootstrap>();
-            bootstrap.autoLoadScene = false;
+            System.IO.Directory.CreateDirectory("Assets/Materials");
+            AssetDatabase.Refresh();
+            var groundMaterial = GetOrCreateMaterial("Assets/Materials/ZSP_Blockout_Ground.mat", new Color(0.32f, 0.30f, 0.26f));
+            var enemyMaterial = GetOrCreateMaterial("Assets/Materials/ZSP_Blockout_Enemy.mat", new Color(0.16f, 0.19f, 0.17f));
+            var informantMaterial = GetOrCreateMaterial("Assets/Materials/ZSP_Blockout_Informant.mat", new Color(0.42f, 0.48f, 0.40f));
+            var playerMaterial = GetOrCreateMaterial("Assets/Materials/ZSP_Blockout_Player.mat", new Color(0.34f, 0.38f, 0.43f));
 
             var ground = GameObject.CreatePrimitive(PrimitiveType.Plane);
             ground.name = "BlockoutGround";
             ground.transform.localScale = new Vector3(12f, 1f, 12f);
-            var mat = new Material(Shader.Find("Standard")) { color = new Color(0.32f, 0.30f, 0.26f) };
-            ground.GetComponent<MeshRenderer>().sharedMaterial = mat;
+            if (groundMaterial != null) ground.GetComponent<MeshRenderer>().sharedMaterial = groundMaterial;
 
             var player = new GameObject("Player");
             player.tag = "Player";
@@ -137,16 +168,31 @@ namespace ZSP.EditorTools
             cc.height = 1.8f;
             cc.radius = 0.35f;
             cc.center = new Vector3(0f, 0.9f, 0f);
+            CreatePlayerBlockoutVisual(player.transform, playerMaterial);
             var move = player.AddComponent<ThirdPersonController>();
             var progression = player.AddComponent<ProgressionSystem>();
             var weapons = player.AddComponent<WeaponSystem>();
             weapons.progression = progression;
+            weapons.weapons.Add(new WeaponStats
+            {
+                displayName = "Service Rifle",
+                damage = 34,
+                fireRate = 7.5f,
+                magazineSize = 30,
+                reloadTime = 2.1f,
+                range = 100f,
+                spreadDegrees = 0.8f,
+                automatic = true,
+                recoil = 0.8f
+            });
+            weapons.startingWeapon = 0;
             var health = player.AddComponent<PlayerHealth>();
             var stealth = player.AddComponent<StealthSystem>();
             stealth.playerRoot = player.transform;
             stealth.controller = move;
             stealth.progression = progression;
             var camGo = new GameObject("PlayerCamera");
+            camGo.tag = "MainCamera";
             camGo.transform.SetParent(player.transform, false);
             camGo.transform.localPosition = new Vector3(0f, 1.55f, 0f);
             var cam = camGo.AddComponent<Camera>();
@@ -156,24 +202,83 @@ namespace ZSP.EditorTools
             orbit.target = player.transform;
             move.cameraTransform = camGo.transform;
             weapons.aimCamera = cam;
+            var melee = player.AddComponent<MeleeSystem>();
+            melee.aimCamera = cam;
+            melee.controller = move;
+            var interrogation = player.AddComponent<InterrogationSystem>();
+            interrogation.aimCamera = cam;
 
             var canvas = new GameObject("Canvas");
             var uiCanvas = canvas.AddComponent<Canvas>();
             uiCanvas.renderMode = RenderMode.ScreenSpaceOverlay;
-            canvas.AddComponent<CanvasScaler>();
+            var canvasScaler = canvas.AddComponent<CanvasScaler>();
+            canvasScaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
+            canvasScaler.referenceResolution = new Vector2(1920f, 1080f);
+            canvasScaler.matchWidthOrHeight = 0.5f;
             canvas.AddComponent<GraphicRaycaster>();
 
             // Legacy UGUI controls require an EventSystem to receive pointer/keyboard input.
             if (Object.FindObjectOfType<EventSystem>() == null)
                 new GameObject("EventSystem", typeof(EventSystem), typeof(StandaloneInputModule));
 
+            // Wire a working HUD instead of leaving MissionDirector.hud unset.
+            var hud = canvas.AddComponent<HUDController>();
+            hud.controller = move;
+            hud.weapons = weapons;
+            hud.stealth = stealth;
+            hud.playerHealth = health;
+            hud.interrogation = interrogation;
+            hud.healthText = CreateUIText(canvas.transform, "HealthText", new Vector2(0.02f, 0.92f), new Vector2(0.22f, 0.99f), 18, new Color(0.95f, 0.88f, 0.68f));
+            hud.ammoText = CreateUIText(canvas.transform, "AmmoText", new Vector2(0.78f, 0.92f), new Vector2(0.98f, 0.99f), 18, new Color(0.95f, 0.88f, 0.68f));
+            hud.detectionText = CreateUIText(canvas.transform, "DetectionText", new Vector2(0.35f, 0.92f), new Vector2(0.65f, 0.99f), 16, Color.white);
+            hud.objectiveText = CreateUIText(canvas.transform, "ObjectiveText", new Vector2(0.02f, 0.02f), new Vector2(0.58f, 0.10f), 16, Color.white);
+            hud.intelText = CreateUIText(canvas.transform, "IntelText", new Vector2(0.02f, 0.11f), new Vector2(0.58f, 0.22f), 15, new Color(0.86f, 0.88f, 0.78f));
+
+            var detectionFillObject = new GameObject("DetectionFill", typeof(RectTransform), typeof(Image));
+            detectionFillObject.transform.SetParent(canvas.transform, false);
+            var detectionRect = detectionFillObject.GetComponent<RectTransform>();
+            detectionRect.anchorMin = new Vector2(0.40f, 0.89f);
+            detectionRect.anchorMax = new Vector2(0.60f, 0.91f);
+            detectionRect.offsetMin = Vector2.zero;
+            detectionRect.offsetMax = Vector2.zero;
+            var detectionFill = detectionFillObject.GetComponent<Image>();
+            detectionFill.type = Image.Type.Filled;
+            detectionFill.fillMethod = Image.FillMethod.Horizontal;
+            detectionFill.fillOrigin = (int)Image.OriginHorizontal.Left;
+            detectionFill.fillAmount = 0f;
+            hud.detectionFill = detectionFill;
+
+            var informant = GameObject.CreatePrimitive(PrimitiveType.Capsule);
+            informant.name = "Informant";
+            informant.transform.position = new Vector3(4f, 1f, 4f);
+            var informantRenderer = informant.GetComponent<MeshRenderer>();
+            if (informantRenderer != null && informantMaterial != null)
+                informantRenderer.sharedMaterial = informantMaterial;
+            informant.AddComponent<InterrogationTarget>();
+
             var spawner = new GameObject("EnemySpawner");
-            spawner.AddComponent<EnemySpawner>();
+            var enemySpawner = spawner.AddComponent<EnemySpawner>();
+            var spawnPoints = new Transform[3];
+            var spawnPositions = new[]
+            {
+                new Vector3(-22f, 0f, 15f),
+                new Vector3(22f, 0f, 15f),
+                new Vector3(0f, 0f, 28f)
+            };
+            for (int i = 0; i < spawnPositions.Length; i++)
+            {
+                var point = new GameObject($"EnemySpawn_{i + 1}");
+                point.transform.SetParent(spawner.transform, false);
+                point.transform.localPosition = spawnPositions[i];
+                spawnPoints[i] = point.transform;
+            }
+            enemySpawner.spawnPoints = spawnPoints;
+            enemySpawner.fallbackMaterial = enemyMaterial;
 
             var director = new GameObject("MissionDirector").AddComponent<MissionDirector>();
-            director.hud = null; // wire to a HUDController when the real UI exists
+            director.hud = hud;
             director.stealthSystem = stealth;
-            director.enemySpawner = spawner.GetComponent<EnemySpawner>();
+            director.enemySpawner = enemySpawner;
             director.autoStartFirstMission = false;
             director.playerHealth = health;
             director.identity = new OperativeIdentity();
@@ -191,6 +296,8 @@ namespace ZSP.EditorTools
 
             var registrar = registrarPanel.AddComponent<IdentityRegistrar>();
             registrar.director = director;
+            registrar.beginMissionOnConfirm = true;
+            registrar.missionToBeginOnConfirm = "M1";
             registrar.previewText = CreateUIText(registrarPanel.transform, "Preview", new Vector2(0.04f, 0.02f), new Vector2(0.96f, 0.55f), 16, new Color(0.93f, 0.86f, 0.60f));
             registrar.errorText = CreateUIText(registrarPanel.transform, "Error", new Vector2(0.04f, 0.55f), new Vector2(0.96f, 0.62f), 14, new Color(0.95f, 0.35f, 0.30f));
             registrar.displayNameField = CreateInputField(registrarPanel.transform, "DisplayName", "Display name", new Vector2(0.04f, 0.64f), new Vector2(0.96f, 0.72f));
@@ -202,10 +309,11 @@ namespace ZSP.EditorTools
 
             const string path = "Assets/Scenes/VerticalSlice.unity";
             System.IO.Directory.CreateDirectory("Assets/Scenes");
+            AssetDatabase.SaveAssets();
             EditorSceneManager.SaveScene(scene, path);
             AssetDatabase.Refresh();
             Selection.activeGameObject = player;
-            Debug.Log("[ZSP] Vertical slice scene created at " + path + ". Add HUD, spawn points and content hooks to finish the slice.");
+            Debug.Log("[ZSP] Vertical slice scene created at " + path + ". Confirm the operative identity to begin M1.");
         }
 
         [MenuItem("ZSP/Apply Project Identity")]
@@ -218,6 +326,43 @@ namespace ZSP.EditorTools
             AssetDatabase.SaveAssets();
             Debug.Log("[ZSP] Product identity set to 'Zimbabwe: The Shadow Protocol'.");
         }
+        private static void CreatePlayerBlockoutVisual(Transform parent, Material material)
+        {
+            var visual = GameObject.CreatePrimitive(PrimitiveType.Capsule);
+            visual.name = "PlayerBlockoutVisual";
+            visual.transform.SetParent(parent, false);
+            visual.transform.localPosition = new Vector3(0f, 0.9f, 0f);
+            visual.transform.localScale = new Vector3(0.7f, 0.9f, 0.7f);
+            var collider = visual.GetComponent<Collider>();
+            if (collider != null) Object.DestroyImmediate(collider);
+            var renderer = visual.GetComponent<MeshRenderer>();
+            if (renderer != null && material != null) renderer.sharedMaterial = material;
+        }
+
+        private static Material GetOrCreateMaterial(string assetPath, Color color)
+        {
+            var material = AssetDatabase.LoadAssetAtPath<Material>(assetPath);
+            if (material == null)
+            {
+                var shader = Shader.Find("Standard") ??
+                             Shader.Find("Universal Render Pipeline/Lit") ??
+                             Shader.Find("Sprites/Default");
+                if (shader == null)
+                {
+                    Debug.LogWarning("[ZSP] No compatible shader found for " + assetPath);
+                    return null;
+                }
+                material = new Material(shader) { color = color };
+                AssetDatabase.CreateAsset(material, assetPath);
+            }
+            else
+            {
+                material.color = color;
+                EditorUtility.SetDirty(material);
+            }
+            return material;
+        }
+
         private static Text CreateUIText(Transform parent, string name, Vector2 anchorMin, Vector2 anchorMax, int fontSize, Color color)
         {
             var go = new GameObject(name, typeof(RectTransform), typeof(Text));

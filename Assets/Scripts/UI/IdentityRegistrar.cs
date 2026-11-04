@@ -26,6 +26,8 @@ namespace ZSP.UI
         [Header("Binding")]
         public MissionDirector director;
         public bool autoBindOnStart = true;
+        public bool beginMissionOnConfirm = false;
+        public string missionToBeginOnConfirm = "M1";
 
         public event Action<OperativeIdentity> Confirmed;
 
@@ -99,8 +101,11 @@ namespace ZSP.UI
             {
                 director.identity = identity;
                 director.Save();
+                if (beginMissionOnConfirm && !string.IsNullOrEmpty(missionToBeginOnConfirm))
+                    director.BeginMission(missionToBeginOnConfirm);
             }
             Confirmed?.Invoke(identity);
+            gameObject.SetActive(false);
             Debug.Log($"[OIS] Identity registered: {identity.callsign} ({identity.displayName})");
         }
     }

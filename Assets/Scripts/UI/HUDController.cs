@@ -14,12 +14,16 @@ namespace ZSP.UI
         public ThirdPersonController controller;
         public WeaponSystem weapons;
         public StealthSystem stealth;
+        public PlayerHealth playerHealth;
+        public InterrogationSystem interrogation;
 
         [Header("UI")]
         public Text ammoText;
         public Text detectionText;
         public Text objectiveText;
         public Image detectionFill;
+        public Text healthText;
+        public Text intelText;
 
         [Header("Colours")]
         public Color calmColor = new Color(0.2f, 0.8f, 0.3f);
@@ -29,13 +33,25 @@ namespace ZSP.UI
 
         private void Start()
         {
-            if (weapons != null) weapons.OnAmmoChanged += UpdateAmmo;
+            if (weapons != null)
+            {
+                weapons.OnAmmoChanged += UpdateAmmo;
+                UpdateAmmo(weapons.CurrentAmmo, weapons.CurrentMagazineSize);
+            }
+            if (playerHealth != null)
+            {
+                playerHealth.OnHealthChanged += UpdateHealth;
+                UpdateHealth(playerHealth.health);
+            }
+            if (interrogation != null) interrogation.OnIntelReceived += UpdateIntel;
             SetObjective(CurrentObjective);
         }
 
         private void OnDestroy()
         {
             if (weapons != null) weapons.OnAmmoChanged -= UpdateAmmo;
+            if (playerHealth != null) playerHealth.OnHealthChanged -= UpdateHealth;
+            if (interrogation != null) interrogation.OnIntelReceived -= UpdateIntel;
         }
 
         private void Update()
@@ -56,7 +72,18 @@ namespace ZSP.UI
 
         private void UpdateAmmo(int current, int max)
         {
-            if (ammoText != null) ammoText.text = $"{current} / {max}";
+            if (ammoText != null) ammoText.text = $"AMMO {current} / {max}";
+        }
+
+        private void UpdateHealth(int current)
+        {
+            if (healthText != null && playerHealth != null)
+                healthText.text = $"HEALTH {current} / {playerHealth.maxHealth}";
+        }
+
+        private void UpdateIntel(string intel)
+        {
+            if (intelText != null) intelText.text = $"INTEL: {intel}";
         }
 
         public void SetObjective(string objective)

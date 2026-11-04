@@ -10,7 +10,7 @@ Engine: **Unity 6000.6.8f1** (Unity 6). Android first, iOS later.
 - Unity 6000.6.8f1 + Android Build Support installed locally.
 - `ZSP → Create Bootstrap Scene` → streams `level3` (Mirage) / `level7` (Mountain).
 - `ZSP → Create Player Rig` → third-person control, orbit camera, hitscan weapons.
-- **Done (by code):** controller, camera, weapons, stealth, HUD scripts, bundle loader; generated player health/tag; vertical-slice EventSystem and identity registrar; enemy health, player targeting and line-of-sight filtering.
+- **Done (by code):** controller, camera, default rifle, stealth, melee, interrogation, health/ammo/detection/objective HUD, bundle loader; generated player health/tag; vertical-slice EventSystem and identity registrar with M1 handoff; informant target, enemy health, player targeting and line-of-sight filtering.
 - **Done:** Unity 6000.6.8f1 is installed and the project opens in the editor.
 - **Pending:** regenerate the checked-in Player prefab and Vertical Slice scene from the updated menu tooling; run Bootstrap/SIS Demo/Vertical Slice; verify scene and bundle streaming, gameplay systems, and 30 fps on device.
 

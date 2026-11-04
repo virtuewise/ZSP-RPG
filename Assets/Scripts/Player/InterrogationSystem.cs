@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace ZSP.Player
@@ -17,6 +18,7 @@ namespace ZSP.Player
         public KeyCode interactKey = KeyCode.E;
 
         public string LastIntel { get; private set; }
+        public event Action<string> OnIntelReceived;
 
         private void Update()
         {
@@ -36,29 +38,10 @@ namespace ZSP.Player
             if (target == null) return false;
 
             LastIntel = target.GetIntel();
+            OnIntelReceived?.Invoke(LastIntel);
             Debug.Log($"[ZSP] Interrogation: {LastIntel}");
             return true;
         }
     }
 
-    public class InterrogationTarget : MonoBehaviour
-    {
-        [TextArea] public string[] intel = { "I only move cargo. I never saw the manifest." };
-        [Range(0f, 1f)] public float trust = 0.35f;
-        public float trustPerAnswer = 0.15f;
-
-        private int index;
-
-        public string GetIntel()
-        {
-            if (intel == null || intel.Length == 0) return "No useful information.";
-
-            // Higher trust reveals later (more valuable) entries first.
-            int start = Mathf.Clamp(Mathf.FloorToInt(trust * intel.Length), 0, intel.Length - 1);
-            string result = intel[Mathf.Clamp(index + start, 0, intel.Length - 1)];
-            index++;
-            trust = Mathf.Clamp01(trust + trustPerAnswer);
-            return result;
-        }
-    }
 }

@@ -1,4 +1,4 @@
-> **Status (4 Nov 2026):** The story content has been re-keyed to `ZSP_SEASON_01_STORY_BIBLE.md` — M1–M3 are Episodes 01–03, the cast is Tinashe/Amara/Muponda/Victor/Tafadzwa/Lovemore, and the slice ends on the Season One interlude. The engine and SIS logic are unchanged; only content and tests were re- pointed.
+> **Status (4 Nov 2026):** The story content has been re-keyed to `ZSP_SEASON_01_STORY_BIBLE.md` — M1–M3 are Episodes 01–03, the cast is Tinashe/Amara/Muponda/Victor/Tafadzwa/Lovemore, and the slice ends on the Season One interlude. The SIS behavioral model remains the same; Unity runtime scaffolding and content validation have since been expanded.
 
 # Vertical Slice — Acceptance, Build Order and Status
 
@@ -14,9 +14,9 @@ It replaces the old "Milestones 0–2" plan in ROADMAP.md.
 - `ZSP → Create Bootstrap Scene` → `Bootstrap.unity`.
 - `ZSP → Create Player Rig` → `Player.prefab`.
 - `GameBootstrap` loads `StreamingAssets/zsp_assets.unity3d` and streams `level3` (Mirage) or `level7` (Mountain).
-- Player can walk/run/jump/crouch/aim/shoot; orbit camera works; HUD shows ammo/detection/objective.
+- Player can walk/run/jump/crouch/aim/shoot/melee; orbit camera works; HUD shows health/ammo/detection/objective; the informant can be interrogated; confirming OIS identity starts the M1 mission context and initial enemy wave.
 - **Status:** Unity 6000.6.8f1 upgrade is complete and the project opens in that editor. Bootstrap/runtime scene execution, bundle streaming, gameplay acceptance and Android performance are still pending. The local environment bundle is not tracked in this public repository.
-- **Acceptance:** 30 seconds of uninterrupted third-person control on Android and Windows Editor; no console errors; save/load works. Generated UI receives input; enemies acquire the tagged player, respect world-geometry line of sight, take damage and die.
+- **Acceptance:** 30 seconds of uninterrupted third-person control on Android and Windows Editor; no console errors; save/load works. Generated UI receives input; identity confirmation starts M1; HUD health/ammo/detection/objective update; the informant returns intel; rifle/melee damage enemies; enemies acquire the tagged player, respect world-geometry line of sight, take damage and die.
 
 ### Milestone 2 — Character creation
 - Select a suitable rigged humanoid from the bundle (`Final Men`, `EnemyBadNew3/4`, `Character001`) as the reference; **no character modelling by the player** — clothing, weapons, capability only.
@@ -60,8 +60,8 @@ Includes: content loader, BICL, replay reconciliation, contact exposure graph, w
 ### Unity C# scaffolding
 - `MissionChain.cs`, `MissionChainDemo.cs` — legacy AMC prototype.
 - `StoryContent.cs`, `ShadowIntelligenceSystem.cs`, `SISSaveSystem.cs`, `ShadowIntelligenceDemo.cs` — SIS port (see below).
-- `MissionDirector.cs`, `EnemySpawner.cs`, `EnemyAI.cs`, `PlayerHealth.cs` — integration.
-- `ZSP/Create Bootstrap Scene`, `ZSP/Create Player Rig`, `ZSP/Create SIS Demo Scene` — one-click scaffolding.
+- `MissionDirector.cs`, `EnemySpawner.cs`, `EnemyAI.cs`, `PlayerHealth.cs`, `HUDController.cs`, `IdentityRegistrar.cs`, `InterrogationSystem.cs`, `InterrogationTarget.cs` — integration.
+- `ZSP/Create Bootstrap Scene`, `ZSP/Create Player Rig`, `ZSP/Create SIS Demo Scene`, `ZSP/Create Vertical Slice Scene` — one-click scaffolding.
 
 ### Content and art
 - `Assets/StreamingAssets/Content/` — Season One data: Tinashe, Amara, Muponda, Victor, Tafadzwa, Mhara, Lovemore; Meridian/Directorate/Ledger/Shadow Network; 7 locations; 8 intel; 2 witnesses; Episodes 01–03 fully authored (M1–M3).

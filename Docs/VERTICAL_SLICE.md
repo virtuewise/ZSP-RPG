@@ -14,7 +14,7 @@ It replaces the old "Milestones 0–2" plan in ROADMAP.md.
 - `ZSP → Create Bootstrap Scene` → `Bootstrap.unity`.
 - `ZSP → Create Player Rig` → `Player.prefab`.
 - `GameBootstrap` loads `StreamingAssets/zsp_assets.unity3d` and streams `level3` (Mirage) or `level7` (Mountain).
-- Player can walk/run/jump/crouch/aim/shoot; orbit camera works; HUD shows ammo/detection/objective.
+- Player can walk/run/jump/crouch/aim/shoot/melee; orbit camera works; HUD shows health/ammo/detection/objective; the informant can be interrogated; confirming OIS identity starts M1.
 - **Status:** Unity 6000.6.8f1 upgrade is complete and the project opens in that editor. Bootstrap/runtime scene execution, bundle streaming, gameplay acceptance and Android performance are still pending. The local environment bundle is not tracked in this public repository.
 - **Acceptance:** 30 seconds of uninterrupted third-person control on Android and Windows Editor; no console errors; save/load works. Generated UI receives input; enemies acquire the tagged player, respect world-geometry line of sight, take damage and die.
 
@@ -60,8 +60,8 @@ Includes: content loader, BICL, replay reconciliation, contact exposure graph, w
 ### Unity C# scaffolding
 - `MissionChain.cs`, `MissionChainDemo.cs` — legacy AMC prototype.
 - `StoryContent.cs`, `ShadowIntelligenceSystem.cs`, `SISSaveSystem.cs`, `ShadowIntelligenceDemo.cs` — SIS port (see below).
-- `MissionDirector.cs`, `EnemySpawner.cs`, `EnemyAI.cs`, `PlayerHealth.cs` — integration.
-- `ZSP/Create Bootstrap Scene`, `ZSP/Create Player Rig`, `ZSP/Create SIS Demo Scene` — one-click scaffolding.
+- `MissionDirector.cs`, `EnemySpawner.cs`, `EnemyAI.cs`, `PlayerHealth.cs`, `HUDController.cs`, `IdentityRegistrar.cs`, `InterrogationSystem.cs`, `InterrogationTarget.cs` — integration.
+- `ZSP/Create Bootstrap Scene`, `ZSP/Create Player Rig`, `ZSP/Create SIS Demo Scene`, `ZSP/Create Vertical Slice Scene` — one-click scaffolding.
 
 ### Content and art
 - `Assets/StreamingAssets/Content/` — Season One data: Tinashe, Amara, Muponda, Victor, Tafadzwa, Mhara, Lovemore; Meridian/Directorate/Ledger/Shadow Network; 7 locations; 8 intel; 2 witnesses; Episodes 01–03 fully authored (M1–M3).

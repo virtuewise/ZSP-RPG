@@ -55,7 +55,7 @@ def test_nickname_is_plain_text_not_rich_text_markup():
     with pytest.raises(OISError):
         validate_nickname("<color=red>Ghost</color>")
     with pytest.raises(OISError):
-        validate_nickname("Ghost\\x00ADMIN")
+        validate_nickname("Ghost" + chr(0) + "ADMIN")
 
 
 def test_empty_fields_fall_back_to_defaults():

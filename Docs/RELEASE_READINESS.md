@@ -9,18 +9,19 @@
 
 | Area | Evidence | Result | Scope / limitation |
 |---|---|---|---|
-| CodeQL C# extraction | CodeQL PR run 41848010650 | Passed | Source analysis completed with build-mode `none`; this is not a Unity compile. |
-| Python reference prototypes | Python validation run 41850281041 | 22 tests passed | SIS, OIS and adaptive mission-chain reference suite. |
+| CodeQL C# extraction | CodeQL main-branch run 41851065355 | Passed | Source analysis completed with build-mode `none`; this is not a Unity compile. |
+| Python reference prototypes | Python main-branch run 41851066207 | 22 tests passed | SIS, OIS and adaptive mission-chain reference suite. |
 | Project content integrity | Python validation run 41850281041 | Passed | Unity version pin, JSON parsing, Resources/StreamingAssets byte parity, M1–M3 mission IDs and start/beat IDs. |
 | Unity editor compilation | Not available in hosted workflow | Not verified | Requires Unity Editor 6000.6.8f1 and a configured licensed runner or local editor. |
 | Android build and device performance | Not available in hosted workflow | Not verified | Requires Android Build Support, a signing setup and physical-device profiling. |
 
 ## Local Unity 6 acceptance checklist
 
-Run this on a machine with Unity **6000.6.8f1** and Android Build Support installed.
+**Confirmed completed:** Unity Editor **6000.6.8f1** is installed and the project opens in that editor. This confirms the editor/project-open step only; it does not confirm a clean compile, scene execution, or Android build.
 
-- [ ] Open the repository root as the Unity project; allow package resolution to finish.
-- [ ] Confirm the Console has no compile errors.
+Run the remaining checks on the machine with Unity **6000.6.8f1** and Android Build Support installed.
+
+- [ ] Allow package resolution to finish and confirm the Console has no compile errors.
 - [ ] Run the ZSP project setup commands documented in the root README.
 - [ ] Open and play the Bootstrap scene.
 - [ ] Verify environment bundle loading; the optional local bundle is not part of this public repository.

@@ -67,6 +67,7 @@ def main() -> None:
     mission_files = sorted(mission_dir.glob("*.json"))
     mission_ids: set[str] = set()
     missions_by_id: dict[str, dict] = {}
+    beat_next_missions: list[tuple[str, str, str]] = []
     for path in mission_files:
         payload = json.loads(path.read_text(encoding="utf-8"))
         for mission in payload.get("missions", []):
@@ -88,13 +89,31 @@ def main() -> None:
                 fail(f"Mission {mission_id} has missing or empty beat IDs")
             if len(beat_ids) != len(set(beat_ids)):
                 fail(f"Mission {mission_id} has duplicate beat IDs")
-            if mission.get("start") not in set(beat_ids):
+            known_beats = set(beat_ids)
+            if mission.get("start") not in known_beats:
                 fail(f"Mission {mission_id} start beat does not exist")
             known_routes = location_routes[location_id]
             for beat in beats:
+                beat_id = beat["id"]
+                next_beat = beat.get("next")
+                if next_beat and next_beat not in known_beats:
+                    fail(f"Mission {mission_id} beat {beat_id} points to missing beat {next_beat!r}")
+                next_mission = beat.get("nextMission")
+                if next_mission:
+                    beat_next_missions.append((mission_id, beat_id, next_mission))
                 unknown_routes = sorted(set(beat.get("routes", [])) - known_routes)
                 if unknown_routes:
-                    fail(f"Mission {mission_id} beat {beat['id']} references unknown routes: {unknown_routes}")
+                    fail(f"Mission {mission_id} beat {beat_id} references unknown routes: {unknown_routes}")
+                for choice in beat.get("choices", []):
+                    choice_id = choice.get("id", "<unknown>")
+                    choice_next = choice.get("next")
+                    if choice_next and choice_next not in known_beats:
+                        fail(f"Mission {mission_id} choice {beat_id}/{choice_id} points to missing beat {choice_next!r}")
+                    for branch_name in ("success", "failure"):
+                        branch = choice.get(branch_name) or {}
+                        branch_next = branch.get("next")
+                        if branch_next and branch_next not in known_beats:
+                            fail(f"Mission {mission_id} choice {beat_id}/{choice_id}/{branch_name} points to missing beat {branch_next!r}")
 
     expected_missions = {"M1", "M2", "M3"}
     if mission_ids != expected_missions:
@@ -103,6 +122,9 @@ def main() -> None:
         next_mission = mission.get("nextMission")
         if next_mission and next_mission not in mission_ids:
             fail(f"Mission {mission_id} points to missing next mission {next_mission}")
+    for mission_id, beat_id, next_mission in beat_next_missions:
+        if next_mission not in mission_ids:
+            fail(f"Mission {mission_id} beat {beat_id} points to missing next mission {next_mission}")
 
     print(f"PASS: Unity {EXPECTED_UNITY}; {len(resource_json)} mirrored JSON files valid; "
           f"{len(mission_ids)} missions, locations, route IDs, character references and beat identifiers validated.")

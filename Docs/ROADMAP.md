@@ -11,7 +11,8 @@ Engine: **Unity 6000.6.8f1** (Unity 6). Android first, iOS later.
 - `ZSP → Create Bootstrap Scene` → streams `level3` (Mirage) / `level7` (Mountain).
 - `ZSP → Create Player Rig` → third-person control, orbit camera, hitscan weapons.
 - **Done (by code):** controller, camera, weapons, stealth, HUD scripts, bundle loader.
-- **Pending:** open project in Editor, verify scene streaming and 30fps on device.
+- **Done:** Unity 6000.6.8f1 is installed and the project opens in the editor.
+- **Pending:** run Bootstrap/SIS Demo/Vertical Slice, verify scene and bundle streaming, gameplay systems, and 30 fps on device.
 
 ## Milestone 2 — Character creation
 - Identify a licensed humanoid from the bundle; keep the rig, replace the face.
@@ -31,7 +32,7 @@ Engine: **Unity 6000.6.8f1** (Unity 6). Android first, iOS later.
 - Dialogue, investigation, first combat encounter, mission conclusion.
 - Save/load mid-mission; deterministic replay.
 - **Done (content):** Episode 01–03 fully authored; SIS tests re-keyed; OIS registrar implemented in Unity (`UI/IdentityRegistrar.cs`).
-- **Pending:** wire identity registration and mission flows into the actual Unity scenes; Unity 6000.6.8f1 verification (this machine lacks the editor).
+- **Pending:** wire identity registration and mission flows into the actual Unity scenes; complete in-editor runtime and Android acceptance. The Unity 6 project-open check is complete, but this is not a gameplay or build verification.
 
 ## Milestone 5 — Shadow Intelligence System
 - SIS driving enemy profile, entry security, witness/key-character persistence, contact exposure, dialogue variants and ending availability.

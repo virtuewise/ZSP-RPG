@@ -21,6 +21,7 @@ namespace ZSP.AI
         public Material fallbackMaterial;
 
         private readonly List<GameObject> _spawnedEnemies = new();
+        private Material _runtimeFallbackMaterial;
 
         public int Spawn(int count)
         {

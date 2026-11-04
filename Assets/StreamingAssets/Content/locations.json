@@ -296,6 +296,44 @@
           "description": "Mhara dumped his phone here. The culvert is still cold."
         }
       ]
+    },
+    {
+      "id": "bulawayo_yard",
+      "name": "Bulawayo Rail Yard",
+      "region": "Bulawayo",
+      "description": "A freight yard behind the old station. Rust, diesel, and a hotel with too many mirrors. Meridian runs a courier through it on Thursdays.",
+      "routes": [
+        {
+          "id": "rail_yard",
+          "name": "Rail yard",
+          "kind": "front",
+          "baseDifficulty": 4,
+          "stealth": 2,
+          "speed": 3,
+          "risk": 4,
+          "description": "Open ground, floodlights and a guard post that never sleeps."
+        },
+        {
+          "id": "hotel",
+          "name": "Hotel corridor",
+          "kind": "social",
+          "baseDifficulty": 3,
+          "stealth": 3,
+          "speed": 2,
+          "risk": 2,
+          "description": "A small hotel where the informant takes his tea. Cameras in the lobby, none in the stairwell."
+        },
+        {
+          "id": "culvert",
+          "name": "Storm culvert",
+          "kind": "stealth",
+          "baseDifficulty": 3,
+          "stealth": 4,
+          "speed": 1,
+          "risk": 2,
+          "description": "The old drainage line under the yard. Victor's people never watch it."
+        }
+      ]
     }
   ]
 }

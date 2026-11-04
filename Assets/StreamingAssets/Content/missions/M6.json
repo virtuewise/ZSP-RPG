@@ -1,0 +1,149 @@
+{
+  "schemaVersion": 1,
+  "missions": [
+    {
+      "id": "M6",
+      "order": 6,
+      "title": "Episode 06 - THE INFORMANT",
+      "location": "bulawayo_yard",
+      "premise": "A low-level Meridian archivist wants out. He has one page of the Black Ledger: a list of threats with disposal dates. Victor Nhari is already in the hotel.",
+      "invariants": ["page_recovered", "victor_encountered"],
+      "objectives": [
+        "Reach the informant in Bulawayo",
+        "Get the ledger page out",
+        "Survive Victor Nhari"
+      ],
+      "contacts": ["amara", "muponda", "tafadzwa"],
+      "witnesses": ["lovemore"],
+      "keyCharacters": ["victor"],
+      "endings": [],
+      "start": "M6_OPEN",
+      "beats": [
+        {
+          "id": "M6_OPEN",
+          "type": "dialogue",
+          "speaker": "amara",
+          "text": "Bulawayo rail yard. The informant is a Meridian archivist who wants out. He has one page of the Ledger. Victor Nhari is in the hotel, {OIS_CALLSIGN}. He has been there since Tuesday.",
+          "choices": [
+            {
+              "id": "go",
+              "text": "Get me to the yard.",
+              "effects": {
+                "flags": ["accepted_informant"],
+                "behavior": [{"action": "trust_contact", "target": "amara", "value": 1}]
+              },
+              "next": "M6_ENTRY"
+            },
+            {
+              "id": "tafadzwa",
+              "text": "Bring Tafadzwa. He should see this.",
+              "effects": {
+                "trust": [{"contact": "tafadzwa", "delta": 0.15}],
+                "flags": ["tafadzwa_present"],
+                "behavior": [{"action": "trust_contact", "target": "tafadzwa", "value": 1}]
+              },
+              "next": "M6_ENTRY"
+            }
+          ]
+        },
+        {
+          "id": "M6_ENTRY",
+          "type": "route",
+          "text": "Bulawayo rail yard. The rail yard is open ground. The hotel corridor has cameras in the lobby. The storm culvert under the yard is unwatched.",
+          "routes": ["rail_yard", "hotel", "culvert"],
+          "next": "M6_INFORMANT"
+        },
+        {
+          "id": "M6_INFORMANT",
+          "type": "choice",
+          "speaker": "amara",
+          "text": "The informant is in the hotel bar. He has the page folded under his newspaper. He is sweating. He is not going to leave the hotel alive unless someone makes it so.",
+          "choices": [
+            {
+              "id": "empathy",
+              "text": "Get him out before Victor arrives.",
+              "check": {"stat": "empathy", "difficulty": 2},
+              "success": {
+                "text": "You get the page. He is crying. He is also, somehow, lighter.",
+                "effects": {
+                  "intel": ["ledger_page", "tafadzwa_tip"],
+                  "flags": ["page_recovered"],
+                  "trust": [{"contact": "amara", "delta": 0.1}],
+                  "behavior": [{"action": "interrogate", "target": "informant", "value": 1}]
+                },
+                "next": "M6_VICTOR"
+              },
+              "failure": {
+                "text": "He panics and runs for the door. You catch him. The page is in your hand. He is not.",
+                "effects": {
+                  "intel": ["ledger_page"],
+                  "flags": ["page_recovered", "informant_lost"],
+                  "heat": 1
+                },
+                "next": "M6_VICTOR"
+              }
+            },
+            {
+              "id": "pressure",
+              "text": "Give me the page. Now.",
+              "check": {"stat": "intimidation", "difficulty": 2},
+              "success": {
+                "text": "He hands it over without another word. He knows what he has done.",
+                "effects": {
+                  "intel": ["ledger_page"],
+                  "flags": ["page_recovered", "informant_terrified"],
+                  "behavior": [{"action": "interrogate", "target": "informant", "value": 1}]
+                },
+                "next": "M6_VICTOR"
+              },
+              "failure": {
+                "text": "He screams. The lobby turns. You have the page but you have also drawn the room.",
+                "effects": {
+                  "intel": ["ledger_page"],
+                  "flags": ["page_recovered", "informant_lost"],
+                  "heat": 2,
+                  "health": -1
+                },
+                "next": "M6_VICTOR"
+              }
+            }
+          ]
+        },
+        {
+          "id": "M6_VICTOR",
+          "type": "choice",
+          "speaker": "victor",
+          "text": "Victor Nhari walks into the bar. He does not draw. He kills the informant with a hand on the shoulder and a word you cannot hear. He looks at you the way a man recognises a grave. Then he leaves.",
+          "choices": [
+            {
+              "id": "pursue",
+              "text": "Follow him.",
+              "effects": {
+                "flags": ["victor_pursued", "victor_encountered"],
+                "heat": 2,
+                "behavior": [{"action": "gunfight", "target": "victor", "value": 1}]
+              },
+              "next": "M6_END"
+            },
+            {
+              "id": "let_go",
+              "text": "Let him go. He let you go.",
+              "effects": {
+                "flags": ["victor_encountered"],
+                "trust": [{"contact": "amara", "delta": 0.05}],
+                "behavior": [{"action": "stealth_avoid", "target": "victor", "value": 1}]
+              },
+              "next": "M6_END"
+            }
+          ]
+        },
+        {
+          "id": "M6_END",
+          "type": "mission_end",
+          "text": "The page is in your pocket. The first name on it is your own. Bulawayo is behind you, and Victor is somewhere ahead.",
+          "nextMission": ""
+        }
+      ]
+    }
+  ]
+}

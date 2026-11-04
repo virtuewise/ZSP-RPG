@@ -1,0 +1,161 @@
+{
+  "schemaVersion": 1,
+  "missions": [
+    {
+      "id": "M4",
+      "order": 4,
+      "title": "Episode 04 - BROKEN TRUST",
+      "location": "avondale_safehouse",
+      "premise": "Mhara's phone holds a single encrypted folder and a photograph of Tinashe dated three years ago. At an NSD checkpoint, his clearance is revoked in real time. Amara has to get him out.",
+      "invariants": ["broken_trust", "clearance_revoked"],
+      "objectives": [
+        "Survive the NSD checkpoint",
+        "Learn who revoked the clearance",
+        "Follow the MSG-09 money"
+      ],
+      "contacts": ["amara", "muponda"],
+      "witnesses": ["lovemore"],
+      "keyCharacters": ["mhara", "victor"],
+      "endings": [],
+      "start": "M4_OPEN",
+      "beats": [
+        {
+          "id": "M4_OPEN",
+          "type": "dialogue",
+          "speaker": "amara",
+          "text": "The phone unlocks. One folder. One photograph of you, dated three years ago, with a Meridian watermark. They knew you were coming before you did. {OIS_CALLSIGN}, I am going to the checkpoint myself. Do not run.",
+          "choices": [
+            {
+              "id": "surrender",
+              "text": "I'll go in. Let them ask.",
+              "effects": {
+                "flags": ["nsd_surrendered"],
+                "behavior": [{"action": "trust_contact", "target": "amara", "value": 1}]
+              },
+              "next": "M4_CHECKPOINT"
+            },
+            {
+              "id": "evade",
+              "text": "Evade the checkpoint. I am not going inside.",
+              "effects": {
+                "flags": ["nsd_evaded"],
+                "behavior": [{"action": "stealth_avoid", "target": "nsd_checkpoint", "value": 1}]
+              },
+              "next": "M4_CHECKPOINT"
+            },
+            {
+              "id": "run",
+              "text": "Run. Now.",
+              "effects": {
+                "flags": ["nsd_ran"],
+                "heat": 2,
+                "behavior": [{"action": "gunfight", "target": "nsd_checkpoint", "value": 1}]
+              },
+              "next": "M4_CHECKPOINT"
+            }
+          ]
+        },
+        {
+          "id": "M4_CHECKPOINT",
+          "type": "combat",
+          "text": "The checkpoint is a fluorescent room with a clock that is always slightly wrong. A man reads from a script Tinashe wrote three years ago. His clearance is revoked in real time.",
+          "enemies": 3,
+          "choices": [
+            {
+              "id": "truth",
+              "text": "Tell the truth. All of it.",
+              "check": {"stat": "empathy", "difficulty": 2},
+              "success": {
+                "text": "The interrogator blinks once. 'You are telling me you were the leak.' 'No,' Tinashe says. 'I am telling you I was the container.'",
+                "effects": {
+                  "flags": ["truth_told", "clearance_revoked"],
+                  "trust": [{"contact": "amara", "delta": 0.1}],
+                  "behavior": [{"action": "interrogate", "target": "nsd_interrogator", "value": 1}]
+                },
+                "next": "M4_BREAKOUT"
+              },
+              "failure": {
+                "text": "He reads back the script. Tinashe says nothing. The clock keeps being wrong.",
+                "effects": {
+                  "flags": ["silence_held", "clearance_revoked"],
+                  "trust": [{"contact": "amara", "delta": -0.05}]
+                },
+                "next": "M4_BREAKOUT"
+              }
+            },
+            {
+              "id": "silence",
+              "text": "Say nothing.",
+              "effects": {
+                "flags": ["silence_held", "clearance_revoked"],
+                "trust": [{"contact": "amara", "delta": -0.05}]
+              },
+              "next": "M4_BREAKOUT"
+            }
+          ]
+        },
+        {
+          "id": "M4_BREAKOUT",
+          "type": "chase",
+          "text": "Amara breaks the line with a Directorate contractor truck that goes cold at the river crossing. The Director on the phone is not Muponda. Or is.",
+          "choices": [
+            {
+              "id": "drive",
+              "text": "Take the truck and go.",
+              "check": {"stat": "driving", "difficulty": 2},
+              "success": {
+                "text": "The truck crosses the river before the boom comes down. Amara is in the passenger seat, reading the folder.",
+                "effects": {
+                  "flags": ["escaped_nsd"],
+                  "trust": [{"contact": "amara", "delta": 0.15}],
+                  "behavior": [{"action": "vehicle_chase", "target": "nsd_checkpoint", "value": 1}]
+                },
+                "next": "M4_END"
+              },
+              "failure": {
+                "text": "The truck stalls on the bridge. They are out and gone on foot, but the phone is gone and the file is gone.",
+                "effects": {
+                  "flags": ["escaped_nsd"],
+                  "health": -1,
+                  "heat": 2,
+                  "behavior": [{"action": "vehicle_chase", "target": "nsd_checkpoint", "value": 1}]
+                },
+                "next": "M4_END"
+              }
+            },
+            {
+              "id": "sneak",
+              "text": "Leave the truck. Walk out.",
+              "check": {"stat": "stealth", "difficulty": 2},
+              "success": {
+                "text": "They walk out through the contractor yard as if they belong to it. The phone is in Amara's pocket.",
+                "effects": {
+                  "flags": ["escaped_nsd"],
+                  "trust": [{"contact": "amara", "delta": 0.1}],
+                  "behavior": [{"action": "stealth_avoid", "target": "nsd_checkpoint", "value": 1}]
+                },
+                "next": "M4_END"
+              },
+              "failure": {
+                "text": "A guard checks their face against a list. They run. The phone makes it. They do not.",
+                "effects": {
+                  "flags": ["escaped_nsd"],
+                  "health": -2,
+                  "heat": 2,
+                  "behavior": [{"action": "stealth_takedown", "target": "nsd_guard", "value": 1}]
+                },
+                "next": "M4_END"
+              }
+            }
+          ]
+        },
+        {
+          "id": "M4_END",
+          "type": "mission_end",
+          "text": "The Directorate is no longer his. The file is. Amara reads it in the dark of a parked car.",
+          "nextMission": "M5"
+        }
+      ]
+    }
+  ]
+}

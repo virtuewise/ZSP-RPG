@@ -51,11 +51,11 @@
       "tags": ["M3", "ep03", "core"]
     },
     {
-      "id": "victor_sighting",
-      "name": "Victor sighting",
-      "description": "A witness saw Victor Nhari at the terminus at 03:17. He watched the cleaner work as if noting a pattern he had seen before.",
-      "source": "Lovemore Chigumba",
-      "tags": ["M2", "ep02", "victor"]
+      "id": "ledger_page",
+      "name": "Ledger page",
+      "description": "One page of the Black Ledger: a list of threats with disposal dates. The first name on the list is Tinashe Mukasa.",
+      "source": "Meridian archivist",
+      "tags": ["M6", "ep06", "core"]
     }
   ],
   "witnesses": [

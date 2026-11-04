@@ -37,13 +37,14 @@ def run_script(script, stats=None):
 
 
 def test_content_loads_and_validates(content: Content):
-    assert set(content.missions) == {"M1", "M2", "M3"}
+    assert set(content.missions) >= {"M1", "M2", "M3", "M4", "M5", "M6"}
     for mid, mission in content.missions.items():
         assert mission["beats"], mid
         assert mission["invariants"], mid
     assert content.epilogues["interlude"]["title"]
     assert content.locations["chitungwiza"]["routes"]
     assert content.locations["avondale_safehouse"]["routes"]
+    assert content.locations["bulawayo_yard"]["routes"]
     for req in ("flag:accepted_message", "intel:mhara_phone", "any:witness:lovemore:spared,witness:tafadzwa:spared", "trust:amara:0.4"):
         parse_requirement(req)
 

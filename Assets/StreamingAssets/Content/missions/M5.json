@@ -1,0 +1,148 @@
+{
+  "schemaVersion": 1,
+  "missions": [
+    {
+      "id": "M5",
+      "order": 5,
+      "title": "Episode 05 - GHOSTS OF HARARE",
+      "location": "mbare_market",
+      "premise": "The Sable section pay record surfaces in a farm outside Chinamhora. Tinashe's own name is on the list. The survivor is still alive. He has been waiting three years to say two sentences.",
+      "invariants": ["silent_gate_uncovered", "amara_secret_revealed"],
+      "objectives": [
+        "Find the Sable pay record",
+        "Find the survivor",
+        "Decode the Silent Gate after-action"
+      ],
+      "contacts": ["amara", "muponda"],
+      "witnesses": ["lovemore"],
+      "keyCharacters": ["mhara", "victor"],
+      "endings": [],
+      "start": "M5_OPEN",
+      "beats": [
+        {
+          "id": "M5_OPEN",
+          "type": "dialogue",
+          "speaker": "amara",
+          "text": "The pay record is in a farmhouse outside Chinamhora. The recipient bank account is MSG-09 — Meridian's. Your name is on the list. The survivor is still there. He speaks in the third person.",
+          "choices": [
+            {
+              "id": "go",
+              "text": "Take me there.",
+              "effects": {
+                "flags": ["accepted_ghosts"],
+                "behavior": [{"action": "trust_contact", "target": "amara", "value": 1}]
+              },
+              "next": "M5_INVESTIGATION"
+            },
+            {
+              "id": "muponda",
+              "text": "Call Muponda first.",
+              "effects": {
+                "trust": [{"contact": "muponda", "delta": 0.2}],
+                "behavior": [{"action": "trust_contact", "target": "muponda", "value": 1}]
+              },
+              "next": "M5_INVESTIGATION"
+            }
+          ]
+        },
+        {
+          "id": "M5_INVESTIGATION",
+          "type": "investigation",
+          "text": "The farmhouse has one good chair and three broken ones. The pay record is in a biscuit tin under the floorboard. The after-action is in Amara's pocket, where she has kept it for three years.",
+          "maxSearches": 2,
+          "areas": [
+            {
+              "id": "tin",
+              "name": "The biscuit tin",
+              "text": "The tin holds the Sable pay record: seven names, seven amounts, one account. MSG-09. The account is Meridian's.",
+              "stat": "stealth",
+              "difficulty": 2,
+              "intel": ["msg09_account"],
+              "effects": {
+                "flags": ["sable_pay_found"],
+                "behavior": [{"action": "investigate", "target": "tin", "value": 1}]
+              },
+              "failureEffects": {
+                "heat": 1
+              }
+            },
+            {
+              "id": "survivor",
+              "name": "The survivor",
+              "text": "He is a man so damaged he speaks in the third person. He says only: 'You weren't the target. You were the delivery.'",
+              "stat": "empathy",
+              "difficulty": 2,
+              "intel": ["lovemore_statement"],
+              "effects": {
+                "flags": ["survivor_spoken", "survivor_alive"],
+                "behavior": [{"action": "interrogate", "target": "survivor", "value": 1}]
+              },
+              "failureEffects": {
+                "heat": 1
+              }
+            },
+            {
+              "id": "after_action",
+              "name": "The after-action",
+              "text": "Amara opens the sealed file she has carried for three years. Operation Silent Gate was not a failed mission. It was Phase Two of something else.",
+              "stat": "tech",
+              "difficulty": 3,
+              "intel": ["mhara_phone"],
+              "effects": {
+                "flags": ["after_action_opened", "amara_secret_exposed"],
+                "behavior": [{"action": "investigate", "target": "after_action", "value": 1}]
+              },
+              "failureEffects": {
+                "heat": 1
+              }
+            }
+          ],
+          "next": "M5_AMARA"
+        },
+        {
+          "id": "M5_AMARA",
+          "type": "choice",
+          "speaker": "amara",
+          "text": "Amara stands by the window. 'I was at the debrief, Tinashe. I saw the targeting file. I was told to stop. I copied it. I have been carrying it for three years.'",
+          "choices": [
+            {
+              "id": "forgive",
+              "text": "Then we carry it together.",
+              "effects": {
+                "trust": [{"contact": "amara", "delta": 0.2}],
+                "flags": ["amara_forgiven"],
+                "behavior": [{"action": "trust_contact", "target": "amara", "value": 1}]
+              },
+              "next": "M5_END"
+            },
+            {
+              "id": "confront",
+              "text": "You should have told me.",
+              "effects": {
+                "trust": [{"contact": "amara", "delta": -0.1}],
+                "flags": ["amara_confronted"]
+              },
+              "next": "M5_END"
+            },
+            {
+              "id": "use",
+              "text": "The file is the only thing that matters. Hand it over.",
+              "effects": {
+                "trust": [{"contact": "amara", "delta": -0.2}],
+                "flags": ["amara_used"],
+                "behavior": [{"action": "protect_org", "target": "directorate", "value": 1}]
+              },
+              "next": "M5_END"
+            }
+          ]
+        },
+        {
+          "id": "M5_END",
+          "type": "mission_end",
+          "text": "The farmhouse is behind you. The rain is coming. The pay record is in your pocket and the after-action is in Amara's.",
+          "nextMission": "M6"
+        }
+      ]
+    }
+  ]
+}

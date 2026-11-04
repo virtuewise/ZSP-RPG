@@ -55,9 +55,18 @@ def main() -> None:
         if resource_path.read_bytes() != runtime_path.read_bytes():
             fail(f"Resources and StreamingAssets copies differ: {relative}")
 
+    locations_data = json.loads((resources / "locations.json").read_text(encoding="utf-8"))
+    location_routes = {
+        location["id"]: {route["id"] for route in location.get("routes", [])}
+        for location in locations_data.get("locations", [])
+    }
+    season_data = json.loads((resources / "season.json").read_text(encoding="utf-8"))
+    character_ids = {character["id"] for character in season_data.get("characters", [])}
+
     mission_dir = resources / "missions"
     mission_files = sorted(mission_dir.glob("*.json"))
     mission_ids: set[str] = set()
+    missions_by_id: dict[str, dict] = {}
     for path in mission_files:
         payload = json.loads(path.read_text(encoding="utf-8"))
         for mission in payload.get("missions", []):
@@ -65,6 +74,14 @@ def main() -> None:
             if not mission_id or mission_id in mission_ids:
                 fail(f"Missing or duplicate mission id in {path.relative_to(ROOT)}: {mission_id!r}")
             mission_ids.add(mission_id)
+            missions_by_id[mission_id] = mission
+            location_id = mission.get("location")
+            if location_id not in location_routes:
+                fail(f"Mission {mission_id} references unknown location {location_id!r}")
+            for field in ("contacts", "witnesses", "keyCharacters"):
+                unknown = sorted(set(mission.get(field, [])) - character_ids)
+                if unknown:
+                    fail(f"Mission {mission_id} references unknown {field}: {unknown}")
             beats = mission.get("beats", [])
             beat_ids = [beat.get("id") for beat in beats]
             if not beats or any(not beat_id for beat_id in beat_ids):
@@ -73,13 +90,22 @@ def main() -> None:
                 fail(f"Mission {mission_id} has duplicate beat IDs")
             if mission.get("start") not in set(beat_ids):
                 fail(f"Mission {mission_id} start beat does not exist")
+            known_routes = location_routes[location_id]
+            for beat in beats:
+                unknown_routes = sorted(set(beat.get("routes", [])) - known_routes)
+                if unknown_routes:
+                    fail(f"Mission {mission_id} beat {beat['id']} references unknown routes: {unknown_routes}")
 
     expected_missions = {"M1", "M2", "M3"}
     if mission_ids != expected_missions:
         fail(f"Expected mission set {sorted(expected_missions)}, found {sorted(mission_ids)}")
+    for mission_id, mission in missions_by_id.items():
+        next_mission = mission.get("nextMission")
+        if next_mission and next_mission not in mission_ids:
+            fail(f"Mission {mission_id} points to missing next mission {next_mission}")
 
     print(f"PASS: Unity {EXPECTED_UNITY}; {len(resource_json)} mirrored JSON files valid; "
-          f"{len(mission_ids)} missions and their beat identifiers validated.")
+          f"{len(mission_ids)} missions, locations, route IDs, character references and beat identifiers validated.")
 
 
 if __name__ == "__main__":

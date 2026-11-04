@@ -11,7 +11,7 @@
 |---|---|---|---|
 | CodeQL C# extraction | CodeQL main-branch run 41851065355 | Passed | Source analysis completed with build-mode `none`; this is not a Unity compile. |
 | Python reference prototypes | Python main-branch run 41851066207 | 22 tests passed | SIS, OIS and adaptive mission-chain reference suite. |
-| Project content integrity | Python main-branch run 41851066207 | Passed | Unity version pin, JSON parsing, Resources/StreamingAssets byte parity, M1–M3 mission IDs and start/beat IDs. |
+| Project content integrity | Python main-branch run 41851066207; PR #4 run 41872981473 | Passed | Unity version pin, 9 mirrored JSON files, 6 missions, Resources/StreamingAssets parity, mission/beat/choice/branch/next-mission references. |
 | Unity editor compilation | Not available in hosted workflow | Not verified | Requires Unity Editor 6000.6.8f1 and a configured licensed runner or local editor. |
 | Android build and device performance | Not available in hosted workflow | Not verified | Requires Android Build Support, a signing setup and physical-device profiling. |
 
@@ -22,8 +22,10 @@
 Run the remaining checks on the machine with Unity **6000.6.8f1** and Android Build Support installed.
 
 - [ ] Allow package resolution to finish and confirm the Console has no compile errors.
+- [ ] Regenerate `Assets/Prefabs/Player.prefab` and `Assets/Scenes/VerticalSlice.unity` from the updated ZSP menu commands; the checked-in copies predate the latest generator fixes and do not yet contain the EventSystem, current player tag/health or identity-registration panel. Commit the regenerated assets.
 - [ ] Run the ZSP project setup commands documented in the root README.
 - [ ] Open and play the Bootstrap scene.
+- [ ] Confirm the regenerated Vertical Slice scene contains the EventSystem, Player tag/health, identity registrar and enemy setup.
 - [ ] Verify environment bundle loading; the optional local bundle is not part of this public repository.
 - [ ] Verify player movement, camera, weapon, stealth, melee, health and HUD interactions.
 - [ ] Verify EventSystem input, player/enemy tags, enemy target acquisition, line of sight, damage and death.

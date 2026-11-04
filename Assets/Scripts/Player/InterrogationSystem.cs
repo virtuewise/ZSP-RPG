@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace ZSP.Player
@@ -17,6 +18,7 @@ namespace ZSP.Player
         public KeyCode interactKey = KeyCode.E;
 
         public string LastIntel { get; private set; }
+        public event Action<string> OnIntelReceived;
 
         private void Update()
         {
@@ -36,6 +38,7 @@ namespace ZSP.Player
             if (target == null) return false;
 
             LastIntel = target.GetIntel();
+            OnIntelReceived?.Invoke(LastIntel);
             Debug.Log($"[ZSP] Interrogation: {LastIntel}");
             return true;
         }

@@ -216,7 +216,7 @@ namespace ZSP.EditorTools
 
             var informant = GameObject.CreatePrimitive(PrimitiveType.Capsule);
             informant.name = "Informant";
-            informant.transform.position = new Vector3(4f, 0f, 4f);
+            informant.transform.position = new Vector3(4f, 1f, 4f);
             var informantRenderer = informant.GetComponent<MeshRenderer>();
             if (informantRenderer != null)
                 informantRenderer.sharedMaterial = new Material(Shader.Find("Standard")) { color = new Color(0.42f, 0.48f, 0.40f) };

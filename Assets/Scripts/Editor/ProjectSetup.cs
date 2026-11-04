@@ -30,6 +30,7 @@ namespace ZSP.EditorTools
 
             const string path = "Assets/Scenes/Bootstrap.unity";
             System.IO.Directory.CreateDirectory("Assets/Scenes");
+            AssetDatabase.SaveAssets();
             EditorSceneManager.SaveScene(scene, path);
             AssetDatabase.Refresh();
             Debug.Log("[ZSP] Created " + path + ". Press Play to load the asset bundle.");
@@ -140,11 +141,16 @@ namespace ZSP.EditorTools
             var defaultCamera = Camera.main;
             if (defaultCamera != null) Object.DestroyImmediate(defaultCamera.gameObject);
 
+            System.IO.Directory.CreateDirectory("Assets/Materials");
+            AssetDatabase.Refresh();
+            var groundMaterial = GetOrCreateMaterial("Assets/Materials/ZSP_Blockout_Ground.mat", new Color(0.32f, 0.30f, 0.26f));
+            var enemyMaterial = GetOrCreateMaterial("Assets/Materials/ZSP_Blockout_Enemy.mat", new Color(0.16f, 0.19f, 0.17f));
+            var informantMaterial = GetOrCreateMaterial("Assets/Materials/ZSP_Blockout_Informant.mat", new Color(0.42f, 0.48f, 0.40f));
+
             var ground = GameObject.CreatePrimitive(PrimitiveType.Plane);
             ground.name = "BlockoutGround";
             ground.transform.localScale = new Vector3(12f, 1f, 12f);
-            var mat = new Material(Shader.Find("Standard")) { color = new Color(0.32f, 0.30f, 0.26f) };
-            ground.GetComponent<MeshRenderer>().sharedMaterial = mat;
+            if (groundMaterial != null) ground.GetComponent<MeshRenderer>().sharedMaterial = groundMaterial;
 
             var player = new GameObject("Player");
             player.tag = "Player";
@@ -233,8 +239,8 @@ namespace ZSP.EditorTools
             informant.name = "Informant";
             informant.transform.position = new Vector3(4f, 1f, 4f);
             var informantRenderer = informant.GetComponent<MeshRenderer>();
-            if (informantRenderer != null)
-                informantRenderer.sharedMaterial = new Material(Shader.Find("Standard")) { color = new Color(0.42f, 0.48f, 0.40f) };
+            if (informantRenderer != null && informantMaterial != null)
+                informantRenderer.sharedMaterial = informantMaterial;
             informant.AddComponent<InterrogationTarget>();
 
             var spawner = new GameObject("EnemySpawner");
@@ -254,6 +260,7 @@ namespace ZSP.EditorTools
                 spawnPoints[i] = point.transform;
             }
             enemySpawner.spawnPoints = spawnPoints;
+            enemySpawner.fallbackMaterial = enemyMaterial;
 
             var director = new GameObject("MissionDirector").AddComponent<MissionDirector>();
             director.hud = hud;
@@ -305,6 +312,30 @@ namespace ZSP.EditorTools
             AssetDatabase.SaveAssets();
             Debug.Log("[ZSP] Product identity set to 'Zimbabwe: The Shadow Protocol'.");
         }
+        private static Material GetOrCreateMaterial(string assetPath, Color color)
+        {
+            var material = AssetDatabase.LoadAssetAtPath<Material>(assetPath);
+            if (material == null)
+            {
+                var shader = Shader.Find("Standard") ??
+                             Shader.Find("Universal Render Pipeline/Lit") ??
+                             Shader.Find("Sprites/Default");
+                if (shader == null)
+                {
+                    Debug.LogWarning("[ZSP] No compatible shader found for " + assetPath);
+                    return null;
+                }
+                material = new Material(shader) { color = color };
+                AssetDatabase.CreateAsset(material, assetPath);
+            }
+            else
+            {
+                material.color = color;
+                EditorUtility.SetDirty(material);
+            }
+            return material;
+        }
+
         private static Text CreateUIText(Transform parent, string name, Vector2 anchorMin, Vector2 anchorMax, int fontSize, Color color)
         {
             var go = new GameObject(name, typeof(RectTransform), typeof(Text));

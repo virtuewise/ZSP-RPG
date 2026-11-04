@@ -142,6 +142,19 @@ namespace ZSP.EditorTools
             var progression = player.AddComponent<ProgressionSystem>();
             var weapons = player.AddComponent<WeaponSystem>();
             weapons.progression = progression;
+            weapons.weapons.Add(new WeaponStats
+            {
+                displayName = "Service Rifle",
+                damage = 34,
+                fireRate = 7.5f,
+                magazineSize = 30,
+                reloadTime = 2.1f,
+                range = 100f,
+                spreadDegrees = 0.8f,
+                automatic = true,
+                recoil = 0.8f
+            });
+            weapons.startingWeapon = 0;
             var health = player.AddComponent<PlayerHealth>();
             var stealth = player.AddComponent<StealthSystem>();
             stealth.playerRoot = player.transform;
@@ -157,6 +170,11 @@ namespace ZSP.EditorTools
             orbit.target = player.transform;
             move.cameraTransform = camGo.transform;
             weapons.aimCamera = cam;
+            var melee = player.AddComponent<MeleeSystem>();
+            melee.aimCamera = cam;
+            melee.controller = move;
+            var interrogation = player.AddComponent<InterrogationSystem>();
+            interrogation.aimCamera = cam;
 
             var canvas = new GameObject("Canvas");
             var uiCanvas = canvas.AddComponent<Canvas>();
@@ -194,12 +212,27 @@ namespace ZSP.EditorTools
             hud.detectionFill = detectionFill;
 
             var spawner = new GameObject("EnemySpawner");
-            spawner.AddComponent<EnemySpawner>();
+            var enemySpawner = spawner.AddComponent<EnemySpawner>();
+            var spawnPoints = new Transform[3];
+            var spawnPositions = new[]
+            {
+                new Vector3(-7f, 0f, 8f),
+                new Vector3(7f, 0f, 8f),
+                new Vector3(0f, 0f, 12f)
+            };
+            for (int i = 0; i < spawnPositions.Length; i++)
+            {
+                var point = new GameObject($"EnemySpawn_{i + 1}");
+                point.transform.SetParent(spawner.transform, false);
+                point.transform.localPosition = spawnPositions[i];
+                spawnPoints[i] = point.transform;
+            }
+            enemySpawner.spawnPoints = spawnPoints;
 
             var director = new GameObject("MissionDirector").AddComponent<MissionDirector>();
             director.hud = hud;
             director.stealthSystem = stealth;
-            director.enemySpawner = spawner.GetComponent<EnemySpawner>();
+            director.enemySpawner = enemySpawner;
             director.autoStartFirstMission = false;
             director.playerHealth = health;
             director.identity = new OperativeIdentity();
@@ -224,6 +257,7 @@ namespace ZSP.EditorTools
             registrar.nicknameField = CreateInputField(registrarPanel.transform, "Nickname", "Nickname (optional)", new Vector2(0.04f, 0.84f), new Vector2(0.96f, 0.92f));
             registrar.confirmButton = CreateButton(registrarPanel.transform, "Confirm", new Vector2(0.04f, 0.93f), new Vector2(0.96f, 0.99f));
             // IdentityRegistrar.Start() owns the confirmation listener; do not register it twice.
+            registrar.Confirmed += _ => director.BeginMission("M1");
             registrar.RefreshPreview();
 
             const string path = "Assets/Scenes/VerticalSlice.unity";
@@ -231,7 +265,7 @@ namespace ZSP.EditorTools
             EditorSceneManager.SaveScene(scene, path);
             AssetDatabase.Refresh();
             Selection.activeGameObject = player;
-            Debug.Log("[ZSP] Vertical slice scene created at " + path + ". Add HUD, spawn points and content hooks to finish the slice.");
+            Debug.Log("[ZSP] Vertical slice scene created at " + path + ". Confirm the operative identity to begin M1.");
         }
 
         [MenuItem("ZSP/Apply Project Identity")]

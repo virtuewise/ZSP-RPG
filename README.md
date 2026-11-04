@@ -29,7 +29,8 @@ A cinematic, mobile-first third-person espionage action RPG built on Unity 6.
 cd Prototype
 python sis_game.py --demo
 python sis_game.py --interactive
-python -m pytest test_sis_v1.py -q   # 22 passed
+python -m pip install -r ../requirements-dev.txt
+python -m pytest -q   # complete prototype suite
 ```
 
 ## First run in the editor
@@ -51,6 +52,7 @@ python -m pytest test_sis_v1.py -q   # 22 passed
 - `Docs/EP01_THE_MESSAGE.md` — Mission 001 development specification.
 - `Docs/OPERATIVE_IDENTITY_SYSTEM.md` — OIS (callsign/display name/dossier) design.
 - `Docs/CODEQL_ANALYSIS.md` — CodeQL C# baseline (build-mode `none` retained; controlled improvement plan; Unity 6 build prerequisites).
+- `Docs/RELEASE_READINESS.md` — verified CI evidence and remaining Unity/Android/release acceptance gates (see [issue #3](https://github.com/virtuewise/ZSP-RPG/issues/3)).
 - `Docs/VERTICAL_SLICE.md` — five-milestone build order and acceptance criteria.
 - `Docs/ASSET_REPLACEMENT.md` — what was quarantined and what is original.
 

@@ -1,0 +1,40 @@
+name: Python and Content Validation
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    name: Prototype tests and project content
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: 'pip'
+
+      - name: Install test dependency
+        run: python -m pip install --upgrade pytest
+
+      - name: Validate Unity version and content mirrors
+        run: python tools/validate_project.py
+
+      - name: Run prototype and system tests
+        run: python -m pytest Prototype -q

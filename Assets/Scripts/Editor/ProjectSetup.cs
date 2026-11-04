@@ -61,6 +61,19 @@ namespace ZSP.EditorTools
 
             var weapons = player.AddComponent<WeaponSystem>();
             weapons.aimCamera = cam;
+            weapons.weapons.Add(new WeaponStats
+            {
+                displayName = "Service Rifle",
+                damage = 34,
+                fireRate = 7.5f,
+                magazineSize = 30,
+                reloadTime = 2.1f,
+                range = 100f,
+                spreadDegrees = 0.8f,
+                automatic = true,
+                recoil = 0.8f
+            });
+            weapons.startingWeapon = 0;
 
             var progression = player.AddComponent<ProgressionSystem>();
             player.AddComponent<PlayerHealth>();

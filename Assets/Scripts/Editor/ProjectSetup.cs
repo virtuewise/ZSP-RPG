@@ -45,6 +45,10 @@ namespace ZSP.EditorTools
             var existingCamera = Camera.main;
             if (existingCamera != null) Object.DestroyImmediate(existingCamera.gameObject);
 
+            System.IO.Directory.CreateDirectory("Assets/Materials");
+            AssetDatabase.Refresh();
+            var playerMaterial = GetOrCreateMaterial("Assets/Materials/ZSP_Blockout_Player.mat", new Color(0.34f, 0.38f, 0.43f));
+
             var player = new GameObject("Player");
             player.tag = "Player";
             player.transform.position = Vector3.zero;
@@ -53,6 +57,7 @@ namespace ZSP.EditorTools
             cc.height = 1.8f;
             cc.radius = 0.35f;
             cc.center = new Vector3(0f, 0.9f, 0f);
+            CreatePlayerBlockoutVisual(player.transform, playerMaterial);
 
             var move = player.AddComponent<ThirdPersonController>();
 
@@ -104,6 +109,7 @@ namespace ZSP.EditorTools
             audio.playOnAwake = false;
 
             System.IO.Directory.CreateDirectory("Assets/Prefabs");
+            AssetDatabase.SaveAssets();
             PrefabUtility.SaveAsPrefabAsset(player, "Assets/Prefabs/Player.prefab");
             AssetDatabase.Refresh();
 
@@ -149,6 +155,7 @@ namespace ZSP.EditorTools
             var groundMaterial = GetOrCreateMaterial("Assets/Materials/ZSP_Blockout_Ground.mat", new Color(0.32f, 0.30f, 0.26f));
             var enemyMaterial = GetOrCreateMaterial("Assets/Materials/ZSP_Blockout_Enemy.mat", new Color(0.16f, 0.19f, 0.17f));
             var informantMaterial = GetOrCreateMaterial("Assets/Materials/ZSP_Blockout_Informant.mat", new Color(0.42f, 0.48f, 0.40f));
+            var playerMaterial = GetOrCreateMaterial("Assets/Materials/ZSP_Blockout_Player.mat", new Color(0.34f, 0.38f, 0.43f));
 
             var ground = GameObject.CreatePrimitive(PrimitiveType.Plane);
             ground.name = "BlockoutGround";
@@ -161,6 +168,7 @@ namespace ZSP.EditorTools
             cc.height = 1.8f;
             cc.radius = 0.35f;
             cc.center = new Vector3(0f, 0.9f, 0f);
+            CreatePlayerBlockoutVisual(player.transform, playerMaterial);
             var move = player.AddComponent<ThirdPersonController>();
             var progression = player.AddComponent<ProgressionSystem>();
             var weapons = player.AddComponent<WeaponSystem>();
@@ -318,6 +326,19 @@ namespace ZSP.EditorTools
             AssetDatabase.SaveAssets();
             Debug.Log("[ZSP] Product identity set to 'Zimbabwe: The Shadow Protocol'.");
         }
+        private static void CreatePlayerBlockoutVisual(Transform parent, Material material)
+        {
+            var visual = GameObject.CreatePrimitive(PrimitiveType.Capsule);
+            visual.name = "PlayerBlockoutVisual";
+            visual.transform.SetParent(parent, false);
+            visual.transform.localPosition = new Vector3(0f, 0.9f, 0f);
+            visual.transform.localScale = new Vector3(0.7f, 0.9f, 0.7f);
+            var collider = visual.GetComponent<Collider>();
+            if (collider != null) Object.DestroyImmediate(collider);
+            var renderer = visual.GetComponent<MeshRenderer>();
+            if (renderer != null && material != null) renderer.sharedMaterial = material;
+        }
+
         private static Material GetOrCreateMaterial(string assetPath, Color color)
         {
             var material = AssetDatabase.LoadAssetAtPath<Material>(assetPath);

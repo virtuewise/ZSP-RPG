@@ -72,14 +72,24 @@ namespace ZSP.AI
 
         private GameObject CreateFallback(Vector3 position)
         {
-            var capsule = GameObject.CreatePrimitive(PrimitiveType.Capsule);
-            capsule.transform.position = position + Vector3.up * 0.9f;
-            capsule.transform.localScale = new Vector3(0.8f, 0.95f, 0.8f);
-            var renderer = capsule.GetComponent<MeshRenderer>();
+            var enemy = new GameObject("FallbackEnemy");
+            enemy.transform.position = position;
+
+            // Keep the visual capsule centered on the same ground-level root as the CharacterController.
+            var visual = GameObject.CreatePrimitive(PrimitiveType.Capsule);
+            visual.name = "Visual";
+            visual.transform.SetParent(enemy.transform, false);
+            visual.transform.localPosition = new Vector3(0f, 0.9f, 0f);
+            visual.transform.localScale = new Vector3(0.8f, 0.95f, 0.8f);
+            var visualCollider = visual.GetComponent<Collider>();
+            if (visualCollider != null) Destroy(visualCollider);
+
+            var renderer = visual.GetComponent<MeshRenderer>();
             var material = GetRuntimeFallbackMaterial();
             if (renderer != null && material != null) renderer.sharedMaterial = material;
-            capsule.AddComponent<EnemyAI>();
-            return capsule;
+
+            enemy.AddComponent<EnemyAI>();
+            return enemy;
         }
     }
 }

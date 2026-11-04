@@ -32,6 +32,7 @@ namespace ZSP.AI
         private int _waypointIndex;
         private float _nextAttack;
         private bool _chasing;
+        private readonly RaycastHit[] _sightHits = new RaycastHit[16];
 
         private void Awake()
         {
@@ -125,7 +126,18 @@ namespace ZSP.AI
             var origin = transform.position + Vector3.up * 1.4f;
             var direction = target + Vector3.up * 1.2f - origin;
             if (direction.sqrMagnitude < 0.01f) return true;
-            return !Physics.Raycast(origin, direction.normalized, direction.magnitude, sightMask, QueryTriggerInteraction.Ignore);
+            // Ignore the enemy and target's own colliders; only world geometry blocks sight.
+            int hitCount = Physics.RaycastNonAlloc(origin, direction.normalized, _sightHits,
+                direction.magnitude, sightMask, QueryTriggerInteraction.Ignore);
+            for (int i = 0; i < hitCount; i++)
+            {
+                var collider = _sightHits[i].collider;
+                if (collider == null) continue;
+                var root = collider.transform.root;
+                if (root == transform.root || (_player != null && root == _player.root)) continue;
+                return false;
+            }
+            return true;
         }
     }
 }

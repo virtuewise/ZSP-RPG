@@ -29,7 +29,8 @@ A cinematic, mobile-first third-person espionage action RPG built on Unity 6.
 cd Prototype
 python sis_game.py --demo
 python sis_game.py --interactive
-python -m pytest test_sis_v1.py -q   # 22 passed
+python -m pip install -r ../requirements-dev.txt
+python -m pytest -q   # complete prototype suite
 ```
 
 ## First run in the editor

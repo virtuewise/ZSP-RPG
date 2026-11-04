@@ -15,7 +15,7 @@ It replaces the old "Milestones 0–2" plan in ROADMAP.md.
 - `ZSP → Create Player Rig` → `Player.prefab`.
 - `GameBootstrap` loads `StreamingAssets/zsp_assets.unity3d` and streams `level3` (Mirage) or `level7` (Mountain).
 - Player can walk/run/jump/crouch/aim/shoot; orbit camera works; HUD shows ammo/detection/objective.
-- **Status:** scripts written; bundle loaded; not yet executed in-editor. Unity 6000.6.8f1 not installed on this machine.
+- **Status:** Unity 6000.6.8f1 upgrade is complete and the project opens in that editor. Bootstrap/runtime scene execution, bundle streaming, gameplay acceptance and Android performance are still pending. The local environment bundle is not tracked in this public repository.
 - **Acceptance:** 30 seconds of uninterrupted third-person control on Android and Windows Editor; no console errors; save/load works.
 
 ### Milestone 2 — Character creation
@@ -28,8 +28,7 @@ It replaces the old "Milestones 0–2" plan in ROADMAP.md.
 - Convert the Mirage airport kit → **Avondale safehouse / Mbare terminus** (M1).
 - Convert the Mountain kit → **Chitungwiza** (M2) and back to **Avondale safehouse** (M3).
 - Later: Eastgate/Samora Machel (Episodes 04–06), Kaguvi Hill estate (Episode 12).
-- Replace all branded textures with original ZSP set (`Assets/Art/`).
-- Replace all branded textures with original ZSP set (`Assets/Art/`).
+- Replace all branded textures with the original ZSP set (`Assets/Art/`).
 - Audio: convert FSB banks or use direct bundle playback; at minimum rifle, footsteps, ambient crowd, door, radio chatter.
 - **Acceptance:** three playable blockouts with fictional Harare signage, original textures, no Commando/branded assets; 60 minutes of playable ambient loop at 30 fps on a mid-tier Android device.
 
@@ -94,7 +93,7 @@ PRIOR_ART.md · SHADOW_INTELLIGENCE_SYSTEM.md · STORY_BIBLE.md · ASSET_REPLACE
 
 ## Known blockers
 
-- Unity 6000.6.8f1 is not installed on this machine; no project has been opened.
+- Unity 6000.6.8f1 installation and project-open checks are complete. Remaining: execute the scenes in-editor, verify runtime systems, and complete Android device profiling.
 - No Zimbabwe-specific 3D environments exist yet; Mirage/Mountain are generic.
 - FSB audio needs conversion (vgmstream/FMOD) or runtime loading.
 - The original humanoid rigs are generic stock characters; the player body must be licensed or replaced.

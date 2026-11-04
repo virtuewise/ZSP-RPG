@@ -1,0 +1,54 @@
+# Zimbabwe: The Shadow Protocol
+
+A cinematic, mobile-first third-person espionage action RPG built on Unity 6.
+
+**Engine:** Unity 6000.6.8f1 (Android first; iOS later). Install 6000.6.8f1 with Android Build Support before opening the project.
+
+**This repository is the game.** The project root is `Assets/`, `Packages/`, `ProjectSettings/`.
+
+```
+.
+├── ZSP_SEASON_01_STORY_BIBLE.md   ← canonical Season One story (THE BLACK LEDGER)
+├── Docs/                          ← SIS design, prior art, vertical slice, roadmap
+├── Prototype/                     ← Python SIS prototype (playable, tested)
+├── Assets/                        ← Original art, content, scripts, resources
+│   ├── Art/                       ← Original emblem, logo, splash, icon, HUD bars
+│   ├── Resources/Content/         ← Season content (readable by Unity and Python)
+│   ├── StreamingAssets/Content/   ← Same content, StreamingAssets copy
+│   └── Scripts/                   ← Player, enemy AI, Narrative/SIS, UI
+├── Packages/manifest.json         ← Minimal, ad/billing/analytics-free
+├── ProjectSettings/               ← 6000.6.8f1
+└── tools/                         ← Original art generators
+```
+
+**Not in this repository (ever):** anything derived from the decompiled "Commando Army" APK — extracted meshes, textures, audio, materials, SDK splash screens, ad creatives, or Unity splash art. Those remain on the local machine only and are excluded by `.gitignore`.
+
+## Run the SIS prototype today (no Unity required)
+
+```powershell
+cd Prototype
+python sis_game.py --demo
+python sis_game.py --interactive
+python -m pytest test_sis_v1.py -q   # 14 passed
+```
+
+## First run in the editor
+
+1. Open `.` in Unity 6000.6.8f1 with Android Build Support.
+2. **ZSP → Create Bootstrap Scene**, **ZSP → Create Player Rig**, optionally **ZSP → Create SIS Demo Scene**.
+3. Press Play. The bootstrap streams the Mirage or Mountain bundle (local only — `zsp_assets.unity3d` is not in this repo).
+
+## The two systems that make the game
+
+- **SHADOW INTELLIGENCE — Adaptive Enemy Doctrine** (`Docs/SHADOW_INTELLIGENCE_SYSTEM.md`, `Assets/Scripts/Narrative/ShadowIntelligenceSystem.cs`, `Prototype/sis_v1.py`): the game remembers how you enter, fight, trust and spare; it reconciles the story by replay and stays inside a fixed adaptation budget.
+- **Operative Identity System (OIS)** (`Docs/../ZSP_SEASON_01_STORY_BIBLE.md` §14, `Prototype/ois.py`, `Assets/Scripts/Narrative/OperativeIdentity.cs`): fixed protagonist Tinashe Mukasa; the player chooses display name, callsign and optional nickname; dossier updates from SIS.
+
+## Read before writing
+
+- `ZSP_SEASON_01_STORY_BIBLE.md` — canon.
+- `Docs/PRIOR_ART.md` — Nemesis patent, AI Director, DDA, storylets; no novelty claim without counsel.
+- `Docs/STORY_BIBLE.md` — superseded interim arc (kept for history).
+
+## Licence posture
+
+Original code, art, and fiction are ours. The APK's ownership remains with its original publisher. Nothing from it ships here.

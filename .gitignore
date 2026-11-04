@@ -1,30 +1,44 @@
-# ZSP — what may never enter the repository.
-# The original APK and everything derived from it is proprietary and stays local.
+# ZIMBABWE: THE SHADOW PROTOCOL — repository hygiene.
+# The original decompiled APK and everything derived from it is proprietary
+# and stays on the local machine, never in git.
 
-# Original decompiled APK and its leftovers
+# Unity project at repo root
+/Library/
+/Temp/
+/UserSettings/
+/Logs/
+/obj/
+*.csproj
+*.sln
+*.pidb
+*.userprefs
+
+# Local APK materials (extraction source + quarantine)
 /ZIMBABWE THE SHADOW PROTOCOL/
 /ZSP_CLEAN/StrippedSource/
-
-# Everything extracted from that APK (reference only, never redistributed)
-/ZSP_CLEAN/Assets/Extracted/
-/ZSP_CLEAN/Assets/StreamingAssets/zsp_assets.unity3d
-/ZSP_CLEAN/Assets/StreamingAssets/zsp_assets.unity3d.meta
 /ZSP_CLEAN/_Quarantine/
-/ZSP_CLEAN/ASSET_INDEX.csv
+/ZSP_CLEAN/Assets/Extracted/
+/Assets/Extracted/
+/Assets/StreamingAssets/zsp_assets.unity3d
+/Assets/StreamingAssets/zsp_assets.unity3d.meta
+/Assets/StreamingAssets/zsp_assets.unity3d.*
 
-# Python tooling outputs
-__pycache__/
-*.pyc
-.pytest_cache/
-_probe/
-inventory_out.txt
-ASSET_INVENTORY.md
+# Local-only APK analysis artifacts (not for publication)
+/ZSP_CLEAN/ASSET_INDEX.csv
+/ASSET_INDEX.csv
+/ASSET_CATALOG.md
+/AUDIO_INDEX.csv
+/QUARANTINE_INDEX.csv
+/ASSET_INVENTORY.md
+/inventory_out.txt
+/CLEANUP_REPORT.md
 demo_summary.json
 
-# Local notes and generated media (not for publication)
+# Local notebooks / personal notes
+/WORKSPACE.md
 /Zimbabwe RPG Invention Ideas.html
 
-# Root extraction/analysis tooling that inspects the APK (local only)
+# Root analysis tooling that inspects the APK
 /adaptive_mission_chain.py
 /test_amc.py
 /ADAPTIVE_MISSION_CHAIN_DESIGN.md
@@ -37,27 +51,16 @@ demo_summary.json
 /inspect_*.py
 /probe_*.py
 /make_catalog.py
-/quarantine_*.py
+*.fsb
+*.wav
 
-# APK-derived metadata and local tooling (keep local)
-/ZSP_CLEAN/ASSET_CATALOG.md
-/ZSP_CLEAN/AUDIO_INDEX.csv
-/ZSP_CLEAN/QUARANTINE_INDEX.csv
-/ZSP_CLEAN/CLEANUP_REPORT.md
-/ZSP_CLEAN/Tools/
+# Python caches
+__pycache__/
+*.pyc
+.pytest_cache/
+_probe/
 
-# OS / tooling noise
+# OS noise
 .DS_Store
 Thumbs.db
 *.log
-
-# Unity user/editor state
-/ZSP_CLEAN/Library/
-/ZSP_CLEAN/Temp/
-/ZSP_CLEAN/UserSettings/
-/ZSP_CLEAN/Logs/
-/ZSP_CLEAN/obj/
-*.csproj
-*.sln
-*.pidb
-*.userprefs

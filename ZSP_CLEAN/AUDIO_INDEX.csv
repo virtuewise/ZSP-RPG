@@ -1,0 +1,227 @@
+type,name,path,bytes
+AudioClip,character_voc_death_tak_01 - V2,Audio\character_voc_death_tak_01_-_V2.fsb,16448
+AudioClip,Pain,Audio\Pain.fsb,6368
+AudioClip,Mission failed,Audio\Mission_failed.fsb,19936
+AudioClip,Prize Wheel Spin 2 Reward,Audio\Prize_Wheel_Spin_2_Reward.fsb,14048
+AudioClip,quickprevious,Audio\quickprevious.fsb,3232
+AudioClip,ui_victory_screen_music,Audio\ui_victory_screen_music.fsb,142112
+AudioClip,Rifle Gun Shot-SoundBible.com-1143231822,Audio\Rifle_Gun_Shot-SoundBible.com-1143231822.fsb,7456
+AudioClip,bullet_impact_flesh_tak_03 - V1_0,Audio\bullet_impact_flesh_tak_03_-_V1_0.fsb,5504
+AudioClip,Button Click On-SoundBible.com-459633989,Audio\Button_Click_On-SoundBible.com-459633989.fsb,3040
+AudioClip,comp_short,Audio\comp_short.fsb,55296
+AudioClip,character_voc_death_tak_04 - V2,Audio\character_voc_death_tak_04_-_V2.fsb,19072
+AudioClip,Oriental,Audio\Oriental.fsb,20256
+AudioClip,Upgrades_fail,Audio\Upgrades_fail.fsb,4736
+AudioClip,bulletTravek(S3D),Audio\bulletTravek(S3D).fsb,42592
+AudioClip,Halloween2018_EventCase_Opening_V1,Audio\Halloween2018_EventCase_Opening_V1.fsb,22144
+AudioClip,win_new,Audio\win_new.fsb,88768
+AudioClip,league_up,Audio\league_up.fsb,39424
+AudioClip,Thick Action Tab UI Button 3 with Flair,Audio\Thick_Action_Tab_UI_Button_3_with_Flair.fsb,5216
+AudioClip,Headshot Sound Effect,Audio\Headshot_Sound_Effect.fsb,14784
+AudioClip,BGM-3,Audio\BGM-3.fsb,321216
+AudioClip,BGM-1,Audio\BGM-1.fsb,208672
+AudioClip,ui_btn_money_v2,Audio\ui_btn_money_v2.fsb,7552
+AudioClip,Loud Click-4,Audio\Loud_Click-4.fsb,3872
+AudioClip,Back click sfx,Audio\Back_click_sfx.fsb,8864
+AudioClip,Summer_Case_opening_soundeffect_landing (mp3cut.net),Audio\Summer_Case_opening_soundeffect_landing_(mp3cut.net).fsb,8864
+AudioClip,tutorial_ambience_outdoor-1,Audio\tutorial_ambience_outdoor-1.fsb,150432
+AudioClip,character_voc_death_tak_05 - V2,Audio\character_voc_death_tak_05_-_V2.fsb,17152
+AudioClip,character_voc_death_tak_02 - V2,Audio\character_voc_death_tak_02_-_V2.fsb,18112
+AudioClip,character_voc_death_tak_03 - V2,Audio\character_voc_death_tak_03_-_V2.fsb,17824
+AudioClip,PowerUp30,Audio\PowerUp30.fsb,29984
+AudioClip,Next or Select Click Sfx,Audio\Next_or_Select_Click_Sfx.fsb,4736
+AudioClip,quicknext,Audio\quicknext.fsb,3168
+AudioClip,Summer-Case-Opening,Audio\Summer-Case-Opening.fsb,19040
+AudioClip,Special & Powerup (10),Audio\Special_&_Powerup_(10).fsb,6560
+AudioClip,smg3ready,Audio\smg3ready.fsb,6720
+AudioClip,Roger,Audio\Roger.fsb,2528
+AudioClip,gravel loop 1,Audio\gravel_loop_1.fsb,29120
+AudioClip,explode,Audio\explode.fsb,17568
+AudioClip,TakeCover_Male2_Radio 1,Audio\TakeCover_Male2_Radio_1.fsb,6656
+AudioClip,LeadTheWay,Audio\LeadTheWay.fsb,2336
+AudioClip,hood impact 7,Audio\hood_impact_7.fsb,1504
+AudioClip,minigun,Audio\minigun.fsb,12704
+AudioClip,Following,Audio\Following.fsb,2432
+AudioClip,SCrifleReady,Audio\SCrifleReady.fsb,4512
+AudioClip,squish,Audio\squish.fsb,6720
+AudioClip,dsa58_fire_silenced-1,Audio\dsa58_fire_silenced-1.fsb,9408
+AudioClip,General-1,Audio\General-1.fsb,4128
+AudioClip,AMrifleReady,Audio\AMrifleReady.fsb,6848
+AudioClip,MP5_fire,Audio\MP5_fire.fsb,3168
+AudioClip,sg551_fire_silenced-1,Audio\sg551_fire_silenced-1.fsb,11232
+AudioClip,Moving,Audio\Moving.fsb,2208
+AudioClip,Incoming_Male2_Radio 1,Audio\Incoming_Male2_Radio_1.fsb,5984
+AudioClip,jetengine2,Audio\jetengine2.fsb,21600
+AudioClip,tire impact mid,Audio\tire_impact_mid.fsb,416
+AudioClip,scrape loop 8,Audio\scrape_loop_8.fsb,3712
+AudioClip,shotgun2ready,Audio\shotgun2ready.fsb,4896
+AudioClip,shotgun2reloadonce,Audio\shotgun2reloadonce.fsb,4576
+AudioClip,NeedBackUp_Male2_Radio 1,Audio\NeedBackUp_Male2_Radio_1.fsb,6336
+AudioClip,HoldingPosition,Audio\HoldingPosition.fsb,3200
+AudioClip,DefendBase_Male2_Radio 1,Audio\DefendBase_Male2_Radio_1.fsb,8000
+AudioClip,HoldPositions_Male2_Radio 1,Audio\HoldPositions_Male2_Radio_1.fsb,8480
+AudioClip,explode2,Audio\explode2.fsb,36928
+AudioClip,IllStayHere,Audio\IllStayHere.fsb,2848
+AudioClip,rocket,Audio\rocket.fsb,11840
+AudioClip,UnderHeavyFire_Male2_Radio 1,Audio\UnderHeavyFire_Male2_Radio_1.fsb,8768
+AudioClip,hood impact 8a,Audio\hood_impact_8a.fsb,1792
+AudioClip,UmpReload,Audio\UmpReload.fsb,9184
+AudioClip,hit,Audio\hit.fsb,2880
+AudioClip,scrape loop 4,Audio\scrape_loop_4.fsb,5088
+AudioClip,HoldPosition_Male2_Radio 1,Audio\HoldPosition_Male2_Radio_1.fsb,7488
+AudioClip,vector_fire_silenced-1,Audio\vector_fire_silenced-1.fsb,6912
+AudioClip,skid loop 4,Audio\skid_loop_4.fsb,23424
+AudioClip,UZI,Audio\UZI.fsb,4096
+AudioClip,Attack_Male2_Radio 1,Audio\Attack_Male2_Radio_1.fsb,5472
+AudioClip,TA_Frag-2-[AudioTrimmer.com],Audio\TA_Frag-2-[AudioTrimmer.com].fsb,4032
+AudioClip,metal scratch,Audio\metal_scratch.fsb,3840
+AudioClip,SoldierFireM4,Audio\SoldierFireM4.fsb,8032
+AudioClip,mp5_fire-1,Audio\mp5_fire-1.fsb,6368
+AudioClip,SCrifleReload1,Audio\SCrifleReload1.fsb,11232
+AudioClip,P90Reload,Audio\P90Reload.fsb,10208
+AudioClip,Reloading_Male2_Radio 1,Audio\Reloading_Male2_Radio_1.fsb,5696
+AudioClip,car rumble,Audio\car_rumble.fsb,10560
+AudioClip,smg3reload,Audio\smg3reload.fsb,17120
+AudioClip,Charge_Male2_Radio 1,Audio\Charge_Male2_Radio_1.fsb,8640
+AudioClip,engine loop,Audio\engine_loop.fsb,9760
+AudioClip,carbineReload,Audio\carbineReload.fsb,14144
+AudioClip,impactWater2,Audio\impactWater2.fsb,4000
+AudioClip,impactDefault3,Audio\impactDefault3.fsb,4032
+AudioClip,stepDefault4,Audio\stepDefault4.fsb,2848
+AudioClip,StepGravel3,Audio\StepGravel3.fsb,5344
+AudioClip,proneShuffle3,Audio\proneShuffle3.fsb,6560
+AudioClip,hmgReload,Audio\hmgReload.fsb,20512
+AudioClip,espannol,Audio\espannol.fsb,19232
+AudioClip,grenade_pull,Audio\grenade_pull.fsb,17920
+AudioClip,ShellFall2,Audio\ShellFall2.fsb,4800
+AudioClip,impactFleshMelee3,Audio\impactFleshMelee3.fsb,5024
+AudioClip,StepStone3,Audio\StepStone3.fsb,4384
+AudioClip,pickup_beep,Audio\pickup_beep.fsb,1024
+AudioClip,pickup_health,Audio\pickup_health.fsb,4128
+AudioClip,impactFlesh2,Audio\impactFlesh2.fsb,4896
+AudioClip,carbineFire2,Audio\carbineFire2.fsb,4192
+AudioClip,impactDefault4,Audio\impactDefault4.fsb,3776
+AudioClip,pain_small,Audio\pain_small.fsb,4960
+AudioClip,impactMetal2,Audio\impactMetal2.fsb,4608
+AudioClip,PlayerDead,Audio\PlayerDead.fsb,8032
+AudioClip,pdrfire1,Audio\pdrfire1.fsb,4000
+AudioClip,hmgfireB,Audio\hmgfireB.fsb,6656
+AudioClip,impactWoodMelee1,Audio\impactWoodMelee1.fsb,3648
+AudioClip,grenade_ready,Audio\grenade_ready.fsb,6016
+AudioClip,impactDefault2,Audio\impactDefault2.fsb,3328
+AudioClip,sluggerfire2,Audio\sluggerfire2.fsb,4512
+AudioClip,Shotgun_reload,Audio\Shotgun_reload.fsb,3264
+AudioClip,smgreload,Audio\smgreload.fsb,15200
+AudioClip,stepWater1,Audio\stepWater1.fsb,4160
+AudioClip,impactGlass2,Audio\impactGlass2.fsb,7360
+AudioClip,pain_large,Audio\pain_large.fsb,4288
+AudioClip,Shotgun_reload_last,Audio\Shotgun_reload_last.fsb,7904
+AudioClip,impactMetal3,Audio\impactMetal3.fsb,4800
+AudioClip,ShellFall1,Audio\ShellFall1.fsb,5184
+AudioClip,stepWater4,Audio\stepWater4.fsb,4160
+AudioClip,Bow_Pull,Audio\Bow_Pull.fsb,7776
+AudioClip,cqfire2,Audio\cqfire2.fsb,3680
+AudioClip,sightsdown,Audio\sightsdown.fsb,3520
+AudioClip,StepStone2,Audio\StepStone2.fsb,4192
+AudioClip,stepLadder2,Audio\stepLadder2.fsb,1600
+AudioClip,proneShuffle4,Audio\proneShuffle4.fsb,6336
+AudioClip,crossbowreload,Audio\crossbowreload.fsb,12608
+AudioClip,StepGrass3,Audio\StepGrass3.fsb,4576
+AudioClip,Katana_ready,Audio\Katana_ready.fsb,4032
+AudioClip,impactMetalMelee2,Audio\impactMetalMelee2.fsb,2304
+AudioClip,ApplePick,Audio\ApplePick.fsb,4960
+AudioClip,sightsup,Audio\sightsup.fsb,2496
+AudioClip,Shotgun_ready,Audio\Shotgun_ready.fsb,4416
+AudioClip,ShellFallSg,Audio\ShellFallSg.fsb,6176
+AudioClip,StepGravel2,Audio\StepGravel2.fsb,5120
+AudioClip,Player_Die_Drown,Audio\Player_Die_Drown.fsb,14816
+AudioClip,stepMetal4,Audio\stepMetal4.fsb,4352
+AudioClip,Confirm,Audio\Confirm.fsb,7936
+AudioClip,foliageRustle4,Audio\foliageRustle4.fsb,8992
+AudioClip,impactWater3,Audio\impactWater3.fsb,4160
+AudioClip,stepLadder3,Audio\stepLadder3.fsb,1856
+AudioClip,weaponswitch,Audio\weaponswitch.fsb,3136
+AudioClip,pdrReload,Audio\pdrReload.fsb,11488
+AudioClip,stepMetal5,Audio\stepMetal5.fsb,3968
+AudioClip,StepGrass1,Audio\StepGrass1.fsb,5024
+AudioClip,sniperReady,Audio\sniperReady.fsb,8768
+AudioClip,ShellFall3,Audio\ShellFall3.fsb,3712
+AudioClip,landMetal,Audio\landMetal.fsb,5440
+AudioClip,foliageRustle3,Audio\foliageRustle3.fsb,6432
+AudioClip,proneShuffle2,Audio\proneShuffle2.fsb,7136
+AudioClip,sluggerReload,Audio\sluggerReload.fsb,15008
+AudioClip,stepWater5,Audio\stepWater5.fsb,4896
+AudioClip,Player_Gasp,Audio\Player_Gasp.fsb,4096
+AudioClip,stepWater3,Audio\stepWater3.fsb,4160
+AudioClip,sluggerReady,Audio\sluggerReady.fsb,6336
+AudioClip,Sniper_fire,Audio\Sniper_fire.fsb,15328
+AudioClip,stepMetal2,Audio\stepMetal2.fsb,3808
+AudioClip,stepWood2,Audio\stepWood2.fsb,4224
+AudioClip,landDefault,Audio\landDefault.fsb,5664
+AudioClip,StepGravel4,Audio\StepGravel4.fsb,5600
+AudioClip,Collect Gems,Audio\Collect_Gems.fsb,23392
+AudioClip,hmgReady,Audio\hmgReady.fsb,6816
+AudioClip,pickup_weapon,Audio\pickup_weapon.fsb,2912
+AudioClip,impactFleshMelee2,Audio\impactFleshMelee2.fsb,3872
+AudioClip,impactDefaultMelee1,Audio\impactDefaultMelee1.fsb,2880
+AudioClip,impactDefault5,Audio\impactDefault5.fsb,3488
+AudioClip,Katana_pickup,Audio\Katana_pickup.fsb,7712
+AudioClip,smgready,Audio\smgready.fsb,5920
+AudioClip,stepWood4,Audio\stepWood4.fsb,4448
+AudioClip,carbineReady,Audio\carbineReady.fsb,6976
+AudioClip,impactWood1,Audio\impactWood1.fsb,7840
+AudioClip,enterBulletTime,Audio\enterBulletTime.fsb,1472
+AudioClip,stepWood1,Audio\stepWood1.fsb,4576
+AudioClip,stepLadder4,Audio\stepLadder4.fsb,1984
+AudioClip,Player_Catch_Breath,Audio\Player_Catch_Breath.fsb,16160
+AudioClip,mineExplosion,Audio\mineExplosion.fsb,19904
+AudioClip,stepDefault5,Audio\stepDefault5.fsb,2752
+AudioClip,impactGlass1,Audio\impactGlass1.fsb,7840
+AudioClip,CQreload,Audio\CQreload.fsb,12000
+AudioClip,StepGrass2,Audio\StepGrass2.fsb,5216
+AudioClip,StepGrass4,Audio\StepGrass4.fsb,4640
+AudioClip,stepWood5,Audio\stepWood5.fsb,4320
+AudioClip,impactFleshMelee1,Audio\impactFleshMelee1.fsb,5184
+AudioClip,pain_drown,Audio\pain_drown.fsb,4064
+AudioClip,stepMetal3,Audio\stepMetal3.fsb,4064
+AudioClip,exitBulletTime,Audio\exitBulletTime.fsb,1504
+AudioClip,stepDefault1,Audio\stepDefault1.fsb,1472
+AudioClip,Shotgun_fire,Audio\Shotgun_fire.fsb,8512
+AudioClip,pickup_ammo,Audio\pickup_ammo.fsb,3360
+AudioClip,pistolready,Audio\pistolready.fsb,6560
+AudioClip,landWood,Audio\landWood.fsb,4192
+AudioClip,sniperreload,Audio\sniperreload.fsb,20864
+AudioClip,CQready,Audio\CQready.fsb,6176
+AudioClip,noAmmo,Audio\noAmmo.fsb,1088
+AudioClip,impactDefaultMelee2,Audio\impactDefaultMelee2.fsb,1824
+AudioClip,pistolreload,Audio\pistolreload.fsb,11200
+AudioClip,foliageRustle1,Audio\foliageRustle1.fsb,10272
+AudioClip,jump,Audio\jump.fsb,3456
+AudioClip,Katana_swing,Audio\Katana_swing.fsb,1504
+AudioClip,stepWood3,Audio\stepWood3.fsb,4032
+AudioClip,impactFlesh1,Audio\impactFlesh1.fsb,4640
+AudioClip,impactGlass3,Audio\impactGlass3.fsb,6720
+AudioClip,StepStone4,Audio\StepStone4.fsb,4064
+AudioClip,hitmarker,Audio\hitmarker.fsb,672
+AudioClip,foliageRustle2,Audio\foliageRustle2.fsb,9600
+AudioClip,impactWater1,Audio\impactWater1.fsb,4160
+AudioClip,crossbowfire,Audio\crossbowfire.fsb,5472
+AudioClip,impactWoodMelee2,Audio\impactWoodMelee2.fsb,3008
+AudioClip,proneShuffle1,Audio\proneShuffle1.fsb,7040
+AudioClip,stepDefault2,Audio\stepDefault2.fsb,1568
+AudioClip,smgfire,Audio\smgfire.fsb,1792
+AudioClip,impactDefault1,Audio\impactDefault1.fsb,1824
+AudioClip,ambience,Audio\ambience.fsb,118592
+AudioClip,impactWood2,Audio\impactWood2.fsb,7904
+AudioClip,stepDefault3,Audio\stepDefault3.fsb,2816
+AudioClip,landWater,Audio\landWater.fsb,8320
+AudioClip,stepMetal1,Audio\stepMetal1.fsb,3680
+AudioClip,impactMetal1,Audio\impactMetal1.fsb,4448
+AudioClip,StepGravel1,Audio\StepGravel1.fsb,5152
+AudioClip,stepWater2,Audio\stepWater2.fsb,4000
+AudioClip,impactWood3,Audio\impactWood3.fsb,5728
+AudioClip,pdrReady,Audio\pdrReady.fsb,4064
+AudioClip,BlasterFire,Audio\BlasterFire.fsb,3680
+AudioClip,stepLadder1,Audio\stepLadder1.fsb,1632
+AudioClip,StepStone1,Audio\StepStone1.fsb,4192
+AudioClip,impactMetalMelee1,Audio\impactMetalMelee1.fsb,2720

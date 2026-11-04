@@ -194,7 +194,7 @@ from an incompatible version" error.
 
 ## 10. Verification
 
-The reference implementation (`ZSP_CLEAN/Prototype`) ships with 14 tests covering:
+The reference implementation (`Prototype`) ships with 14 tests covering:
 
 - content validation and requirement parsing;
 - deterministic replay of the three-mission slice;

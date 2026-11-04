@@ -45,10 +45,10 @@ It replaces the old "Milestones 0–2" plan in ROADMAP.md.
 ## What is already built (as of 2026-11-04)
 
 ### Python reference slice (playable now)
-`ZSP_CLEAN/Prototype/sis_game.py` — data-driven, deterministic, three-mission playthrough.
+`Prototype/sis_game.py` — data-driven, deterministic, three-mission playthrough.
 
 ```powershell
-cd ZSP_CLEAN\Prototype
+cd Prototype
 python sis_game.py --demo          # deterministic demo run
 python sis_game.py --interactive   # play it
 python -m pytest test_sis_v1.py -q # 14 tests

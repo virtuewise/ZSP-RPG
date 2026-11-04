@@ -53,7 +53,7 @@ Engine: **Unity 6000.6.8f1** (Unity 6). Android first, iOS later.
 ## Verification commands
 
 ```powershell
-cd ZSP_CLEAN\Prototype
+cd Prototype
 python -m pytest test_sis_v1.py -q   # 14 passed
 python sis_game.py --demo            # three-mission slice
 ```

@@ -11,7 +11,7 @@ from pathlib import Path
 
 from PIL import Image, ImageDraw, ImageFont
 
-ROOT = Path(__file__).resolve().parent.parent / "ZSP_CLEAN" / "Assets" / "Art"
+ROOT = Path(__file__).resolve().parent.parent / "Assets" / "Art"
 UI = ROOT / "UI"
 ICONS = ROOT / "Icons"
 TEXTURES = ROOT / "Textures"

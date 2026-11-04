@@ -34,6 +34,10 @@ Run the remaining checks on the machine with Unity **6000.6.8f1** and Android Bu
 - [ ] Profile sustained frame rate, memory, loading, thermal behaviour, battery use and crash-free mission completion.
 - [ ] Test fresh install, save migration, app pause/resume and low-storage behaviour.
 
+## Known save/load limitation from source review
+
+The current Unity `GameSaveRecord` persists the mission identifier, health, identity and SIS snapshot. It does not persist the active story beat, player transform, weapon/ammunition state, inventory, or live enemy/scene state. `MissionDirector.Load()` restores the SIS record and selected identity/health, but does not reconstruct the active beat, mission conditions, HUD state or enemy wave. Therefore, **mid-mission resume is not implemented or verified**; the existing save file must not be described as a complete campaign checkpoint. Add versioned checkpoint data and a deterministic scene rehydration path, then test interrupted/resumed missions before accepting this gate.
+
 ## Release and rights gates
 
 - [ ] Complete a provenance/licence audit for every third-party model, animation, sound, font and plugin.
